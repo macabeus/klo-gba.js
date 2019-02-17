@@ -1,0 +1,25 @@
+{
+  "name": "brush",
+  "version": "0.0.1",
+  "description": "Map viewer for the levels",
+  "scripts": {
+    "start": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production"
+  },
+  "author": "macabeus",
+  "license": "MIT",
+  "dependencies": {
+    "react": "16.8.2",
+    "react-dom": "16.8.2"
+  },
+  "devDependencies": {
+    "babel-core": "6.26.3",
+    "babel-loader": "7.1.5",
+    "babel-preset-env": "1.7.0",
+    "babel-preset-react": "6.24.1",
+    "html-webpack-plugin": "3.2.0",
+    "webpack": "4.29.4",
+    "webpack-cli": "3.2.3",
+    "webpack-dev-server": "3.1.14"
+  }
+}
