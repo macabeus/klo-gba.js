@@ -4,7 +4,8 @@
   "description": "Map viewer for the levels",
   "scripts": {
     "start": "webpack-dev-server --mode development --open",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "lint": "./node_modules/eslint/bin/eslint.js . ; exit 0"
   },
   "author": "macabeus",
   "license": "MIT",
@@ -17,6 +18,8 @@
     "babel-loader": "7.1.5",
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
+    "eslint": "4.19.1",
+    "eslint-config-pagarme-react": "1.5.0",
     "html-webpack-plugin": "3.2.0",
     "webpack": "4.29.4",
     "webpack-cli": "3.2.3",

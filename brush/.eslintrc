@@ -1,0 +1,6 @@
+{
+  "extends": "pagarme-react",
+  "env": {
+    "browser": true
+  }
+}
