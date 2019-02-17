@@ -10,8 +10,12 @@
   "author": "macabeus",
   "license": "MIT",
   "dependencies": {
+    "konva": "2.6.0",
+    "prop-types": "15.7.2",
+    "ramda": "0.26.1",
     "react": "16.8.2",
-    "react-dom": "16.8.2"
+    "react-dom": "16.8.2",
+    "react-konva": "16.8.2-0"
   },
   "devDependencies": {
     "babel-core": "6.26.3",
