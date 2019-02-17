@@ -8,6 +8,7 @@ const htmlPlugin = new HtmlWebPackPlugin({
 module.exports = {
   module: {
     rules: [
+      { test: /dump\/.*\.bin/, use: 'buffer-loader' },
       {
         exclude: /node_modules/,
         test: /\.js$/,

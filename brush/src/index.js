@@ -1,10 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Map from './map/map'
+import getVision from './get-vision'
 
-const tilemap = [1, 0, 0, 1, 0, 1, 1, 0]
+const {
+  infos: {
+    tilemap: {
+      height,
+      width,
+    },
+  },
+  tilemap,
+} = getVision(1, 1)
 
 ReactDOM.render(
-  <Map height={2} width={4} tilemap={tilemap} />,
+  <Map height={height} width={width} tilemap={tilemap} />,
   document.getElementById('app')
 )

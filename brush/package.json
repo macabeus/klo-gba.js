@@ -22,11 +22,12 @@
     "babel-loader": "7.1.5",
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
+    "buffer-loader": "0.1.0",
     "eslint": "4.19.1",
     "eslint-config-pagarme-react": "1.5.0",
     "html-webpack-plugin": "3.2.0",
-    "webpack": "4.29.4",
     "webpack-cli": "3.2.3",
+    "webpack": "4.29.4",
     "webpack-dev-server": "3.1.14"
   }
 }
