@@ -7,6 +7,7 @@ const {
   infos: {
     tilemap: {
       height,
+      scheme,
       width,
     },
   },
@@ -14,6 +15,6 @@ const {
 } = getVision(1, 1)
 
 ReactDOM.render(
-  <Map height={height} width={width} tilemap={tilemap} />,
+  <Map height={height} width={width} tilemap={tilemap} scheme={scheme} />,
   document.getElementById('app')
 )

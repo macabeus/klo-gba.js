@@ -1,7 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Stage, Layer } from 'react-konva'
-import { range } from 'ramda'
+import {
+  defaultTo,
+  find,
+  pipe,
+  prop,
+  range,
+} from 'ramda'
 import Point from './point'
 
 const listCoordinates = (height, width) => {
@@ -16,6 +22,12 @@ const listCoordinates = (height, width) => {
   return coordinates
 }
 
+const getTileNameFromScheme = tileValue => pipe(
+  find(({ ids }) => ids.includes(tileValue)),
+  defaultTo({ name: 'unknown' }),
+  prop('name')
+)
+
 class Map extends React.Component {
   constructor (props) {
     super(props)
@@ -24,6 +36,7 @@ class Map extends React.Component {
 
     this.state = {
       height: props.height,
+      scheme: props.scheme,
       tilemap: props.tilemap,
       width: props.width,
     }
@@ -32,11 +45,13 @@ class Map extends React.Component {
   getPoint (x, y) {
     const tileValue = this.state.tilemap[x + (y * this.state.width)]
 
-    if (tileValue !== 0x00) {
-      return <Point x={x} y={y} key={`${x} ${y}`} />
+    if (tileValue === 0x00) {
+      return null
     }
 
-    return null
+    const tileName = getTileNameFromScheme(tileValue)(this.state.scheme)
+
+    return <Point x={x} y={y} tileName={tileName} key={`${x} ${y}`} />
   }
 
   render () {
@@ -56,6 +71,10 @@ class Map extends React.Component {
 
 Map.propTypes = {
   height: PropTypes.number.isRequired,
+  scheme: PropTypes.arrayOf(PropTypes.shape({
+    ids: PropTypes.arrayOf(PropTypes.number).isRequired,
+    name: PropTypes.string.isRequired,
+  })).isRequired,
   tilemap: PropTypes.arrayOf(PropTypes.number).isRequired,
   width: PropTypes.number.isRequired,
 }
