@@ -8,7 +8,7 @@ import {
   prop,
   range,
 } from 'ramda'
-import Point from './point'
+import PointTile from './point/point-tile'
 
 const listCoordinates = (height, width) => {
   const rangeHeight = range(0, height)
@@ -51,7 +51,7 @@ class Map extends React.Component {
 
     const tileName = getTileNameFromScheme(tileValue)(this.state.scheme)
 
-    return <Point x={x} y={y} tileName={tileName} key={`${x} ${y}`} />
+    return <PointTile x={x} y={y} tileName={tileName} key={`${x} ${y}`} />
   }
 
   render () {

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Rect } from 'react-konva'
+import Point from './point'
 
 const mapTileNameToColor = {
   board: '199, 199, 199, 1',
@@ -15,20 +15,19 @@ const mapTileNameToColor = {
   wood: '188, 111, 93, 1',
 }
 
-const Point = ({ tileName, x, y }) => (
-  <Rect
-    x={x * 3}
-    y={y * 3}
-    width={3}
-    height={3}
-    fill={`rgba(${mapTileNameToColor[tileName]})`}
+const PointTile = ({ tileName, x, y }) => (
+  <Point
+    color={`rgba(${mapTileNameToColor[tileName]})`}
+    debugMessage={`Tile ${tileName}; x ${x} y ${y}`}
+    x={x}
+    y={y}
   />
 )
 
-Point.propTypes = {
+PointTile.propTypes = {
   tileName: PropTypes.string.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
 }
 
-export default Point
+export default PointTile
