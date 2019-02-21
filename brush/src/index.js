@@ -1,6 +1,27 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Map from './map/map'
+import getVision from './get-vision'
 
-const App = () => <div>Hello React!</div>
+const {
+  infos: {
+    tilemap: {
+      height,
+      scheme,
+      width,
+    },
+  },
+  oam,
+  tilemap,
+} = getVision(1, 1)
 
-ReactDOM.render(<App />, document.getElementById('app'))
+ReactDOM.render(
+  <Map
+    height={height}
+    width={width}
+    tilemap={tilemap}
+    scheme={scheme}
+    oam={oam}
+  />,
+  document.getElementById('app')
+)

@@ -10,19 +10,25 @@
   "author": "macabeus",
   "license": "MIT",
   "dependencies": {
+    "binary": "0.3.0",
+    "konva": "2.6.0",
+    "prop-types": "15.7.2",
+    "ramda": "0.26.1",
     "react": "16.8.2",
-    "react-dom": "16.8.2"
+    "react-dom": "16.8.2",
+    "react-konva": "16.8.2-0"
   },
   "devDependencies": {
     "babel-core": "6.26.3",
     "babel-loader": "7.1.5",
     "babel-preset-env": "1.7.0",
     "babel-preset-react": "6.24.1",
+    "buffer-loader": "0.1.0",
     "eslint": "4.19.1",
     "eslint-config-pagarme-react": "1.5.0",
     "html-webpack-plugin": "3.2.0",
-    "webpack": "4.29.4",
     "webpack-cli": "3.2.3",
+    "webpack": "4.29.4",
     "webpack-dev-server": "3.1.14"
   }
 }
