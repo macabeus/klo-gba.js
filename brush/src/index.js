@@ -11,10 +11,17 @@ const {
       width,
     },
   },
+  oam,
   tilemap,
 } = getVision(1, 1)
 
 ReactDOM.render(
-  <Map height={height} width={width} tilemap={tilemap} scheme={scheme} />,
+  <Map
+    height={height}
+    width={width}
+    tilemap={tilemap}
+    scheme={scheme}
+    oam={oam}
+  />,
   document.getElementById('app')
 )
