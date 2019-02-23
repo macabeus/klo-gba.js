@@ -7,7 +7,7 @@ import {
   ThemeProvider,
 } from 'former-kit'
 import skin from 'former-kit-skin-pagarme'
-import Map from './map/map'
+import Map from './components/map'
 import SelectVision from './components/SelectVision'
 import VisionProvider from './providers/VisionProvider'
 

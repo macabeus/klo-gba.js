@@ -8,9 +8,9 @@ import {
   prop,
   range,
 } from 'ramda'
-import PointTile from './point/point-tile'
-import PointOam from './point/point-oam'
-import VisionContext from '../context/VisionContext'
+import PointTile from './point/PointTile'
+import PointOam from './point/PointOam'
+import VisionContext from '../../context/VisionContext'
 
 const listCoordinates = (height, width) => {
   const rangeHeight = range(0, height)

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Point from './point'
+import Point from '.'
 
 const mapTileNameToColor = {
   board: '199, 199, 199, 1',
