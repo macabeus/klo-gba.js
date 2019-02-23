@@ -1,27 +1,31 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import {
+  Card,
+  Header,
+  HeaderTitle,
+  ThemeProvider,
+} from 'former-kit'
+import skin from 'former-kit-skin-pagarme'
 import Map from './map/map'
-import getVision from './get-vision'
-
-const {
-  infos: {
-    tilemap: {
-      height,
-      scheme,
-      width,
-    },
-  },
-  oam,
-  tilemap,
-} = getVision(1, 1)
+import SelectVision from './components/SelectVision'
+import VisionProvider from './providers/VisionProvider'
 
 ReactDOM.render(
-  <Map
-    height={height}
-    width={width}
-    tilemap={tilemap}
-    scheme={scheme}
-    oam={oam}
-  />,
+  <ThemeProvider theme={skin}>
+    <VisionProvider>
+      <Header>
+        <SelectVision />
+
+        <HeaderTitle>
+          klo-gba.js
+        </HeaderTitle>
+      </Header>
+
+      <Card>
+        <Map />
+      </Card>
+    </VisionProvider>
+  </ThemeProvider>,
   document.getElementById('app')
 )
