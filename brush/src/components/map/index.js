@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, Fragment, useState } from 'react'
 import binary from 'binary'
 import { Stage, Layer } from 'react-konva'
 import {
@@ -8,6 +8,7 @@ import {
   prop,
   range,
 } from 'ramda'
+import MapFooter from '../MapFooter'
 import PointTile from './point/PointTile'
 import PointOam from './point/PointOam'
 import VisionContext from '../../context/VisionContext'
@@ -30,20 +31,42 @@ const getTileNameFromScheme = tileValue => pipe(
   prop('name')
 )
 
-const getPoint = (tilemap, width, scheme) => (x, y) => {
-  const tileValue = tilemap[x + (y * width)]
+const Map = () => {
+  const {
+    infos: {
+      tilemap: {
+        height,
+        scheme,
+        width,
+      },
+    },
+    oam,
+    tilemap,
+  } = useContext(VisionContext).vision
 
-  if (tileValue === 0x00) {
-    return null
+  const [selectedPointInfos, setSelectedPointInfos] = useState(null)
+
+  const getPoint = (x, y) => {
+    const tileValue = tilemap[x + (y * width)]
+
+    let tileName
+    if (tileValue === 0x00) {
+      tileName = 'empty'
+    } else {
+      tileName = getTileNameFromScheme(tileValue)(scheme)
+    }
+
+    return (<PointTile
+      key={`${x} ${y}`}
+      tileName={tileName}
+      tileValue={tileValue}
+      showPointInfosHandle={setSelectedPointInfos}
+      x={x}
+      y={y}
+    />)
   }
 
-  const tileName = getTileNameFromScheme(tileValue)(scheme)
-
-  return <PointTile x={x} y={y} tileName={tileName} key={`${x} ${y}`} />
-}
-
-const listOam = oam =>
-  oam
+  const oamList = oam
     .map(i =>
       binary.parse(i)
         .word16lu('xStage1')
@@ -73,6 +96,7 @@ const listOam = oam =>
           key={`${xStage1} ${yStage1} 1`}
           oamId={kind}
           stage={1}
+          showPointInfosHandle={setSelectedPointInfos}
           x={xStage1}
           y={yStage1}
         />,
@@ -80,6 +104,7 @@ const listOam = oam =>
           key={`${xStage2} ${yStage2} 2`}
           oamId={kind}
           stage={2}
+          showPointInfosHandle={setSelectedPointInfos}
           x={xStage2}
           y={yStage2}
         />,
@@ -87,41 +112,27 @@ const listOam = oam =>
           key={`${xStage3} ${yStage3} 3`}
           oamId={kind}
           stage={3}
+          showPointInfosHandle={setSelectedPointInfos}
           x={xStage3}
           y={yStage3}
         />,
       ])
 
-const Map = () => {
-  const {
-    infos: {
-      tilemap: {
-        height,
-        scheme,
-        width,
-      },
-    },
-    oam,
-    tilemap,
-  } = useContext(VisionContext).vision
-
-  const getPointFromTilemap = getPoint(tilemap, width, scheme)
-
   const tiles = listCoordinates(height, width)
-    .map(([x, y]) => getPointFromTilemap(x, y))
-    .filter(i => i !== null)
-
-  const oamList = listOam(oam)
+    .map(([x, y]) => getPoint(x, y))
 
   return (
-    <Stage width={width * 4} height={height * 4}>
-      <Layer>
-        {tiles}
-      </Layer>
-      <Layer>
-        {oamList}
-      </Layer>
-    </Stage>
+    <Fragment>
+      <Stage width={width * 4} height={height * 4}>
+        <Layer>
+          {tiles}
+        </Layer>
+        <Layer>
+          {oamList}
+        </Layer>
+      </Stage>
+      <MapFooter informations={selectedPointInfos} />
+    </Fragment>
   )
 }
 
