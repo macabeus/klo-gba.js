@@ -6,8 +6,8 @@ const SIZE = 4
 
 const Point = ({
   color,
-  debugMessage,
   hasStroke,
+  onClickHandle,
   scale,
   x,
   y,
@@ -15,7 +15,7 @@ const Point = ({
   const data = {
     fill: color,
     height: SIZE,
-    onClick: () => { console.log(debugMessage) }, // eslint-disable-line no-console
+    onClick: () => { onClickHandle() },
     width: SIZE,
   }
 
@@ -40,8 +40,8 @@ const Point = ({
 
 Point.propTypes = {
   color: PropTypes.string.isRequired,
-  debugMessage: PropTypes.string.isRequired,
   hasStroke: PropTypes.bool,
+  onClickHandle: PropTypes.func,
   scale: PropTypes.number,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
@@ -49,6 +49,7 @@ Point.propTypes = {
 
 Point.defaultProps = {
   hasStroke: false,
+  onClickHandle: () => {},
   scale: 1,
 }
 

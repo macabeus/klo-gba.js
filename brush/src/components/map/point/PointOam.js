@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Point from './point'
+import { pipe } from 'ramda'
+import Point from '.'
 
 const mapOamIdToInfos = {
   0x03: {
@@ -54,16 +55,23 @@ const getOamInfosById = (oamId) => {
 
 const PointOam = ({
   oamId,
+  showPointInfosHandle,
   stage,
   x,
   y,
 }) => {
   const { color, name } = getOamInfosById(oamId)
 
+  const getInformations = () => ({
+    message: `OAM ${name} (${oamId}) from stage ${stage}`,
+    x,
+    y,
+  })
+
   return (<Point
     color={`rgba(${color})`}
-    debugMessage={`OAM ${name} (${oamId}); x ${x} y ${y} stage ${stage}`}
     hasStroke
+    onClickHandle={pipe(getInformations, showPointInfosHandle)}
     scale={8}
     x={x}
     y={y}
@@ -72,9 +80,14 @@ const PointOam = ({
 
 PointOam.propTypes = {
   oamId: PropTypes.number.isRequired,
+  showPointInfosHandle: PropTypes.func,
   stage: PropTypes.number.isRequired,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
+}
+
+PointOam.defaultProps = {
+  showPointInfosHandle: () => {},
 }
 
 export default PointOam
