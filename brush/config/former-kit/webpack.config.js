@@ -1,5 +1,5 @@
-import stylelintFormatter from './stylelintFormatter'
-import postcssUrlRebase from './postcssUrlRebase'
+const stylelintFormatter = require('./stylelintFormatter')
+const postcssUrlRebase = require('./postcssUrlRebase')
 
 const postCSSPlugins = [
   require('postcss-sass-each'),
