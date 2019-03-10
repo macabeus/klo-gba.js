@@ -22,6 +22,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <sys/stat.h>
+#include <emscripten.h>
 
 /*----------------------------------------------------------------------------*/
 int findSize() {
@@ -112,7 +113,7 @@ char *Load(char *filename, int *length, int min, int max);
 void  Save(char *filename, char *buffer, int length);
 char *Memory(int length, int size);
 
-void  HUF_Decode(char *filename);
+void  HUF_Decode();
 void  HUF_Encode(char *filename, int cmd);
 char *HUF_Code(unsigned char *raw_buffer, int raw_len, int *new_len);
 
@@ -202,7 +203,8 @@ char *Memory(int length, int size) {
 }
 
 /*----------------------------------------------------------------------------*/
-void HUF_Decode(char *filename) {
+void EMSCRIPTEN_KEEPALIVE HUF_Decode() {
+  char *filename = "file";
   unsigned char *pak_buffer, *raw_buffer, *pak, *raw, *pak_end, *raw_end;
   unsigned int   pak_len, raw_len, header;
   unsigned char *tree;

@@ -1,4 +1,6 @@
 /brush/dist
 /brush/node_modules
+/scissors/dist
+/scissors/node_modules
 /scissors/src/wasm/*.js
 /scissors/src/wasm/*.wasm
