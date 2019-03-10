@@ -132,47 +132,6 @@ void  HUF_CreateCodeWorks(void);
 void  HUF_FreeCodeWorks(void);
 
 /*----------------------------------------------------------------------------*/
-int main(int argc, char **argv) {
-  int cmd;
-  int arg;
-
-  Title();
-
-  if (argc < 2) Usage();
-  if      (!strcmpi(argv[1], "-d"))  cmd = CMD_DECODE;
-  else if (!strcmpi(argv[1], "-e8")) cmd = CMD_CODE_28;
-  else if (!strcmpi(argv[1], "-e4")) cmd = CMD_CODE_24;
-#ifdef _CUE_MODES_21_22_
-  else if (!strcmpi(argv[1], "-e2")) cmd = CMD_CODE_22;
-  else if (!strcmpi(argv[1], "-e1")) cmd = CMD_CODE_21;
-#endif
-  else if (!strcmpi(argv[1], "-e0")) cmd = CMD_CODE_20;
-  else                               EXIT("Command not supported\n");
-  if (argc < 3) EXIT("Filename not specified\n");
-
-  switch (cmd) {
-    case CMD_DECODE:
-      for (arg = 2; arg < argc; arg++) HUF_Decode(argv[arg]);
-      break;
-    case CMD_CODE_28:
-    case CMD_CODE_24:
-#ifdef _CUE_MODES_21_22_
-    case CMD_CODE_22:
-    case CMD_CODE_21:
-#endif
-    case CMD_CODE_20:
-      for (arg = 2; arg < argc; arg++) HUF_Encode(argv[arg], cmd);
-      break;
-    default:
-      break;
-  }
-
-  printf("\nDone\n");
-
-  return(0);
-}
-
-/*----------------------------------------------------------------------------*/
 void Title(void) {
   printf(
     "\n"
@@ -249,8 +208,6 @@ void HUF_Decode(char *filename) {
   unsigned char *tree;
   unsigned int   pos, next, mask4, code, ch, nbits;
 
-  printf("- decoding '%s'", filename);
-
   pak_buffer = Load(filename, &pak_len, HUF_MINIM, HUF_MAXIM);
 
   header = *pak_buffer;
@@ -317,8 +274,6 @@ void HUF_Decode(char *filename) {
 
   free(raw_buffer);
   free(pak_buffer);
-
-  printf("\n");
 }
 
 /*----------------------------------------------------------------------------*/
