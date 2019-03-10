@@ -20,6 +20,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <sys/stat.h>
+#include <emscripten.h>
+
+/*----------------------------------------------------------------------------*/
+int findSize() {
+  FILE *fp = fopen("filelzss", "rb");
+  fseek(fp, 0, SEEK_END);
+  int lengthOfFile = ftell(fp);
+  fclose(fp);
+
+  return lengthOfFile;
+}
+
+int strcmpi(char* s1, char* s2){
+    int i;
+
+    if(strlen(s1)!=strlen(s2))
+        return -1;
+
+    for(i=0;i<strlen(s1);i++){
+        if(toupper(s1[i])!=toupper(s2[i]))
+            return s1[i]-s2[i];
+    }
+    return 0;
+}
 
 /*----------------------------------------------------------------------------*/
 #define CMD_DECODE    0x00       // decode
@@ -82,40 +108,6 @@ void  LZS_InsertNode(int r);
 void  LZS_DeleteNode(int p);
 
 /*----------------------------------------------------------------------------*/
-int main(int argc, char **argv) {
-  int cmd, mode;
-  int arg;
-
-  Title();
-
-  if (argc < 2) Usage();
-  if      (!strcmpi(argv[1], "-d"))   { cmd = CMD_DECODE; }
-  else if (!strcmpi(argv[1], "-evn")) { cmd = CMD_CODE_10; mode = LZS_VRAM; }
-  else if (!strcmpi(argv[1], "-ewn")) { cmd = CMD_CODE_10; mode = LZS_WRAM; }
-  else if (!strcmpi(argv[1], "-evf")) { cmd = CMD_CODE_10; mode = LZS_VFAST; }
-  else if (!strcmpi(argv[1], "-ewf")) { cmd = CMD_CODE_10; mode = LZS_WFAST; }
-  else if (!strcmpi(argv[1], "-evo")) { cmd = CMD_CODE_10; mode = LZS_VBEST; }
-  else if (!strcmpi(argv[1], "-ewo")) { cmd = CMD_CODE_10; mode = LZS_WBEST; }
-  else                                  EXIT("Command not supported\n");
-  if (argc < 3) EXIT("Filename not specified\n");
-
-  switch (cmd) {
-    case CMD_DECODE:
-      for (arg = 2; arg < argc; arg++) LZS_Decode(argv[arg]);
-      break;
-    case CMD_CODE_10:
-      for (arg = 2; arg < argc; arg++) LZS_Encode(argv[arg], mode);
-      break;
-    default:
-      break;
-  }
-
-  printf("\nDone\n");
-
-  return(0);
-}
-
-/*----------------------------------------------------------------------------*/
 void Title(void) {
   printf(
     "\n"
@@ -151,7 +143,7 @@ char *Load(char *filename, int *length, int min, int max) {
   char *fb;
 
   if ((fp = fopen(filename, "rb")) == NULL) EXIT("\nFile open error\n");
-  fs = filelength(fileno(fp));
+  fs = findSize();
   if ((fs < min) || (fs > max)) EXIT("\nFile size error\n");
   fb = Memory(fs + 3, sizeof(char));
   if (fread(fb, 1, fs, fp) != fs) EXIT("\nFile read error\n");
@@ -186,8 +178,6 @@ void LZS_Decode(char *filename) {
   unsigned char *pak_buffer, *raw_buffer, *pak, *raw, *pak_end, *raw_end;
   unsigned int   pak_len, raw_len, header, len, pos;
   unsigned char  flags, mask;
-
-  printf("- decoding '%s'", filename);
 
   pak_buffer = Load(filename, &pak_len, LZS_MINIM, LZS_MAXIM);
 
@@ -239,8 +229,6 @@ void LZS_Decode(char *filename) {
 
   free(raw_buffer);
   free(pak_buffer);
-
-  printf("\n");
 }
 
 /*----------------------------------------------------------------------------*/
