@@ -20,6 +20,31 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
+#include <sys/stat.h>
+
+/*----------------------------------------------------------------------------*/
+int findSize() {
+  FILE *fp = fopen("file", "rb");
+  fseek(fp, 0, SEEK_END);
+  int lengthOfFile = ftell(fp);
+  fclose(fp);
+
+  return lengthOfFile;
+}
+
+int strcmpi(char* s1, char* s2){
+    int i;
+
+    if(strlen(s1)!=strlen(s2))
+        return -1;
+
+    for(i=0;i<strlen(s1);i++){
+        if(toupper(s1[i])!=toupper(s2[i]))
+            return s1[i]-s2[i];
+    }
+    return 0;
+}
 
 /*----------------------------------------------------------------------------*/
 //#define _CUE_LOG_                // enable log mode (for test purposes)
@@ -187,7 +212,7 @@ char *Load(char *filename, int *length, int min, int max) {
   char *fb;
 
   if ((fp = fopen(filename, "rb")) == NULL) EXIT("\nFile open error\n");
-  fs = filelength(fileno(fp));
+  fs = findSize();
   if ((fs < min) || (fs > max)) EXIT("\nFile size error\n");
   fb = Memory(fs + 3, sizeof(char));
   if (fread(fb, 1, fs, fp) != fs) EXIT("\nFile read error\n");
