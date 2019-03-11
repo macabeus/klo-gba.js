@@ -98,7 +98,7 @@ char *Load(char *filename, int *length, int min, int max);
 void  Save(char *filename, char *buffer, int length);
 char *Memory(int length, int size);
 
-void  LZS_Decode(char *filename);
+void  LZS_Decode();
 void  LZS_Encode(char *filename, int mode);
 char *LZS_Code(unsigned char *raw_buffer, int raw_len, int *new_len, int best);
 
@@ -174,7 +174,8 @@ char *Memory(int length, int size) {
 }
 
 /*----------------------------------------------------------------------------*/
-void LZS_Decode(char *filename) {
+void EMSCRIPTEN_KEEPALIVE LZS_Decode() {
+  char *filename = "filelzss";
   unsigned char *pak_buffer, *raw_buffer, *pak, *raw, *pak_end, *raw_end;
   unsigned int   pak_len, raw_len, header, len, pos;
   unsigned char  flags, mask;
