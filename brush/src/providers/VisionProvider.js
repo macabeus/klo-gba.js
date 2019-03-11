@@ -1,19 +1,24 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import getVision from '../get-vision'
+import scissors from 'scissors'
 import VisionContext from '../context/VisionContext'
 
 const VisionProvider = (props) => {
   const [visionWorld, setVisionWorld] = useState(1)
   const [visionIndex, setVisionIndex] = useState(1)
 
-  const [vision, setVision] = useState(getVision(visionWorld, visionIndex))
+  const [vision, setVision] = useState({
+    infos: { tilemap: { height: 0, scheme: [], width: 0 } },
+    oam: [],
+    tilemap: [],
+  })
 
-  const visionUpdate = (world, index) => {
+  const visionUpdate = (romBuffer, world, index) => {
     setVisionWorld(world)
     setVisionIndex(index)
 
-    setVision(getVision(world, index))
+    const newVision = scissors.getVision(romBuffer, world, index)
+    setVision(newVision)
   }
 
   return (

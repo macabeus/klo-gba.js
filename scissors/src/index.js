@@ -1,7 +1,5 @@
-import huffmanDecode from './huffman'
-import lzssDecode from './lzss'
+import getVision from './get-vision'
 
 export default {
-  huffmanDecode,
-  lzssDecode,
+  getVision,
 }

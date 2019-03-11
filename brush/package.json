@@ -22,7 +22,8 @@
     "react": "16.8.2",
     "react-dom": "16.8.2",
     "react-konva": "16.8.2-0",
-    "react-file-reader-input": "2.0.0"
+    "react-file-reader-input": "2.0.0",
+    "scissors": "file:../scissors"
   },
   "devDependencies": {
     "@babel/core": "7.3.4",

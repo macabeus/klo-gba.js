@@ -6,6 +6,13 @@ const rules = [
     test: /\.wasm$/,
     type: 'javascript/auto',
   },
+  {
+    exclude: /node_modules/,
+    test: /\.js$/,
+    use: {
+      loader: 'babel-loader',
+    },
+  },
 ]
 
 rules.concat()
