@@ -7,25 +7,28 @@ import {
   ThemeProvider,
 } from 'former-kit'
 import skin from 'former-kit-skin-pagarme'
-import Map from './components/map'
 import SelectVision from './components/SelectVision'
+import Content from './components/Content'
+import ROMProvider from './providers/ROMProvider'
 import VisionProvider from './providers/VisionProvider'
 
 ReactDOM.render(
   <ThemeProvider theme={skin}>
-    <VisionProvider>
-      <Header>
-        <SelectVision />
+    <ROMProvider>
+      <VisionProvider>
+        <Header>
+          <SelectVision />
 
-        <HeaderTitle>
-          klo-gba.js
-        </HeaderTitle>
-      </Header>
+          <HeaderTitle>
+            klo-gba.js
+          </HeaderTitle>
+        </Header>
 
-      <Card>
-        <Map />
-      </Card>
-    </VisionProvider>
+        <Card>
+          <Content />
+        </Card>
+      </VisionProvider>
+    </ROMProvider>
   </ThemeProvider>,
   document.getElementById('app')
 )
