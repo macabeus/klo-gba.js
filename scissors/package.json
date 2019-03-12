@@ -1,0 +1,27 @@
+{
+  "name": "scissors",
+  "version": "0.0.1",
+  "description": "ROM extractor",
+  "main": "dist/scissors.js",
+  "scripts": {
+    "start": "webpack --watch --mode development --config webpack.config.js",
+    "build": "webpack --mode production --config webpack.config.js",
+    "lint": "./node_modules/eslint/bin/eslint.js . ; exit 0"
+  },
+  "author": "macabeus",
+  "license": "MIT",
+  "dependencies": {
+    "ramda": "0.26.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.3.4",
+    "@babel/plugin-proposal-pipeline-operator": "7.3.2",
+    "babel-eslint": "10.0.1",
+    "babel-loader": "8.0.5",
+    "eslint": "4.19.1",
+    "eslint-config-pagarme-react": "1.5.0",
+    "file-loader": "3.0.1",
+    "webpack-cli": "3.2.3",
+    "webpack": "4.29.4"
+  }
+}

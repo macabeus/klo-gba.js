@@ -1,6 +1,6 @@
-import HtmlWebPackPlugin from 'html-webpack-plugin'
+const HtmlWebPackPlugin = require('html-webpack-plugin')
 
-import formerKitRules from './former-kit/webpack.config'
+const formerKitRules = require('./former-kit/webpack.config')
 
 const htmlPlugin = new HtmlWebPackPlugin({
   filename: './index.html',
