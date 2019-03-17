@@ -23,7 +23,7 @@ Since this is a study project, I'm writing a manual about how I'm developing it,
 > git clone https://github.com/macabeus/klo-gba.js.git
 ```
 
-2 - At the project root, compile some webassembly:
+2 - At the project root, compile some webassembly. To run this command, you'll need to have docker installed in your machine, in case you don't, check [Docker official website](https://docs.docker.com/install/):
 
 ```
 > cd klo-gba.js
