@@ -27,7 +27,7 @@ Since this is a study project, I'm writing a manual about how I'm developing it,
 
 ```
 > cd klo-gba.js
-> sh ./shellscript/compile-webassembly.sh
+> bash ./shellscript/compile-webassembly.sh
 ```
 
 3 - At the path `klo-gba.js/scissors`, install the dependencies and start Scissors project:
