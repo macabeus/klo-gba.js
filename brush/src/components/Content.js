@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import ROMContext from '../context/ROMContext'
-import InputROM from './InputROM'
 import Map from './map'
+import InputModal from './InputModal';
 
 const Content = () => {
   const { romBuffer } = useContext(ROMContext)
@@ -10,7 +10,7 @@ const Content = () => {
     return <Map />
   }
 
-  return <InputROM />
+  return <InputModal />;
 }
 
 export default Content

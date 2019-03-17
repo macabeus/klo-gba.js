@@ -28,7 +28,7 @@ const InputROM = () => {
 
   return (
     <FileReaderInput as="binary" onChange={handleChange(setROMBuffer)}>
-      <Button>Select the ROM file</Button>
+      <Button>Browse Files</Button>
     </FileReaderInput>
   )
 }
