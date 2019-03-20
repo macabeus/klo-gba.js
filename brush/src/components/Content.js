@@ -4,13 +4,15 @@ import Map from './map'
 import InputROMModal from './InputROMModal'
 
 const Content = () => {
-  const { romBuffer } = useContext(ROMContext)
+  const { romBufferStatus } = useContext(ROMContext)
 
-  if (romBuffer) {
-    return <Map />
+  const contentStates = {
+    empty: <InputROMModal />,
+    loaded: <Map />,
+    starting: null,
   }
 
-  return <InputROMModal />
+  return contentStates[romBufferStatus]
 }
 
 export default Content

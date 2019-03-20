@@ -17,6 +17,7 @@
     "former-kit-skin-pagarme": "1.0.0",
     "former-kit": "1.0.1",
     "konva": "2.6.0",
+    "localforage": "1.7.3",
     "prop-types": "15.7.2",
     "ramda": "0.26.1",
     "react": "16.8.2",
