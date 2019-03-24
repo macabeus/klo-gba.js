@@ -1,5 +1,4 @@
 import React, { useContext, Fragment, useState } from 'react'
-import binary from 'binary'
 import { Stage, Layer } from 'react-konva'
 import {
   defaultTo,
@@ -67,21 +66,7 @@ const Map = () => {
   }
 
   const oamList = oam
-    .map(i =>
-      binary.parse(i)
-        .word16lu('xStage1')
-        .word16lu('yStage1')
-        .skip(4)
-        .word16lu('xStage2')
-        .word16lu('yStage2')
-        .skip(4)
-        .word16lu('xStage3')
-        .word16lu('yStage3')
-        .skip(21)
-        .word8lu('kind')
-        .vars)
-    .filter(({ kind }) =>
-      kind !== null)
+    .map(i => i.data)
     .map(({
       kind,
       xStage1,
