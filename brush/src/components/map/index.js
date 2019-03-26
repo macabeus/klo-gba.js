@@ -66,7 +66,7 @@ const Map = () => {
   }
 
   const oamList = oam
-    .map(i => i.data)
+    .map(oamEntry => oamEntry.data)
     .map(({
       kind,
       xStage1,
