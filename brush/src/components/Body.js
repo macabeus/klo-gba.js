@@ -1,18 +1,25 @@
 import React, { useContext } from 'react'
+import { Card, CardContent } from 'former-kit'
 import ROMContext from '../context/ROMContext'
 import Map from './map'
 import InputROMModal from './InputROMModal'
 
-const Content = () => {
+const Body = () => {
   const { romBufferStatus } = useContext(ROMContext)
 
   const contentStates = {
     empty: <InputROMModal />,
-    loaded: <Map />,
+    loaded: (
+      <Card>
+        <CardContent>
+          <Map />
+        </CardContent>
+      </Card>
+    ),
     starting: null,
   }
 
   return contentStates[romBufferStatus]
 }
 
-export default Content
+export default Body

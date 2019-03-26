@@ -1,14 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {
-  Card,
   Header,
   HeaderTitle,
   ThemeProvider,
 } from 'former-kit'
 import skin from 'former-kit-skin-pagarme'
 import SelectVision from './components/SelectVision'
-import Content from './components/Content'
+import Body from './components/Body'
 import ROMProvider from './providers/ROMProvider'
 import VisionProvider from './providers/VisionProvider'
 
@@ -24,9 +23,7 @@ ReactDOM.render(
           </HeaderTitle>
         </Header>
 
-        <Card>
-          <Content />
-        </Card>
+        <Body />
       </VisionProvider>
     </ROMProvider>
   </ThemeProvider>,
