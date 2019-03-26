@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
+import PropTypes from 'prop-types'
 import { Table } from 'former-kit'
 import scissors from 'scissors'
 import { defaultTo } from 'ramda'
 import VisionContext from '../context/VisionContext'
 
-const ObjectsTable = () => {
+const ObjectsTable = ({ onRowClickHandler }) => {
   const { oam } = useContext(VisionContext).vision
 
   const rows = oam
@@ -43,6 +44,11 @@ const ObjectsTable = () => {
     })
     .flat()
 
+  const onRowClickHandlerWrapper = (index) => {
+    const object = rows[index]
+    onRowClickHandler([object.x, object.y])
+  }
+
   return (
     <Table
       columns={[
@@ -51,8 +57,17 @@ const ObjectsTable = () => {
       ]}
       rows={rows}
       emptyMessage="No objects"
+      onRowClick={onRowClickHandlerWrapper}
     />
   )
+}
+
+ObjectsTable.propTypes = {
+  onRowClickHandler: PropTypes.func,
+}
+
+ObjectsTable.defaultProps = {
+  onRowClickHandler: () => {},
 }
 
 export default ObjectsTable

@@ -1,4 +1,5 @@
 import React, { useContext, Fragment, useState } from 'react'
+import PropTypes from 'prop-types'
 import { Stage, Layer } from 'react-konva'
 import {
   defaultTo,
@@ -10,6 +11,7 @@ import {
 import MapFooter from '../MapFooter'
 import PointTile from './point/PointTile'
 import PointOam from './point/PointOam'
+import HighlightCoordinates from './HighlightCoordinates'
 import VisionContext from '../../context/VisionContext'
 
 const listCoordinates = (height, width) => {
@@ -30,7 +32,7 @@ const getTileNameFromScheme = tileValue => pipe(
   prop('name')
 )
 
-const Map = () => {
+const Map = ({ highlightCoordinates }) => {
   const {
     infos: {
       tilemap: {
@@ -115,10 +117,25 @@ const Map = () => {
         <Layer>
           {oamList}
         </Layer>
+        <Layer>
+          <HighlightCoordinates
+            coordinates={highlightCoordinates}
+            height={height}
+            width={width}
+          />
+        </Layer>
       </Stage>
       <MapFooter informations={selectedPointInfos} />
     </Fragment>
   )
+}
+
+Map.propTypes = {
+  highlightCoordinates: PropTypes.arrayOf(PropTypes.number),
+}
+
+Map.defaultProps = {
+  highlightCoordinates: [-1, -1],
 }
 
 export default Map

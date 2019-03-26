@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from 'react'
+import React, { useContext, useState, Fragment } from 'react'
 import { Card, CardContent, CardTitle, Spacing } from 'former-kit'
 import ObjectsTable from './ObjectsTable'
 import ROMContext from '../context/ROMContext'
@@ -7,6 +7,7 @@ import InputROMModal from './InputROMModal'
 
 const Body = () => {
   const { romBufferStatus } = useContext(ROMContext)
+  const [highlightCoordinates, setHighlightCoordinates] = useState([-1, -1])
 
   const contentStates = {
     empty: <InputROMModal />,
@@ -14,7 +15,7 @@ const Body = () => {
       <Fragment>
         <Card>
           <CardContent>
-            <Map />
+            <Map highlightCoordinates={highlightCoordinates} />
           </CardContent>
         </Card>
 
@@ -23,7 +24,7 @@ const Body = () => {
         <Card>
           <CardTitle title="Objects Table" />
           <CardContent>
-            <ObjectsTable />
+            <ObjectsTable onRowClickHandler={setHighlightCoordinates} />
           </CardContent>
         </Card>
       </Fragment>
