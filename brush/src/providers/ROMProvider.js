@@ -24,7 +24,7 @@ const useROMBuffer = () => {
     }
 
     fetchLocalROMBufferMemory()
-  })
+  }, [])
 
   const updateROMBufferState = (newRomBufferMemory) => {
     setROMBufferState(romBufferStates.loaded(newRomBufferMemory))
