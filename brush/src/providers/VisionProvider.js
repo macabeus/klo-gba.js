@@ -10,7 +10,7 @@ const VisionProvider = (props) => {
   const [vision, setVision] = useState({
     infos: { tilemap: { height: 0, scheme: [], width: 0 } },
     oam: [],
-    tilemap: [],
+    tilemap: new Uint8Array(),
   })
 
   const visionUpdate = (romBuffer, world, index) => {
