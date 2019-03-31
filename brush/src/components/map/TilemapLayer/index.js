@@ -91,4 +91,4 @@ TilemapLayer.defaultProps = {
   setSelectedPointInfos: () => {},
 }
 
-export default TilemapLayer
+export default React.memo(TilemapLayer)
