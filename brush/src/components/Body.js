@@ -4,10 +4,15 @@ import ObjectsTable from './ObjectsTable'
 import ROMContext from '../context/ROMContext'
 import Map from './map'
 import InputROMModal from './InputROMModal'
+import useWhenVisionChanges from '../hooks/useWhenVisionChanges'
 
 const Body = () => {
   const { romBufferStatus } = useContext(ROMContext)
   const [highlightCoordinates, setHighlightCoordinates] = useState([-1, -1])
+
+  useWhenVisionChanges(() => {
+    setHighlightCoordinates([-1, -1])
+  })
 
   const contentStates = {
     empty: <InputROMModal />,
