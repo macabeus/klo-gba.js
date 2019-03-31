@@ -6,6 +6,7 @@ import HighlightCoordinates from './HighlightCoordinates'
 import VisionContext from '../../context/VisionContext'
 import TilemapLayer from './TilemapLayer'
 import OAMLayer from './OAMLayer'
+import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
 
 const Map = ({ highlightCoordinates }) => {
   const { vision } = useContext(VisionContext) // workaround because a limitation in react-konva (https://github.com/konvajs/react-konva/issues/349)
@@ -19,6 +20,10 @@ const Map = ({ highlightCoordinates }) => {
   } = vision
 
   const [selectedPointInfos, setSelectedPointInfos] = useState(null)
+
+  useWhenVisionChanges(() => {
+    setSelectedPointInfos(null)
+  })
 
   return (
     <Fragment>
