@@ -1,5 +1,13 @@
 import React, { useContext, useState, Fragment } from 'react'
-import { Card, CardContent, CardTitle, Spacing } from 'former-kit'
+import {
+  Button,
+  Card,
+  CardContent,
+  CardTitle,
+  Flexbox,
+  Popover,
+  Spacing,
+} from 'former-kit'
 import ObjectsTable from './ObjectsTable'
 import ROMContext from '../context/ROMContext'
 import Map from './map'
@@ -20,6 +28,14 @@ const Body = () => {
       <Fragment>
         <Card>
           <CardContent>
+            <Flexbox justifyContent="flex-end">
+              <Popover content={<Fragment />}>
+                <Button>Display map options</Button>
+              </Popover>
+            </Flexbox>
+
+            <Spacing />
+
             <Map highlightCoordinates={highlightCoordinates} />
           </CardContent>
         </Card>
