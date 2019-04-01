@@ -12,7 +12,7 @@ const HighlightCoordinates = ({
 }) => {
   const [x, y] = coordinates
   const xScaled = ((x * SIZE) / OAM_SCALE) - 2
-  const yScaled = ((y * SIZE) / OAM_SCALE) - 3
+  const yScaled = ((y * SIZE) / OAM_SCALE) - 2
 
   return (
     <Fragment>
