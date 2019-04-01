@@ -20,6 +20,7 @@ const Body = () => {
   const { romBufferStatus } = useContext(ROMContext)
   const [highlightCoordinates, setHighlightCoordinates] = useState([-1, -1])
   const [showGrid, setShowGrid] = useState(false)
+  const [showOAM, setShowOAM] = useState(true)
 
   useWhenVisionChanges(() => {
     setHighlightCoordinates([-1, -1])
@@ -35,13 +36,22 @@ const Body = () => {
               <Popover
                 content={
                   <PopoverContent>
-                    <Checkbox
-                      label="Show grid"
-                      name="showGrid"
-                      value={`${showGrid}`}
-                      checked={showGrid}
-                      onChange={() => { setShowGrid(!showGrid) }}
-                    />
+                    <Fragment>
+                      <Checkbox
+                        label="Show grid"
+                        name="showGrid"
+                        value={`${showGrid}`}
+                        checked={showGrid}
+                        onChange={() => { setShowGrid(!showGrid) }}
+                      />
+                      <Checkbox
+                        label="Show OAM"
+                        name="showOAM"
+                        value={`${showOAM}`}
+                        checked={showOAM}
+                        onChange={() => { setShowOAM(!showOAM) }}
+                      />
+                    </Fragment>
                   </PopoverContent>
                 }
               >
@@ -54,6 +64,7 @@ const Body = () => {
             <Map
               highlightCoordinates={highlightCoordinates}
               showGrid={showGrid}
+              showOAM={showOAM}
             />
           </CardContent>
         </Card>

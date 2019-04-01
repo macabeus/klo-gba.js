@@ -9,7 +9,7 @@ import OAMLayer from './OAMLayer'
 import GridLayer from './GridLayer'
 import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
 
-const Map = ({ highlightCoordinates, showGrid }) => {
+const Map = ({ highlightCoordinates, showGrid, showOAM }) => {
   const { vision } = useContext(VisionContext) // workaround because a limitation in react-konva (https://github.com/konvajs/react-konva/issues/349)
   const {
     infos: {
@@ -33,10 +33,10 @@ const Map = ({ highlightCoordinates, showGrid }) => {
           setSelectedPointInfos={setSelectedPointInfos}
           vision={vision}
         />
-        <OAMLayer
+        {showOAM && <OAMLayer
           setSelectedPointInfos={setSelectedPointInfos}
           vision={vision}
-        />
+        />}
         <Layer>
           <HighlightCoordinates
             coordinates={highlightCoordinates}
@@ -57,11 +57,13 @@ const Map = ({ highlightCoordinates, showGrid }) => {
 Map.propTypes = {
   highlightCoordinates: PropTypes.arrayOf(PropTypes.number),
   showGrid: PropTypes.bool,
+  showOAM: PropTypes.bool,
 }
 
 Map.defaultProps = {
   highlightCoordinates: [-1, -1],
   showGrid: false,
+  showOAM: true,
 }
 
 export default Map
