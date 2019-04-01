@@ -6,9 +6,10 @@ import HighlightCoordinates from './HighlightCoordinates'
 import VisionContext from '../../context/VisionContext'
 import TilemapLayer from './TilemapLayer'
 import OAMLayer from './OAMLayer'
+import GridLayer from './GridLayer'
 import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
 
-const Map = ({ highlightCoordinates }) => {
+const Map = ({ highlightCoordinates, showGrid }) => {
   const { vision } = useContext(VisionContext) // workaround because a limitation in react-konva (https://github.com/konvajs/react-konva/issues/349)
   const {
     infos: {
@@ -43,6 +44,10 @@ const Map = ({ highlightCoordinates }) => {
             width={width}
           />
         </Layer>
+        {showGrid && <GridLayer
+          height={height * 4}
+          width={width * 4}
+        />}
       </Stage>
       <MapFooter informations={selectedPointInfos} />
     </Fragment>
@@ -51,10 +56,12 @@ const Map = ({ highlightCoordinates }) => {
 
 Map.propTypes = {
   highlightCoordinates: PropTypes.arrayOf(PropTypes.number),
+  showGrid: PropTypes.bool,
 }
 
 Map.defaultProps = {
   highlightCoordinates: [-1, -1],
+  showGrid: false,
 }
 
 export default Map

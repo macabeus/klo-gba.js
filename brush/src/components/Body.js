@@ -4,8 +4,10 @@ import {
   Card,
   CardContent,
   CardTitle,
+  Checkbox,
   Flexbox,
   Popover,
+  PopoverContent,
   Spacing,
 } from 'former-kit'
 import ObjectsTable from './ObjectsTable'
@@ -17,6 +19,7 @@ import useWhenVisionChanges from '../hooks/useWhenVisionChanges'
 const Body = () => {
   const { romBufferStatus } = useContext(ROMContext)
   const [highlightCoordinates, setHighlightCoordinates] = useState([-1, -1])
+  const [showGrid, setShowGrid] = useState(false)
 
   useWhenVisionChanges(() => {
     setHighlightCoordinates([-1, -1])
@@ -29,14 +32,29 @@ const Body = () => {
         <Card>
           <CardContent>
             <Flexbox justifyContent="flex-end">
-              <Popover content={<Fragment />}>
+              <Popover
+                content={
+                  <PopoverContent>
+                    <Checkbox
+                      label="Show grid"
+                      name="showGrid"
+                      value={`${showGrid}`}
+                      checked={showGrid}
+                      onChange={() => { setShowGrid(!showGrid) }}
+                    />
+                  </PopoverContent>
+                }
+              >
                 <Button>Display map options</Button>
               </Popover>
             </Flexbox>
 
             <Spacing />
 
-            <Map highlightCoordinates={highlightCoordinates} />
+            <Map
+              highlightCoordinates={highlightCoordinates}
+              showGrid={showGrid}
+            />
           </CardContent>
         </Card>
 
