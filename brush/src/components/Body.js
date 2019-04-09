@@ -12,11 +12,14 @@ import {
 } from 'former-kit'
 import ObjectsTable from './ObjectsTable'
 import ROMContext from '../context/ROMContext'
+import VisionContext from '../context/VisionContext'
 import Map from './map'
+import MapEmptyState from './MapEmptyState'
 import InputROMModal from './InputROMModal'
 import useWhenVisionChanges from '../hooks/useWhenVisionChanges'
 
 const Body = () => {
+  const { vision } = useContext(VisionContext)
   const { romBufferStatus } = useContext(ROMContext)
   const [highlightCoordinates, setHighlightCoordinates] = useState([-1, -1])
   const [showGrid, setShowGrid] = useState(false)
@@ -61,11 +64,15 @@ const Body = () => {
 
             <Spacing />
 
-            <Map
-              highlightCoordinates={highlightCoordinates}
-              showGrid={showGrid}
-              showOAM={showOAM}
-            />
+            {
+              (vision.state === 'selected') ?
+                <Map
+                  highlightCoordinates={highlightCoordinates}
+                  showGrid={showGrid}
+                  showOAM={showOAM}
+                /> :
+                <MapEmptyState />
+            }
           </CardContent>
         </Card>
 
