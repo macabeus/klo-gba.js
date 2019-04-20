@@ -16,6 +16,7 @@ import VisionContext from '../context/VisionContext'
 import Map from './map'
 import MapEmptyState from './MapEmptyState'
 import InputROMModal from './InputROMModal'
+import TileSet from './TileSet'
 import useWhenVisionChanges from '../hooks/useWhenVisionChanges'
 
 const Body = () => {
@@ -73,6 +74,15 @@ const Body = () => {
                 /> :
                 <MapEmptyState />
             }
+          </CardContent>
+        </Card>
+
+        <Spacing />
+
+        <Card>
+          <CardTitle title="Tile Set" />
+          <CardContent>
+            <TileSet />
           </CardContent>
         </Card>
 
