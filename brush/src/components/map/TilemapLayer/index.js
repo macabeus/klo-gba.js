@@ -1,13 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Layer } from 'react-konva'
-import {
-  defaultTo,
-  find,
-  pipe,
-  prop,
-  range,
-} from 'ramda'
+import { range } from 'ramda'
+import { fromSchemeGetTileNameById } from 'scissors'
 import PointTile from '../point/PointTile'
 
 const listCoordinates = (height, width) => {
@@ -22,12 +17,6 @@ const listCoordinates = (height, width) => {
   return coordinates
 }
 
-const getTileNameFromScheme = tileValue => pipe(
-  find(({ ids }) => ids.includes(tileValue)),
-  defaultTo({ name: 'unknown' }),
-  prop('name')
-)
-
 const TilemapLayer = ({ setSelectedPointInfos, vision }) => {
   const {
     infos: {
@@ -40,6 +29,8 @@ const TilemapLayer = ({ setSelectedPointInfos, vision }) => {
     tilemap,
   } = vision
 
+  const getTileNameById = fromSchemeGetTileNameById(scheme)
+
   const getPoint = (x, y) => {
     const tileValue = tilemap[x + (y * width)]
 
@@ -47,7 +38,7 @@ const TilemapLayer = ({ setSelectedPointInfos, vision }) => {
     if (tileValue === 0x00) {
       tileName = 'empty'
     } else {
-      tileName = getTileNameFromScheme(tileValue)(scheme)
+      tileName = getTileNameById(tileValue)
     }
 
     return (<PointTile
