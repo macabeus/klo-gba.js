@@ -25,6 +25,7 @@ const Body = () => {
   const [highlightCoordinates, setHighlightCoordinates] = useState([-1, -1])
   const [showGrid, setShowGrid] = useState(false)
   const [showOAM, setShowOAM] = useState(true)
+  const [selectedTileIdInSet, setSelectedTileIdInSet] = useState(null)
 
   useWhenVisionChanges(() => {
     setHighlightCoordinates([-1, -1])
@@ -69,6 +70,7 @@ const Body = () => {
               (vision.state === 'selected') ?
                 <Map
                   highlightCoordinates={highlightCoordinates}
+                  selectedTileIdInSet={selectedTileIdInSet}
                   showGrid={showGrid}
                   showOAM={showOAM}
                 /> :
@@ -82,7 +84,7 @@ const Body = () => {
         <Card>
           <CardTitle title="Tile Set" />
           <CardContent>
-            <TileSet />
+            <TileSet onSelectTile={setSelectedTileIdInSet} />
           </CardContent>
         </Card>
 

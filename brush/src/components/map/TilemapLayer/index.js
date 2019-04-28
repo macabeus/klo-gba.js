@@ -4,6 +4,7 @@ import { Layer } from 'react-konva'
 import { range } from 'ramda'
 import { fromSchemeGetTileNameById } from 'scissors'
 import PointTile from '../point/PointTile'
+import { addPointRef } from '../global-state'
 
 const listCoordinates = (height, width) => {
   const rangeHeight = range(0, height)
@@ -20,11 +21,13 @@ const listCoordinates = (height, width) => {
 const TilemapLayer = ({ setSelectedPointInfos, vision }) => {
   const {
     infos: {
+      index,
       tilemap: {
         height,
         scheme,
         width,
       },
+      world,
     },
     tilemap,
   } = vision
@@ -42,9 +45,11 @@ const TilemapLayer = ({ setSelectedPointInfos, vision }) => {
     }
 
     return (<PointTile
-      key={`${x} ${y}`}
+      key={`${world} ${index} ${x} ${y}`}
       tileName={tileName}
       tileValue={tileValue}
+      getTileNameById={getTileNameById}
+      ref={(instance) => { addPointRef(x, y, instance) }}
       showPointInfosHandle={setSelectedPointInfos}
       x={x}
       y={y}

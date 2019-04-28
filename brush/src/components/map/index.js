@@ -5,11 +5,17 @@ import MapFooter from '../MapFooter'
 import HighlightCoordinates from './HighlightCoordinates'
 import VisionContext from '../../context/VisionContext'
 import TilemapLayer from './TilemapLayer'
+import DrawingLayer from './DrawingLayer'
 import OAMLayer from './OAMLayer'
 import GridLayer from './GridLayer'
 import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
 
-const Map = ({ highlightCoordinates, showGrid, showOAM }) => {
+const Map = ({
+  highlightCoordinates,
+  selectedTileIdInSet,
+  showGrid,
+  showOAM,
+}) => {
   const { vision } = useContext(VisionContext) // workaround because a limitation in react-konva (https://github.com/konvajs/react-konva/issues/349)
   const {
     infos: {
@@ -32,6 +38,11 @@ const Map = ({ highlightCoordinates, showGrid, showOAM }) => {
         <TilemapLayer
           setSelectedPointInfos={setSelectedPointInfos}
           vision={vision}
+        />
+        <DrawingLayer
+          height={height * 4}
+          selectedTileIdInSet={selectedTileIdInSet}
+          width={width * 4}
         />
         {showOAM && <OAMLayer
           setSelectedPointInfos={setSelectedPointInfos}
@@ -56,12 +67,14 @@ const Map = ({ highlightCoordinates, showGrid, showOAM }) => {
 
 Map.propTypes = {
   highlightCoordinates: PropTypes.arrayOf(PropTypes.number),
+  selectedTileIdInSet: PropTypes.number,
   showGrid: PropTypes.bool,
   showOAM: PropTypes.bool,
 }
 
 Map.defaultProps = {
   highlightCoordinates: [-1, -1],
+  selectedTileIdInSet: null,
   showGrid: false,
   showOAM: true,
 }
