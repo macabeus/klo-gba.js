@@ -8,7 +8,7 @@ const VisionProvider = (props) => {
   const [visionIndex, setVisionIndex] = useState(1)
 
   const [vision, setVision] = useState({
-    infos: { tilemap: { height: 0, scheme: [], width: 0 } },
+    infos: { index: 0, tilemap: { height: 0, scheme: [], width: 0 }, world: 0 },
     oam: [],
     state: 'noSelected',
     tilemap: new Uint8Array(),
@@ -20,6 +20,8 @@ const VisionProvider = (props) => {
 
     const newVision = scissors.getVision(romBuffer, world, index)
     newVision.state = 'selected'
+    newVision.infos.world = world
+    newVision.infos.index = index
     setVision(newVision)
   }
 
