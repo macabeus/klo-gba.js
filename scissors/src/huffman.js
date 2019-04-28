@@ -33,4 +33,19 @@ const huffmanDecode = (buffer) => {
   }
 }
 
-export default huffmanDecode
+const huffmanEncode = (buffer) => {
+  FS.writeFile('input_huffman_encode', buffer)
+
+  huffmanModule._HUF_Encode() // eslint-disable-line no-underscore-dangle
+
+  try {
+    return huffmanModule.FS.readFile('output_huffman_encode', { encoding: 'binary' })
+  } catch (e) {
+    throw new HuffmanDecodeError(e)
+  }
+}
+
+export {
+  huffmanDecode,
+  huffmanEncode,
+}

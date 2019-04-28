@@ -1,6 +1,6 @@
 import { drop, splitEvery, map, filter } from 'ramda'
 import binary from 'binary'
-import huffmanDecode from './huffman'
+import { huffmanDecode } from './huffman'
 import { lzssDecode } from './lzss'
 
 const extractTilemap = (romBuffer, [addressStart, addressEnd]) =>
