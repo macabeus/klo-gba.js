@@ -25,8 +25,8 @@
 #include <emscripten.h>
 
 /*----------------------------------------------------------------------------*/
-int findSize() {
-  FILE *fp = fopen("filelzss", "rb");
+int findSize(char *filename) {
+  FILE *fp = fopen(filename, "rb");
   fseek(fp, 0, SEEK_END);
   int lengthOfFile = ftell(fp);
   fclose(fp);
@@ -99,7 +99,7 @@ void  Save(char *filename, char *buffer, int length);
 char *Memory(int length, int size);
 
 void  LZS_Decode();
-void  LZS_Encode(char *filename, int mode);
+void  LZS_Encode();
 char *LZS_Code(unsigned char *raw_buffer, int raw_len, int *new_len, int best);
 
 char *LZS_Fast(unsigned char *raw_buffer, int raw_len, int *new_len);
@@ -143,7 +143,7 @@ char *Load(char *filename, int *length, int min, int max) {
   char *fb;
 
   if ((fp = fopen(filename, "rb")) == NULL) EXIT("\nFile open error\n");
-  fs = findSize();
+  fs = findSize(filename);
   if ((fs < min) || (fs > max)) EXIT("\nFile size error\n");
   fb = Memory(fs + 3, sizeof(char));
   if (fread(fb, 1, fs, fp) != fs) EXIT("\nFile read error\n");
@@ -233,15 +233,14 @@ void EMSCRIPTEN_KEEPALIVE LZS_Decode() {
 }
 
 /*----------------------------------------------------------------------------*/
-void LZS_Encode(char *filename, int mode) {
+void EMSCRIPTEN_KEEPALIVE LZS_Encode() {
+  int mode = LZS_WRAM;
   unsigned char *raw_buffer, *pak_buffer, *new_buffer;
   unsigned int   raw_len, pak_len, new_len;
 
   lzs_vram = mode & 0xF;
 
-  printf("- encoding '%s'", filename);
-
-  raw_buffer = Load(filename, &raw_len, RAW_MINIM, RAW_MAXIM);
+  raw_buffer = Load("input_lzss_encode", &raw_len, RAW_MINIM, RAW_MAXIM);
 
   pak_buffer = NULL;
   pak_len = LZS_MAXIM + 1;
@@ -258,12 +257,10 @@ void LZS_Encode(char *filename, int mode) {
     pak_len = new_len;
   }
 
-  Save(filename, pak_buffer, pak_len);
+  Save("output_lzss_encode", pak_buffer, pak_len);
 
   free(pak_buffer);
   free(raw_buffer);
-
-  printf("\n");
 }
 
 /*----------------------------------------------------------------------------*/

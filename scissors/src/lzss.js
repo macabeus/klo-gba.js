@@ -33,4 +33,19 @@ const lzssDecode = (buffer) => {
   }
 }
 
-export default lzssDecode
+const lzssEncode = (buffer) => {
+  FS.writeFile('input_lzss_encode', buffer)
+
+  lzssModule._LZS_Encode() // eslint-disable-line no-underscore-dangle
+
+  try {
+    return lzssModule.FS.readFile('output_lzss_encode', { encoding: 'binary' })
+  } catch (e) {
+    throw new LzssDecodeError(e)
+  }
+}
+
+export {
+  lzssDecode,
+  lzssEncode,
+}
