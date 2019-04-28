@@ -25,8 +25,8 @@
 #include <emscripten.h>
 
 /*----------------------------------------------------------------------------*/
-int findSize() {
-  FILE *fp = fopen("file", "rb");
+int findSize(char *filename) {
+  FILE *fp = fopen(filename, "rb");
   fseek(fp, 0, SEEK_END);
   int lengthOfFile = ftell(fp);
   fclose(fp);
@@ -114,7 +114,7 @@ void  Save(char *filename, char *buffer, int length);
 char *Memory(int length, int size);
 
 void  HUF_Decode();
-void  HUF_Encode(char *filename, int cmd);
+void  HUF_Encode();
 char *HUF_Code(unsigned char *raw_buffer, int raw_len, int *new_len);
 
 void  HUF_InitFreqs(void);
@@ -172,7 +172,7 @@ char *Load(char *filename, int *length, int min, int max) {
   char *fb;
 
   if ((fp = fopen(filename, "rb")) == NULL) EXIT("\nFile open error\n");
-  fs = findSize();
+  fs = findSize(filename);
   if ((fs < min) || (fs > max)) EXIT("\nFile size error\n");
   fb = Memory(fs + 3, sizeof(char));
   if (fread(fb, 1, fs, fp) != fs) EXIT("\nFile read error\n");
@@ -279,15 +279,14 @@ void EMSCRIPTEN_KEEPALIVE HUF_Decode() {
 }
 
 /*----------------------------------------------------------------------------*/
-void HUF_Encode(char *filename, int cmd) {
+void EMSCRIPTEN_KEEPALIVE HUF_Encode() {
+  int cmd = CMD_CODE_20;
   unsigned char *raw_buffer, *pak_buffer, *new_buffer;
   unsigned int   raw_len, pak_len, new_len;
 
-  printf("- encoding '%s'", filename);
-
   num_bits = cmd & 0xF;
 
-  raw_buffer = Load(filename, &raw_len, RAW_MINIM, RAW_MAXIM);
+  raw_buffer = Load("input_huffman_encode", &raw_len, RAW_MINIM, RAW_MAXIM);
 
   pak_buffer = NULL;
   pak_len = HUF_MAXIM + 1;
@@ -325,12 +324,10 @@ void HUF_Encode(char *filename, int cmd) {
     pak_len = new_len;
   }
 
-  Save(filename, pak_buffer, pak_len);
+  Save("output_huffman_encode", pak_buffer, pak_len);
 
   free(pak_buffer);
   free(raw_buffer);
-
-  printf("\n");
 }
 
 /*----------------------------------------------------------------------------*/
