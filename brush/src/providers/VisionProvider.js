@@ -25,8 +25,13 @@ const VisionProvider = (props) => {
     setVision(newVision)
   }
 
+  const updateTilemapPoint = (x, y, newTileId) => {
+    vision.tilemap[x + (y * vision.infos.tilemap.width)] = newTileId
+  }
+
   return (
     <VisionContext.Provider value={{
+        updateTilemapPoint,
         vision,
         visionIndex,
         visionUpdate,

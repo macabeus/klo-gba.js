@@ -16,7 +16,7 @@ const Map = ({
   showGrid,
   showOAM,
 }) => {
-  const { vision } = useContext(VisionContext) // workaround because a limitation in react-konva (https://github.com/konvajs/react-konva/issues/349)
+  const { updateTilemapPoint, vision } = useContext(VisionContext) // workaround because a limitation in react-konva (https://github.com/konvajs/react-konva/issues/349)
   const {
     infos: {
       tilemap: {
@@ -42,6 +42,7 @@ const Map = ({
         <DrawingLayer
           height={height * 4}
           selectedTileIdInSet={selectedTileIdInSet}
+          updateTilemapPoint={updateTilemapPoint}
           width={width * 4}
         />
         {showOAM && <OAMLayer

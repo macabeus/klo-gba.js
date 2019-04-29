@@ -4,11 +4,12 @@ import {
   map,
   not,
   pipe,
+  prop,
   splitEvery,
 } from 'ramda'
 import binary from 'binary'
-import { huffmanDecode } from './huffman'
-import { lzssDecode } from './lzss'
+import { huffmanDecode, huffmanEncode } from './huffman'
+import { lzssDecode, lzssEncode } from './lzss'
 
 const isNumeric = pipe(t => Number(t), identical(NaN), not)
 
@@ -58,6 +59,10 @@ const getVision = (romBuffer, world, vision) => {
         return target.length - 4
       }
 
+      if (property === 'full') {
+        return target
+      }
+
       return target[property]
     },
     set: (target, property, value) => {
@@ -85,4 +90,23 @@ const getVision = (romBuffer, world, vision) => {
   }
 }
 
-export default getVision
+const compressTilemap = buffer =>
+  buffer
+  |> prop('full')
+  |> lzssEncode
+  |> huffmanEncode
+
+const saveVision = (romBuffer, world, index, tilemap) => {
+  const infos = require(`./visions/${world}-${index}.js`).default // eslint-disable-line
+  const [addressStart] = infos.rom.tilemap
+
+  const encoded = compressTilemap(tilemap)
+  romBuffer.set(encoded, addressStart)
+
+  return romBuffer
+}
+
+export {
+  getVision,
+  saveVision,
+}
