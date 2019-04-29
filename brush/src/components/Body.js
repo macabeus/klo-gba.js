@@ -16,6 +16,7 @@ import VisionContext from '../context/VisionContext'
 import Map from './map'
 import MapEmptyState from './MapEmptyState'
 import InputROMModal from './InputROMModal'
+import SaveButton from './MapActionsBar/SaveButton'
 import TileSet from './TileSet'
 import useWhenVisionChanges from '../hooks/useWhenVisionChanges'
 
@@ -38,6 +39,8 @@ const Body = () => {
         <Card>
           <CardContent>
             <Flexbox justifyContent="flex-end">
+              <SaveButton />
+              <Spacing size="tiny" />
               <Popover
                 content={
                   <PopoverContent>
