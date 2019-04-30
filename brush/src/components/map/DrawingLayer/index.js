@@ -5,18 +5,16 @@ import { getPointRef } from '../global-state'
 
 const DrawingLayer = ({
   height,
-  selectedTileIdInSet,
+  toolState,
   updateTilemapPoint,
   width,
 }) => {
-  const currentTool = selectedTileIdInSet ?
-    'brush' :
-    'magnifyingGlass'
+  const { name: toolName, value: toolValue } = toolState
 
   const mapToolToFunc = {
     brush: ({ ref, x, y }) => {
-      ref.changeTile(selectedTileIdInSet)
-      updateTilemapPoint(x, y, selectedTileIdInSet)
+      ref.changeTile(toolValue)
+      updateTilemapPoint(x, y, toolValue)
     },
 
     magnifyingGlass: ({ ref }) => {
@@ -26,7 +24,7 @@ const DrawingLayer = ({
 
   const onClickHandler = (x, y) => {
     const ref = getPointRef(x, y)
-    mapToolToFunc[currentTool]({ ref, x, y })
+    mapToolToFunc[toolName]({ ref, x, y })
   }
 
   return (
@@ -45,13 +43,12 @@ const DrawingLayer = ({
 
 DrawingLayer.propTypes = {
   height: PropTypes.number.isRequired,
-  selectedTileIdInSet: PropTypes.number,
+  toolState: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.any,
+  }).isRequired,
   updateTilemapPoint: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
-}
-
-DrawingLayer.defaultProps = {
-  selectedTileIdInSet: null,
 }
 
 export default DrawingLayer

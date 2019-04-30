@@ -12,9 +12,9 @@ import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
 
 const Map = ({
   highlightCoordinates,
-  selectedTileIdInSet,
   showGrid,
   showOAM,
+  toolState,
 }) => {
   const { updateTilemapPoint, vision } = useContext(VisionContext) // workaround because a limitation in react-konva (https://github.com/konvajs/react-konva/issues/349)
   const {
@@ -41,7 +41,7 @@ const Map = ({
         />
         <DrawingLayer
           height={height * 4}
-          selectedTileIdInSet={selectedTileIdInSet}
+          toolState={toolState}
           updateTilemapPoint={updateTilemapPoint}
           width={width * 4}
         />
@@ -68,14 +68,16 @@ const Map = ({
 
 Map.propTypes = {
   highlightCoordinates: PropTypes.arrayOf(PropTypes.number),
-  selectedTileIdInSet: PropTypes.number,
   showGrid: PropTypes.bool,
   showOAM: PropTypes.bool,
+  toolState: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    value: PropTypes.any,
+  }).isRequired,
 }
 
 Map.defaultProps = {
   highlightCoordinates: [-1, -1],
-  selectedTileIdInSet: null,
   showGrid: false,
   showOAM: true,
 }
