@@ -17,7 +17,9 @@ import Map from './map'
 import MapEmptyState from './MapEmptyState'
 import InputROMModal from './InputROMModal'
 import SaveButton from './MapActionsBar/SaveButton'
+import SwitchTool from './MapActionsBar/SwitchTool'
 import TileSet from './TileSet'
+import useTool from '../hooks/useTool'
 import useWhenVisionChanges from '../hooks/useWhenVisionChanges'
 
 const Body = () => {
@@ -26,7 +28,7 @@ const Body = () => {
   const [highlightCoordinates, setHighlightCoordinates] = useState([-1, -1])
   const [showGrid, setShowGrid] = useState(false)
   const [showOAM, setShowOAM] = useState(true)
-  const [selectedTileIdInSet, setSelectedTileIdInSet] = useState(null)
+  const [toolState, setToolState] = useTool()
 
   useWhenVisionChanges(() => {
     setHighlightCoordinates([-1, -1])
@@ -39,6 +41,11 @@ const Body = () => {
         <Card>
           <CardContent>
             <Flexbox justifyContent="flex-end">
+              <SwitchTool
+                setToolState={setToolState}
+                toolState={toolState}
+              />
+              <Spacing />
               <SaveButton />
               <Spacing size="tiny" />
               <Popover
@@ -73,9 +80,9 @@ const Body = () => {
               (vision.state === 'selected') ?
                 <Map
                   highlightCoordinates={highlightCoordinates}
-                  selectedTileIdInSet={selectedTileIdInSet}
                   showGrid={showGrid}
                   showOAM={showOAM}
+                  toolState={toolState}
                 /> :
                 <MapEmptyState />
             }
@@ -87,7 +94,7 @@ const Body = () => {
         <Card>
           <CardTitle title="Tile Set" />
           <CardContent>
-            <TileSet onSelectTile={setSelectedTileIdInSet} />
+            <TileSet setToolState={setToolState} />
           </CardContent>
         </Card>
 

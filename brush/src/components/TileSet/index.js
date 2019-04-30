@@ -32,7 +32,7 @@ const makeTilesGroup = (tiles, name) => (
   </div>
 )
 
-const TileSet = ({ onSelectTile }) => {
+const TileSet = ({ setToolState }) => {
   const {
     vision: {
       infos: {
@@ -52,7 +52,7 @@ const TileSet = ({ onSelectTile }) => {
     |> map(tileId => ({
       id: tileId,
       name: getTileNameById(tileId),
-      onClickHandle: () => { onSelectTile(tileId) },
+      onClickHandle: () => { setToolState('brush', tileId) },
     }))
     |> groupBy(({ name }) => name)
     |> mapObjIndexed(makeTilesGroup)
@@ -66,7 +66,7 @@ const TileSet = ({ onSelectTile }) => {
 }
 
 TileSet.propTypes = {
-  onSelectTile: PropTypes.func.isRequired,
+  setToolState: PropTypes.func.isRequired,
 }
 
 export default TileSet
