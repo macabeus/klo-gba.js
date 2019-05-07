@@ -41210,7 +41210,7 @@ const huffmanWasm = __webpack_require__(/*! ./wasm/huffman.wasm */ "./src/wasm/h
 const huffmanModule = __webpack_require__(/*! ./wasm/huffman.js */ "./src/wasm/huffman.js")({
   locateFile(path) {
     if (path.endsWith('.wasm')) {
-      return `node_modules/scissors/dist/${huffmanWasm}`;
+      return `static/wasm/${huffmanWasm}`;
     }
 
     return path;
@@ -41309,7 +41309,7 @@ const lzssWasm = __webpack_require__(/*! ./wasm/lzss.wasm */ "./src/wasm/lzss.wa
 const lzssModule = __webpack_require__(/*! ./wasm/lzss.js */ "./src/wasm/lzss.js")({
   locateFile(path) {
     if (path.endsWith('.wasm')) {
-      return `node_modules/scissors/dist/${lzssWasm}`;
+      return `static/wasm/${lzssWasm}`;
     }
 
     return path;
