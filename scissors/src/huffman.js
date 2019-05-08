@@ -3,7 +3,7 @@ const huffmanWasm = require('./wasm/huffman.wasm')
 const huffmanModule = require('./wasm/huffman.js')({
   locateFile (path) {
     if (path.endsWith('.wasm')) {
-      return `node_modules/scissors/dist/${huffmanWasm}`
+      return `static/wasm/${huffmanWasm}`
     }
 
     return path

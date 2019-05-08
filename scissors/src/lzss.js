@@ -3,7 +3,7 @@ const lzssWasm = require('./wasm/lzss.wasm')
 const lzssModule = require('./wasm/lzss.js')({
   locateFile (path) {
     if (path.endsWith('.wasm')) {
-      return `node_modules/scissors/dist/${lzssWasm}`
+      return `static/wasm/${lzssWasm}`
     }
 
     return path
