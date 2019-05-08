@@ -1,4 +1,5 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 const formerKitRules = require('./former-kit/webpack.config')
 
@@ -6,6 +7,14 @@ const htmlPlugin = new HtmlWebPackPlugin({
   filename: './index.html',
   template: './src/index.html',
 })
+
+const copyPlugin = new CopyPlugin([
+  {
+    from: 'node_modules/scissors/dist/',
+    ignore: ['*.js', '*.js.map'],
+    to: 'static/wasm/',
+  },
+])
 
 const rules = [
   { test: /dump\/.*\.bin/, use: 'buffer-loader' },
@@ -24,5 +33,5 @@ module.exports = {
   module: {
     rules,
   },
-  plugins: [htmlPlugin],
+  plugins: [htmlPlugin, copyPlugin],
 }
