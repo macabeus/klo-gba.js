@@ -48,6 +48,17 @@ Since this is a study project, I'm writing a manual about how I'm developing it,
 
 5 - Then the service will start at the URL `http://localhost:8080/`
 
+## How to deploy
+
+1 - Deploy on GitHub Pages is a very easy task. Just run it:
+
+```
+> cd klo-gba.js/brush
+> npm run deploy
+```
+
+2 - When it finishs, you can see the new website on `http://macalogs.com.br/klo-gba.js/` (or at the respective URL; you can see which is on repository's Settings tab)
+
 ## Architecture of this project
 
 klo-gba.js is a monorepo built with two projects: `🖌 brush` and `✂️ scissors`. Both projects are written using JS, will be compiled by Babel and uses Webpack.
