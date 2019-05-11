@@ -7,7 +7,7 @@ import {
 } from 'former-kit'
 import skin from 'former-kit-skin-pagarme'
 import SelectVision from './components/SelectVision'
-import Body from './components/Body'
+import Main from './pages/Main'
 import ROMProvider from './providers/ROMProvider'
 import VisionProvider from './providers/VisionProvider'
 
@@ -23,7 +23,7 @@ ReactDOM.render(
           </HeaderTitle>
         </Header>
 
-        <Body />
+        <Main />
       </VisionProvider>
     </ROMProvider>
   </ThemeProvider>,
