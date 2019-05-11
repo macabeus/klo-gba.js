@@ -5,12 +5,12 @@ import ROMContext from '../context/ROMContext'
 
 const SelectVision = () => {
   const { romBufferMemory } = useContext(ROMContext)
-  const { visionIndex, visionUpdate, visionWorld } = useContext(VisionContext)
+  const { updateVision, visionIndex, visionWorld } = useContext(VisionContext)
 
   const setNewVision = (newVision) => {
     const [newVisionWorld, newVisionIndex] = newVision.split('-')
 
-    visionUpdate(romBufferMemory, newVisionWorld, newVisionIndex)
+    updateVision(romBufferMemory, newVisionWorld, newVisionIndex)
   }
 
   return (
