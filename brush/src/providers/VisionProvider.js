@@ -14,7 +14,7 @@ const VisionProvider = (props) => {
     tilemap: new Uint8Array(),
   })
 
-  const visionUpdate = (romBuffer, world, index) => {
+  const updateVision = (romBuffer, world, index) => {
     setVisionWorld(world)
     setVisionIndex(index)
 
@@ -32,9 +32,9 @@ const VisionProvider = (props) => {
   return (
     <VisionContext.Provider value={{
         updateTilemapPoint,
+        updateVision,
         vision,
         visionIndex,
-        visionUpdate,
         visionWorld,
       }}
     >

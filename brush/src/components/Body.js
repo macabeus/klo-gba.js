@@ -26,8 +26,8 @@ const Body = () => {
   const { vision } = useContext(VisionContext)
   const { romBufferStatus } = useContext(ROMContext)
   const [highlightCoordinates, setHighlightCoordinates] = useState([-1, -1])
-  const [showGrid, setShowGrid] = useState(false)
-  const [showOAM, setShowOAM] = useState(true)
+  const [optShowGrid, setOptShowGrid] = useState(false)
+  const [optShowOAM, setOptShowOAM] = useState(true)
   const [toolState, setToolState] = useTool()
 
   useWhenVisionChanges(() => {
@@ -54,17 +54,17 @@ const Body = () => {
                     <Fragment>
                       <Checkbox
                         label="Show grid"
-                        name="showGrid"
-                        value={`${showGrid}`}
-                        checked={showGrid}
-                        onChange={() => { setShowGrid(!showGrid) }}
+                        name="optShowGrid"
+                        value={`${optShowGrid}`}
+                        checked={optShowGrid}
+                        onChange={() => { setOptShowGrid(!optShowGrid) }}
                       />
                       <Checkbox
                         label="Show OAM"
-                        name="showOAM"
-                        value={`${showOAM}`}
-                        checked={showOAM}
-                        onChange={() => { setShowOAM(!showOAM) }}
+                        name="optShowOAM"
+                        value={`${optShowOAM}`}
+                        checked={optShowOAM}
+                        onChange={() => { setOptShowOAM(!optShowOAM) }}
                       />
                     </Fragment>
                   </PopoverContent>
@@ -80,8 +80,8 @@ const Body = () => {
               (vision.state === 'selected') ?
                 <Map
                   highlightCoordinates={highlightCoordinates}
-                  showGrid={showGrid}
-                  showOAM={showOAM}
+                  optShowGrid={optShowGrid}
+                  optShowOAM={optShowOAM}
                   toolState={toolState}
                 /> :
                 <MapEmptyState />
