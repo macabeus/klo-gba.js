@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Layer } from 'react-konva'
 import { range } from 'ramda'
 import { fromSchemeGetTileNameById } from 'scissors'
-import PointTile from '../point/PointTile'
+import PointTile from '../Point/PointTile'
 import { addPointRef } from '../global-state'
 
 const listCoordinates = (height, width) => {

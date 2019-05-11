@@ -13,7 +13,7 @@ import {
 import ObjectsTable from './ObjectsTable'
 import ROMContext from '../context/ROMContext'
 import VisionContext from '../context/VisionContext'
-import Map from './map'
+import Map from './Map'
 import MapEmptyState from './MapEmptyState'
 import InputROMModal from './InputROMModal'
 import SaveButton from './MapActionsBar/SaveButton'
