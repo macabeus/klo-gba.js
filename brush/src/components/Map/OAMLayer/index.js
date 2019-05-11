@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Layer } from 'react-konva'
-import PointOam from '../point/PointOam'
+import PointOam from '../Point/PointOam'
 
 const OAMLayer = ({ setSelectedPointInfos, vision }) => {
   const { oam } = vision
