@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Dropdown } from 'former-kit'
-import VisionContext from '../context/VisionContext'
-import ROMContext from '../context/ROMContext'
+import VisionContext from '../../context/VisionContext'
+import ROMContext from '../../context/ROMContext'
 
 const SelectVision = () => {
   const { romBufferMemory } = useContext(ROMContext)
