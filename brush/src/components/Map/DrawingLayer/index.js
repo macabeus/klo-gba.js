@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Layer, Rect } from 'react-konva'
-import { getPointRef } from '../global-state'
+import { getPointRef } from '../globalState'
 
 const DrawingLayer = ({
   height,

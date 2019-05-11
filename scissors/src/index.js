@@ -1,6 +1,6 @@
-import { getVision, saveVision } from './vision-manager'
-import { oamIdToName } from './oam-maps'
-import fromSchemeGetTileNameById from './from-scheme-get-tile-name-by-id'
+import { getVision, saveVision } from './visionManager'
+import { oamIdToName } from './oamMaps'
+import fromSchemeGetTileNameById from './fromSchemeGetTileNameById'
 
 export default {
   getVision,
