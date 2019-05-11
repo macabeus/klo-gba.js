@@ -4,7 +4,7 @@ import { Layer } from 'react-konva'
 import { range } from 'ramda'
 import { fromSchemeGetTileNameById } from 'scissors'
 import PointTile from '../Point/PointTile'
-import { addPointRef } from '../global-state'
+import { addPointRef } from '../globalState'
 
 const listCoordinates = (height, width) => {
   const rangeHeight = range(0, height)

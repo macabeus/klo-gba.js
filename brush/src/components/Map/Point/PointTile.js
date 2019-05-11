@@ -4,7 +4,7 @@ import { pipe } from 'ramda'
 import tileNameToColor from '../../../constants/tileNameToColor'
 import Point from '.'
 
-// This component should be a class because we need to get a ref of each point to set it in map-global-state
+// This component should be a class because we need to get a ref of each point to set it in globalState
 class PointTile extends React.Component {
   constructor (props) {
     super(props)
