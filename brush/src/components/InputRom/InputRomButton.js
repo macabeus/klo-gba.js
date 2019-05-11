@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import { Button } from 'former-kit'
 import FileReaderInput from 'react-file-reader-input'
-import ROMContext from '../context/ROMContext'
+import ROMContext from '../../context/ROMContext'
 
 const getFileContent = async file =>
   new Promise((resolve, reject) => {

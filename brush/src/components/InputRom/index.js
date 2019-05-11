@@ -1,8 +1,8 @@
 import { Modal, ModalActions, ModalTitle } from 'former-kit'
 import React from 'react'
-import InputROM from './InputROM'
+import InputRomButton from './InputRomButton'
 
-const InputROMModal = () => (
+const InputRomModal = () => (
   <Modal isOpen>
     <ModalTitle
       title="Please, select your ROM file"
@@ -10,9 +10,9 @@ const InputROMModal = () => (
     />
 
     <ModalActions>
-      <InputROM />
+      <InputRomButton />
     </ModalActions>
   </Modal>
 )
 
-export default InputROMModal
+export default InputRomModal
