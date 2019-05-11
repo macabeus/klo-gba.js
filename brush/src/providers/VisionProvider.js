@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import scissors from 'scissors'
+import { getVision } from 'scissors'
 import VisionContext from '../context/VisionContext'
 
 const VisionProvider = (props) => {
@@ -18,7 +18,7 @@ const VisionProvider = (props) => {
     setVisionWorld(world)
     setVisionIndex(index)
 
-    const newVision = scissors.getVision(romBuffer, world, index)
+    const newVision = getVision(romBuffer, world, index)
     newVision.state = 'selected'
     newVision.infos.world = world
     newVision.infos.index = index

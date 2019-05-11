@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { defaultTo, pipe } from 'ramda'
-import scissors from 'scissors'
+import { oamIdToName } from 'scissors'
 import Point from '.'
 
 const oamIdToColor = {
@@ -23,7 +23,7 @@ const PointOam = ({
   x,
   y,
 }) => {
-  const name = defaultTo('unknown', scissors.oamIdToName[oamId])
+  const name = defaultTo('unknown', oamIdToName[oamId])
   const color = defaultTo('0, 0, 0, 1', oamIdToColor[oamId])
 
   const getInformations = () => ({
