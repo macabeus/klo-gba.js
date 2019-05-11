@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Table } from 'former-kit'
 import { oamIdToName } from 'scissors'
 import { defaultTo } from 'ramda'
-import VisionContext from '../context/VisionContext'
+import VisionContext from '../../context/VisionContext'
 
 const ObjectsTable = ({ onRowClickHandler }) => {
   const { oam } = useContext(VisionContext).vision
