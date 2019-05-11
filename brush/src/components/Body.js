@@ -15,7 +15,7 @@ import ROMContext from '../context/ROMContext'
 import VisionContext from '../context/VisionContext'
 import Map from './Map'
 import MapEmptyState from './MapEmptyState'
-import InputROMModal from './InputROMModal'
+import InputRom from './InputRom'
 import SaveButton from './MapActionsBar/SaveButton'
 import SwitchTool from './MapActionsBar/SwitchTool'
 import TileSet from './TileSet'
@@ -35,7 +35,7 @@ const Body = () => {
   })
 
   const contentStates = {
-    empty: <InputROMModal />,
+    empty: <InputRom />,
     loaded: (
       <Fragment>
         <Card>
