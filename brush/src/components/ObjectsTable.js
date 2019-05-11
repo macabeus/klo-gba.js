@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'former-kit'
-import scissors from 'scissors'
+import { oamIdToName } from 'scissors'
 import { defaultTo } from 'ramda'
 import VisionContext from '../context/VisionContext'
 
@@ -19,7 +19,7 @@ const ObjectsTable = ({ onRowClickHandler }) => {
       yStage2,
       yStage3,
     }) => {
-      const name = defaultTo('unknown', scissors.oamIdToName[kind])
+      const name = defaultTo('unknown', oamIdToName[kind])
 
       return [
         {
