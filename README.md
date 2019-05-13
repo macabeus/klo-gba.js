@@ -1,4 +1,4 @@
-# klo-gba.js
+# <img src="/brush/assets/Klonoa_HatPencil_Logo.svg" align="right" height="75px" />  <img src="/brush/assets/Klo-GBA_JS_Logotipo.svg" height="75px" />
 
 > 🧢 Reverse engineering tool for the Klonoa's GBA game
 
