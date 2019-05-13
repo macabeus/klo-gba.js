@@ -10,6 +10,7 @@ import SelectVision from './components/SelectVision'
 import Main from './pages/Main'
 import ROMProvider from './providers/ROMProvider'
 import VisionProvider from './providers/VisionProvider'
+import Logo from '../assets/Klo-GBA_JS_Logotipo.svg'
 
 ReactDOM.render(
   <ThemeProvider theme={skin}>
@@ -19,7 +20,7 @@ ReactDOM.render(
           <SelectVision />
 
           <HeaderTitle>
-            klo-gba.js
+            <Logo style={{ height: '45px' }} />
           </HeaderTitle>
         </Header>
 
