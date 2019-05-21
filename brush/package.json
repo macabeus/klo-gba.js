@@ -16,6 +16,7 @@
     "@babel/polyfill": "7.2.5",
     "@babel/runtime": "7.3.4",
     "@babel/plugin-transform-runtime": "7.3.4",
+    "emblematic-icons": "0.6.1",
     "former-kit-skin-pagarme": "1.0.0",
     "former-kit": "1.0.1",
     "gh-pages": "2.0.1",

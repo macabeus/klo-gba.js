@@ -1,0 +1,5 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.alertMargin > :nth-child(2) {
+  margin-top: var(--spacing-tiny);
+}

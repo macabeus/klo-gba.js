@@ -12,6 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "binary": "0.3.0",
+    "js-sha1": "0.6.0",
     "ramda": "0.26.1"
   },
   "devDependencies": {
