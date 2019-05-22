@@ -15,6 +15,10 @@ const SwitchTool = ({ setToolState, toolState }) => (
         title: 'Brush',
         value: 'brush',
       },
+      {
+        title: 'Eraser',
+        value: 'eraser',
+      },
     ]}
     value={toolState.name}
   />
