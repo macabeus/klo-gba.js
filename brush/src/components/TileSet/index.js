@@ -6,6 +6,7 @@ import {
   mapObjIndexed,
   uniq,
   values,
+  reject,
 } from 'ramda'
 import { fromSchemeGetTileNameById } from 'scissors'
 import tileNameToColor from '../../constants/tileNameToColor'
@@ -49,6 +50,7 @@ const TileSet = ({ setToolState }) => {
   const groups =
     tilemap
     |> uniq
+    |> reject(tileId => tileId === 0x00)
     |> map(tileId => ({
       id: tileId,
       name: getTileNameById(tileId),
