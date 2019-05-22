@@ -1,14 +1,20 @@
 import {
   defaultTo,
   find,
-  pipe,
   prop,
 } from 'ramda'
 
-const fromSchemeGetTileNameById = scheme => id => pipe(
-  find(({ ids }) => ids.includes(id)),
-  defaultTo({ name: 'unknown' }),
-  prop('name')
-)(scheme)
+const fromSchemeGetTileNameById = scheme => (id) => {
+  if (id === 0x00) {
+    return 'empty'
+  }
+
+  const tileName = scheme
+  |> find(({ ids }) => ids.includes(id))
+  |> defaultTo({ name: 'unknown' })
+  |> prop('name')
+
+  return tileName
+}
 
 export default fromSchemeGetTileNameById

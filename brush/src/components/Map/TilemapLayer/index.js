@@ -36,13 +36,7 @@ const TilemapLayer = ({ setSelectedPointInfos, vision }) => {
 
   const getPoint = (x, y) => {
     const tileValue = tilemap[x + (y * width)]
-
-    let tileName
-    if (tileValue === 0x00) {
-      tileName = 'empty'
-    } else {
-      tileName = getTileNameById(tileValue)
-    }
+    const tileName = getTileNameById(tileValue)
 
     return (<PointTile
       key={`${world} ${index} ${x} ${y}`}
