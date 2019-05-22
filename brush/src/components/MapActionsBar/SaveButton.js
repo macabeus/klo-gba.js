@@ -12,7 +12,7 @@ const romDownload = (romBufferMemory, world, index, tilemap) => {
   const url = URL.createObjectURL(blob)
   const link = document.createElement('a')
   link.setAttribute('href', url)
-  link.setAttribute('download', 'klo-gba.rom')
+  link.setAttribute('download', 'klo-gba.gba')
   link.style.visibility = 'hidden'
   document.body.appendChild(link)
   const event = document.createEvent('MouseEvents')
