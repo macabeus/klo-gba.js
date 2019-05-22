@@ -17,6 +17,11 @@ const DrawingLayer = ({
       updateTilemapPoint(x, y, toolValue)
     },
 
+    eraser: ({ ref, x, y }) => {
+      ref.changeTile(0x00)
+      updateTilemapPoint(x, y, toolValue)
+    },
+
     magnifyingGlass: ({ ref }) => {
       ref.clickHandle()
     },
