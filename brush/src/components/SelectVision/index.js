@@ -28,7 +28,11 @@ const SelectVision = () => {
       placeholder="Select a vision"
       onChange={e => setNewVision(e.target.value)}
       value={dropdownValue}
-      options={[{ name: 'Vision 1-1', value: '1-1' }, { name: 'Vision 1-2', value: '1-2' }]}
+      options={[
+        { name: 'Vision 1-1', value: '1-1' },
+        { name: 'Vision 1-2', value: '1-2' },
+        { name: 'Vision 1-3', value: '1-3' },
+      ]}
     />
   )
 }

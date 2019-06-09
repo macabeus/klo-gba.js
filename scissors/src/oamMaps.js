@@ -1,5 +1,8 @@
 const oamIdToName = {
+  0x01: 'redKey',
+  0x02: 'blueKey',
   0x03: 'star',
+  0x05: 'door',
   0x07: 'heart',
   0x2C: 'dreamStone',
   0x2D: 'dreamStoneLarge',

@@ -5,7 +5,10 @@ import { oamIdToName } from 'scissors'
 import Point from '.'
 
 const oamIdToColor = {
+  0x01: '188, 22, 22, 1',
+  0x02: '22, 22, 188, 1',
   0x03: '255, 232, 13, 1',
+  0x05: '115, 115, 115, 1',
   0x07: '255, 110, 210, 1',
   0x2C: '179, 255, 98, 1',
   0x2D: '140, 255, 250',
