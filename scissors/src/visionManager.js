@@ -31,7 +31,13 @@ const extractOAM = (romBuffer, [addressStart, addressEnd]) =>
       .skip(4)
       .word16lu('xStage3')
       .word16lu('yStage3')
-      .skip(21)
+      .skip(4)
+      .word16lu('xStage4')
+      .word16lu('yStage4')
+      .skip(4)
+      .word16lu('xStage5')
+      .word16lu('yStage5')
+      .skip(5)
       .word8lu('kind')
       .vars,
     memory,
