@@ -1,48 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Layer } from 'react-konva'
+import { range } from 'ramda'
 import PointOam from '../Point/PointOam'
 
-const OAMLayer = ({ setSelectedPointInfos, vision }) => {
+const OAMLayer = ({ setSelectedPointInfos, totalStages, vision }) => {
   const { oam } = vision
 
   const oamList = oam
     .map(oamEntry => oamEntry.data)
-    .map(({
-      kind,
-      xStage1,
-      xStage2,
-      xStage3,
-      yStage1,
-      yStage2,
-      yStage3,
-    }) =>
-      [
-        <PointOam
-          key={`${xStage1} ${yStage1} 1`}
-          oamId={kind}
-          stage={1}
-          showPointInfosHandle={setSelectedPointInfos}
-          x={xStage1}
-          y={yStage1}
-        />,
-        <PointOam
-          key={`${xStage2} ${yStage2} 2`}
-          oamId={kind}
-          stage={2}
-          showPointInfosHandle={setSelectedPointInfos}
-          x={xStage2}
-          y={yStage2}
-        />,
-        <PointOam
-          key={`${xStage3} ${yStage3} 3`}
-          oamId={kind}
-          stage={3}
-          showPointInfosHandle={setSelectedPointInfos}
-          x={xStage3}
-          y={yStage3}
-        />,
-      ])
+    .map(oamData =>
+      range(1, totalStages + 1).map((i) => {
+        const x = oamData[`xStage${i}`]
+        const y = oamData[`yStage${i}`]
+
+        return (
+          <PointOam
+            key={`${x} ${y} ${i}`}
+            oamId={oamData.kind}
+            stage={i}
+            showPointInfosHandle={setSelectedPointInfos}
+            x={x}
+            y={y}
+          />
+        )
+      }))
 
   return (
     <Layer>
@@ -53,6 +35,7 @@ const OAMLayer = ({ setSelectedPointInfos, vision }) => {
 
 OAMLayer.propTypes = {
   setSelectedPointInfos: PropTypes.func,
+  totalStages: PropTypes.number.isRequired,
   vision: PropTypes.shape({
     oam: PropTypes.arrayOf(PropTypes.shape({
       data: PropTypes.object.isRequired,

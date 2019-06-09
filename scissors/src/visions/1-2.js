@@ -4,6 +4,7 @@ export default {
     oam: [0xE3CC0, 0xE3FAC],
   },
   tilemap: {
+    totalStages: 3,
     height: 60,
     width: 300,
     scheme: [

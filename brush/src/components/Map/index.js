@@ -21,6 +21,7 @@ const Map = ({
     infos: {
       tilemap: {
         height,
+        totalStages,
         width,
       },
     },
@@ -47,6 +48,7 @@ const Map = ({
         />
         {optShowOAM && <OAMLayer
           setSelectedPointInfos={setSelectedPointInfos}
+          totalStages={totalStages}
           vision={vision}
         />}
         <Layer>
