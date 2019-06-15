@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react'
-import { Alert, Button, Flexbox } from 'former-kit'
-import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
+import React, { useContext } from 'react'
+import PropTypes from 'prop-types'
+import { Button, Flexbox } from 'former-kit'
 import { getRomRegion, isSupportedRegion } from 'scissors'
 import FileReaderInput from 'react-file-reader-input'
 import RomRegionNotSupported from '../../errors/romRegioNotSupported'
@@ -45,24 +45,24 @@ const handleChange = (setROMBuffer, onErrorHandle) =>
     setROMBuffer(fileContent)
   }
 
-const InputROM = () => {
+const InputROM = ({ setError }) => {
   const { setROMBuffer } = useContext(ROMContext)
-  const [error, setError] = useState(null)
 
   return (
     <Flexbox justifyContent="center" className={style.alertMargin}>
-      {
-        error &&
-        <Alert type="error" icon={<IconClose height={16} width={16} />}>
-          <p><strong>Error.</strong> {error.message}</p>
-        </Alert>
-      }
-
       <FileReaderInput as="binary" onChange={handleChange(setROMBuffer, setError)}>
         <Button>Browse Files</Button>
       </FileReaderInput>
     </Flexbox>
   )
+}
+
+InputROM.propTypes = {
+  setError: PropTypes.func,
+}
+
+InputROM.defaultProps = {
+  setError: () => {},
 }
 
 export default InputROM
