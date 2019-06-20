@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import { Layer } from 'react-konva'
 import { range } from 'ramda'
 import { fromSchemeGetTileNameById } from 'scissors'
-import PointTile from '../Point/PointTile'
+import BucketPointsTile from '../Point/BucketPointsTile'
 import { addPointRef } from '../globalState'
+import optimize from './optimize'
 
 const listCoordinates = (height, width) => {
   const rangeHeight = range(0, height)
@@ -38,24 +39,30 @@ const TilemapLayer = ({ setSelectedPointInfos, vision }) => {
     const tileValue = tilemap[x + (y * width)]
     const tileName = getTileNameById(tileValue)
 
-    return (<PointTile
-      key={`${world} ${index} ${x} ${y}`}
-      tileName={tileName}
-      tileValue={tileValue}
-      getTileNameById={getTileNameById}
-      ref={(instance) => { addPointRef(x, y, instance) }}
-      showPointInfosHandle={setSelectedPointInfos}
-      x={x}
-      y={y}
-    />)
+    return {
+      getTileNameById,
+      key: `${world} ${index} ${x} ${y}`,
+      ref: (instance) => { addPointRef(x, y, instance, y) },
+      showPointInfosHandle: setSelectedPointInfos,
+      size: 1,
+      tileName,
+      tileValue,
+      x,
+      y,
+    }
   }
 
   const tiles = listCoordinates(height, width)
     .map(([x, y]) => getPoint(x, y))
 
+  const tilemapOptimized = optimize(tiles)
+
+  const bucketsPoints = tilemapOptimized.map(attributes =>
+    <BucketPointsTile {...attributes} />)
+
   return (
     <Layer>
-      {tiles}
+      {bucketsPoints}
     </Layer>
   )
 }

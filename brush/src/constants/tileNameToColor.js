@@ -4,7 +4,7 @@ const tileNameToColor = {
   bridge: '200, 131, 63, 1',
   bridgeRope: '200, 131, 63, 0.5',
   darkRock: '90, 60, 63, 1',
-  empty: '255, 255, 255, 0',
+  empty: '255, 255, 255, 1',
   grass: '0, 125, 0, 1',
   lightRock: '200, 100, 63, 1',
   redDoor: '215, 100, 100, 0.5',

@@ -12,24 +12,30 @@ const DrawingLayer = ({
   const { name: toolName, value: toolValue } = toolState
 
   const mapToolToFunc = {
-    brush: ({ ref, x, y }) => {
-      ref.changeTile(toolValue)
+    brush: ({
+      paddingY, ref, x, y,
+    }) => {
+      ref.paintTile(toolValue, paddingY)
       updateTilemapPoint(x, y, toolValue)
     },
 
-    eraser: ({ ref, x, y }) => {
-      ref.changeTile(0x00)
+    eraser: ({
+      paddingY, ref, x, y,
+    }) => {
+      ref.paintTile(0x00, paddingY)
       updateTilemapPoint(x, y, toolValue)
     },
 
-    magnifyingGlass: ({ ref }) => {
-      ref.clickHandle()
+    magnifyingGlass: ({ paddingY, ref }) => {
+      ref.clickHandle(paddingY)
     },
   }
 
   const onClickHandler = (x, y) => {
-    const ref = getPointRef(x, y)
-    mapToolToFunc[toolName]({ ref, x, y })
+    const { paddingY, ref } = getPointRef(x, y)
+    mapToolToFunc[toolName]({
+      paddingY, ref, x, y,
+    })
   }
 
   return (

@@ -9,12 +9,13 @@ const Point = ({
   hasStroke,
   onClickHandle,
   scale,
+  size,
   x,
   y,
 }) => {
   const data = {
     fill: color,
-    height: SIZE,
+    height: SIZE * size,
     onClick: () => { onClickHandle() },
     width: SIZE,
   }
@@ -43,6 +44,7 @@ Point.propTypes = {
   hasStroke: PropTypes.bool,
   onClickHandle: PropTypes.func,
   scale: PropTypes.number,
+  size: PropTypes.number,
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
 }
@@ -51,6 +53,7 @@ Point.defaultProps = {
   hasStroke: false,
   onClickHandle: () => {},
   scale: 1,
+  size: 1,
 }
 
 export default Point
