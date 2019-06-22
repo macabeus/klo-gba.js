@@ -45,6 +45,20 @@ const extractOAM = (romBuffer, [addressStart, addressEnd]) =>
   |> filter(({ data }) =>
     data.kind !== null)
 
+const extractPortals = (romBuffer, [addressStart, addressEnd]) =>
+  romBuffer.slice(addressStart, addressEnd)
+  |> splitEvery(8)
+  |> map(memory => ({
+    data: binary.parse(memory)
+      .word16lu('x')
+      .word16lu('y')
+      .skip(4)
+      .vars,
+    memory,
+  }))
+  |> filter(({ data }) =>
+    data.kind !== null)
+
 const getVision = (romBuffer, world, vision) => {
   const infos = require(`./visions/${world}-${vision}.js`).default // eslint-disable-line
 
@@ -88,10 +102,12 @@ const getVision = (romBuffer, world, vision) => {
   })
 
   const oam = extractOAM(romBuffer, infos.rom.oam)
+  const portals = extractPortals(romBuffer, infos.rom.portals)
 
   return {
     infos,
     oam,
+    portals,
     tilemap: tilemapProxy,
   }
 }
