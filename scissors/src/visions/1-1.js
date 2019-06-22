@@ -2,6 +2,7 @@ export default {
   rom: {
     tilemap: [0x1B27FC, 0x1B36F3],
     oam: [0xE2B90, 0xE2F59],
+    portals: [0xD48C8, 0xD48EF],
   },
   tilemap: {
     totalStages: 3,

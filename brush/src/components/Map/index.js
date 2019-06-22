@@ -7,6 +7,7 @@ import VisionContext from '../../context/VisionContext'
 import TilemapLayer from './TilemapLayer'
 import DrawingLayer from './DrawingLayer'
 import OAMLayer from './OAMLayer'
+import PortalsLayer from './PortalsLayer'
 import GridLayer from './GridLayer'
 import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
 
@@ -51,6 +52,7 @@ const Map = ({
           totalStages={totalStages}
           vision={vision}
         />}
+        <PortalsLayer vision={vision} />
         <Layer>
           <HighlightCoordinates
             coordinates={highlightCoordinates}
