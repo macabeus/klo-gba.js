@@ -25,6 +25,7 @@ const LoadedRom = () => {
   const [highlightCoordinates, setHighlightCoordinates] = useState([-1, -1])
   const [optShowGrid, setOptShowGrid] = useState(false)
   const [optShowOAM, setOptShowOAM] = useState(true)
+  const [optShowPortals, setOptShowPortals] = useState(true)
   const [toolState, setToolState] = useTool()
 
   useWhenVisionChanges(() => {
@@ -61,6 +62,13 @@ const LoadedRom = () => {
                       checked={optShowOAM}
                       onChange={() => { setOptShowOAM(!optShowOAM) }}
                     />
+                    <Checkbox
+                      label="Show Portals"
+                      name="optShowPortals"
+                      value={`${optShowPortals}`}
+                      checked={optShowPortals}
+                      onChange={() => { setOptShowPortals(!optShowPortals) }}
+                    />
                   </Fragment>
                 </PopoverContent>
               }
@@ -77,6 +85,7 @@ const LoadedRom = () => {
                 highlightCoordinates={highlightCoordinates}
                 optShowGrid={optShowGrid}
                 optShowOAM={optShowOAM}
+                optShowPortals={optShowPortals}
                 toolState={toolState}
               /> :
               <MapEmptyState />

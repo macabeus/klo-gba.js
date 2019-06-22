@@ -15,6 +15,7 @@ const Map = ({
   highlightCoordinates,
   optShowGrid,
   optShowOAM,
+  optShowPortals,
   toolState,
 }) => {
   const { updateTilemapPoint, vision } = useContext(VisionContext) // workaround because a limitation in react-konva (https://github.com/konvajs/react-konva/issues/349)
@@ -52,7 +53,7 @@ const Map = ({
           totalStages={totalStages}
           vision={vision}
         />}
-        <PortalsLayer vision={vision} />
+        {optShowPortals && <PortalsLayer vision={vision} />}
         <Layer>
           <HighlightCoordinates
             coordinates={highlightCoordinates}
@@ -74,6 +75,7 @@ Map.propTypes = {
   highlightCoordinates: PropTypes.arrayOf(PropTypes.number),
   optShowGrid: PropTypes.bool,
   optShowOAM: PropTypes.bool,
+  optShowPortals: PropTypes.bool,
   toolState: PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.any,
@@ -84,6 +86,7 @@ Map.defaultProps = {
   highlightCoordinates: [-1, -1],
   optShowGrid: false,
   optShowOAM: true,
+  optShowPortals: true,
 }
 
 export default Map
