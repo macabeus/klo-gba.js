@@ -1,6 +1,6 @@
 import React, { useContext, Fragment, useState } from 'react'
 import PropTypes from 'prop-types'
-import { Stage, Layer } from 'react-konva'
+import { Stage } from '@inlet/react-pixi'
 import MapFooter from '../MapFooter'
 import HighlightCoordinates from './HighlightCoordinates'
 import VisionContext from '../../context/VisionContext'
@@ -18,7 +18,7 @@ const Map = ({
   optShowPortals,
   toolState,
 }) => {
-  const { updateTilemapPoint, vision } = useContext(VisionContext) // workaround because a limitation in react-konva (https://github.com/konvajs/react-konva/issues/349)
+  const { updateTilemapPoint, vision } = useContext(VisionContext)
   const {
     infos: {
       tilemap: {
@@ -37,7 +37,14 @@ const Map = ({
 
   return (
     <Fragment>
-      <Stage width={width * 4} height={height * 4}>
+      <Stage
+        width={width * 4}
+        height={height * 4}
+        options={{
+          antialias: true,
+          transparent: true,
+        }}
+      >
         <TilemapLayer
           setSelectedPointInfos={setSelectedPointInfos}
           vision={vision}
@@ -54,13 +61,11 @@ const Map = ({
           vision={vision}
         />}
         {optShowPortals && <PortalsLayer vision={vision} />}
-        <Layer>
-          <HighlightCoordinates
-            coordinates={highlightCoordinates}
-            height={height}
-            width={width}
-          />
-        </Layer>
+        <HighlightCoordinates
+          coordinates={highlightCoordinates}
+          height={height}
+          width={width}
+        />
         {optShowGrid && <GridLayer
           height={height * 4}
           width={width * 4}

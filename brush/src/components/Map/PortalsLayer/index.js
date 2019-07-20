@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Layer } from 'react-konva'
 import PortalPoint from '../Point/PortalPoint'
 
 const PortalsLayer = ({ vision }) => {
@@ -17,9 +16,9 @@ const PortalsLayer = ({ vision }) => {
     ))
 
   return (
-    <Layer>
+    <Fragment>
       {portalList}
-    </Layer>
+    </Fragment>
   )
 }
 

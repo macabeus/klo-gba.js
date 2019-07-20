@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Layer } from 'react-konva'
 import { range } from 'ramda'
 import PointOam from '../Point/PointOam'
 
@@ -27,9 +26,9 @@ const OAMLayer = ({ setSelectedPointInfos, totalStages, vision }) => {
       }))
 
   return (
-    <Layer>
+    <Fragment>
       {oamList}
-    </Layer>
+    </Fragment>
   )
 }
 

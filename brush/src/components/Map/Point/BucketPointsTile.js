@@ -89,7 +89,7 @@ class BucketPointsTile extends React.Component {
 
     return [
       <Point
-        color={`rgba(${tileNameToColor[tileName]})`}
+        color={tileNameToColor[tileName]}
         x={x}
         y={y}
         size={size}

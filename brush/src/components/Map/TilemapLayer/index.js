@@ -1,6 +1,5 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { Layer } from 'react-konva'
 import { range } from 'ramda'
 import { fromSchemeGetTileNameById } from 'scissors'
 import BucketPointsTile from '../Point/BucketPointsTile'
@@ -61,9 +60,9 @@ const TilemapLayer = ({ setSelectedPointInfos, vision }) => {
     <BucketPointsTile {...attributes} />)
 
   return (
-    <Layer>
+    <Fragment>
       {bucketsPoints}
-    </Layer>
+    </Fragment>
   )
 }
 
