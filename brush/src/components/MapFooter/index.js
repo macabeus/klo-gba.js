@@ -4,14 +4,14 @@ import PropTypes from 'prop-types'
 const MapFooter = ({ informations }) => {
   if (informations === null) {
     return (
-      <span>Click at a point to show its informations here</span>
+      <div>Click at a point to show its informations here</div>
     )
   }
 
   const { message, x, y } = informations
 
   return (
-    <span>{message} [{x}, {y}]</span>
+    <div>{message} [{x}, {y}]</div>
   )
 }
 

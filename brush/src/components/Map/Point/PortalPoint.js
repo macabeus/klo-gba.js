@@ -1,22 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Star } from 'react-konva'
+import { Graphics } from '@inlet/react-pixi'
 
 const SIZE = 4
 const SCALE = 8
 
 const PortalPoint = ({ x, y }) => (
-  <Star
-    stroke="blue"
-    strokeWidth={2}
-    height={SIZE * 4}
-    width={SIZE * 4}
-    x={
-      ((x * SIZE) / SCALE) - (SIZE - 8)
-    }
-    y={
-      ((y * SIZE) / SCALE) - SIZE
-    }
+  <Graphics
+    draw={(g) => {
+      g.clear()
+
+      const color = 0x0000FF
+      const radius = SIZE * 2
+      const innerRadius = SIZE
+      const points = 6
+      const scaledX = ((x * innerRadius) / SCALE) + 4
+      const scaledY = ((y * innerRadius) / SCALE) - 8
+
+      g.beginFill(color)
+      g.drawStar(scaledX, scaledY, points, radius, innerRadius)
+    }}
   />
 )
 

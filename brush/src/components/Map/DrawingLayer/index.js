@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Layer, Rect } from 'react-konva'
+import { Graphics } from '@inlet/react-pixi'
 import { getPointRef } from '../globalState'
 
 const DrawingLayer = ({
@@ -39,16 +39,21 @@ const DrawingLayer = ({
   }
 
   return (
-    <Layer
-      onClick={(e) => {
-        onClickHandler(
-          Math.floor(e.evt.layerX / 4),
-          Math.floor(e.evt.layerY / 4)
-        )
+    <Graphics
+      draw={(g) => {
+        g.clear()
+
+        g.beginFill(0x000000, 0.01)
+        g.drawRect(0, 0, width * 4, height * 4)
       }}
-    >
-      <Rect height={height} width={width} />
-    </Layer>
+      interactive
+      pointerdown={e =>
+        onClickHandler(
+          Math.floor(e.data.global.x / 4),
+          Math.floor(e.data.global.y / 4)
+        )
+      }
+    />
   )
 }
 

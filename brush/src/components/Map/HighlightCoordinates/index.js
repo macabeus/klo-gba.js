@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { Line } from 'react-konva'
+import { Graphics } from '@inlet/react-pixi'
 
 const SIZE = 4
 const OAM_SCALE = 8
@@ -15,20 +15,19 @@ const HighlightCoordinates = ({
   const yScaled = ((y * SIZE) / OAM_SCALE) - 2
 
   return (
-    <Fragment>
-      <Line
-        points={[0, yScaled, width * 4, yScaled]}
-        strokeWidth={4}
-        stroke="black"
-        opacity={0.4}
-      />
-      <Line
-        points={[xScaled, 0, xScaled, height * 4]}
-        strokeWidth={4}
-        stroke="black"
-        opacity={0.4}
-      />
-    </Fragment>
+    <Graphics
+      draw={(g) => {
+        g.clear()
+
+        g.lineStyle(4, 0x000000, 0.4)
+          .moveTo(0, yScaled)
+          .lineTo(width * 4, yScaled)
+
+        g.lineStyle(4, 0x000000, 0.4)
+          .moveTo(xScaled, 0)
+          .lineTo(xScaled, height * 4)
+      }}
+    />
   )
 }
 

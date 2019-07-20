@@ -13,13 +13,21 @@ import tileNameToColor from '../../constants/tileNameToColor'
 import VisionContext from '../../context/VisionContext'
 import style from './style.css'
 
+const hexToRGBAColor = ([hexColor, alpha]) => {
+  const red = hexColor >> 16 // eslint-disable-line no-bitwise
+  const green = (hexColor >> 16) & (hexColor >> 8) // eslint-disable-line no-bitwise
+  const blue = hexColor % 256
+
+  return `rgba(${red}, ${green}, ${blue}, ${alpha})`
+}
+
 const mapTilesIdsToBlock = map(({ id, name, onClickHandle }) => (
   // TODO: disabling these rules because we are using <p> temporarily until a better UI is developed
   // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
   <p
     className={style.block}
     key={`${name} ${id}`}
-    style={{ backgroundColor: `rgba(${tileNameToColor[name]})` }}
+    style={{ backgroundColor: hexToRGBAColor(tileNameToColor[name]) }}
     onClick={onClickHandle}
   >
     {id}
