@@ -17,6 +17,7 @@ import TileSet from '../../components/TileSet'
 import ZoomSelector from '../../components/ZoomSelector'
 import useTool from '../../hooks/useTool'
 import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
+import style from './style.css'
 
 const LoadedRom = () => {
   const { vision } = useContext(VisionContext)
@@ -34,7 +35,7 @@ const LoadedRom = () => {
   return (
     <Fragment>
       <Card>
-        <CardContent>
+        <CardContent className={style.cardTilemap}>
           <Flexbox justifyContent="flex-end">
             <SwitchTool
               setToolState={setToolState}
@@ -56,8 +57,6 @@ const LoadedRom = () => {
               onChangeOptShowPortals={setOptShowPortals}
             />
           </Flexbox>
-
-          <Spacing />
 
           {
             (vision.state === 'selected') ?
