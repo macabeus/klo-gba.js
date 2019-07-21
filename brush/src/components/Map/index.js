@@ -16,6 +16,7 @@ const Map = ({
   optShowGrid,
   optShowOAM,
   optShowPortals,
+  resolution,
   toolState,
 }) => {
   const { updateTilemapPoint, vision } = useContext(VisionContext)
@@ -30,20 +31,31 @@ const Map = ({
   } = vision
 
   const [selectedPointInfos, setSelectedPointInfos] = useState(null)
+  const [pixiApplication, setPixiApplication] = useState(null)
 
   useWhenVisionChanges(() => {
     setSelectedPointInfos(null)
   })
 
+  if (
+    pixiApplication !== null &&
+    pixiApplication.renderer.resolution !== resolution
+  ) {
+    pixiApplication.renderer.resolution = resolution
+    pixiApplication.render()
+  }
+
   return (
     <Fragment>
       <Stage
-        width={width * 4}
-        height={height * 4}
+        width={(width * 4) + resolution} //   workaround because, for some unknown reason, we need to update the size of the stage when we change its resolution
+        height={(height * 4) + resolution} // https://github.com/inlet/react-pixi/issues/127
         options={{
           antialias: true,
+          resolution,
           transparent: true,
         }}
+        onMount={setPixiApplication}
       >
         <TilemapLayer
           setSelectedPointInfos={setSelectedPointInfos}
@@ -51,6 +63,7 @@ const Map = ({
         />
         <DrawingLayer
           height={height * 4}
+          resolution={resolution}
           toolState={toolState}
           updateTilemapPoint={updateTilemapPoint}
           width={width * 4}
@@ -81,6 +94,7 @@ Map.propTypes = {
   optShowGrid: PropTypes.bool,
   optShowOAM: PropTypes.bool,
   optShowPortals: PropTypes.bool,
+  resolution: PropTypes.number,
   toolState: PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.any,
@@ -92,6 +106,7 @@ Map.defaultProps = {
   optShowGrid: false,
   optShowOAM: true,
   optShowPortals: true,
+  resolution: 1,
 }
 
 export default Map
