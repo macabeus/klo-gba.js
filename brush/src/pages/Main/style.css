@@ -1,5 +1,10 @@
 @import "former-kit-skin-pagarme/dist/styles/colors/light.css";
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
 
 body {
   background-color: var(--color-light-platinum-100);
+}
+
+.cardTilemap canvas {
+  padding-top: var(--spacing-tiny);
 }
