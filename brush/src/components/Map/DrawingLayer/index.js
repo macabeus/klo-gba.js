@@ -5,6 +5,7 @@ import { getPointRef } from '../globalState'
 
 const DrawingLayer = ({
   height,
+  resolution,
   toolState,
   updateTilemapPoint,
   width,
@@ -44,13 +45,13 @@ const DrawingLayer = ({
         g.clear()
 
         g.beginFill(0x000000, 0.01)
-        g.drawRect(0, 0, width * 4, height * 4)
+        g.drawRect(0, 0, width * 4 * resolution, height * 4 * resolution)
       }}
       interactive
       pointerdown={e =>
         onClickHandler(
-          Math.floor(e.data.global.x / 4),
-          Math.floor(e.data.global.y / 4)
+          Math.floor(e.data.global.x / 4 / resolution),
+          Math.floor(e.data.global.y / 4 / resolution)
         )
       }
     />
@@ -59,6 +60,7 @@ const DrawingLayer = ({
 
 DrawingLayer.propTypes = {
   height: PropTypes.number.isRequired,
+  resolution: PropTypes.number.isRequired,
   toolState: PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.any,

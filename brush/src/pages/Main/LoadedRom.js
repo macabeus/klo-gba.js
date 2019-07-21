@@ -17,6 +17,7 @@ import MapEmptyState from '../../components/MapEmptyState'
 import SaveButton from '../../components/MapActionsBar/SaveButton'
 import SwitchTool from '../../components/MapActionsBar/SwitchTool'
 import TileSet from '../../components/TileSet'
+import ZoomSelector from '../../components/ZoomSelector'
 import useTool from '../../hooks/useTool'
 import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
 
@@ -27,6 +28,7 @@ const LoadedRom = () => {
   const [optShowOAM, setOptShowOAM] = useState(true)
   const [optShowPortals, setOptShowPortals] = useState(true)
   const [toolState, setToolState] = useTool()
+  const [resolution, setResolution] = useState(1)
 
   useWhenVisionChanges(() => {
     setHighlightCoordinates([-1, -1])
@@ -42,6 +44,10 @@ const LoadedRom = () => {
               toolState={toolState}
             />
             <Spacing />
+            <ZoomSelector
+              onSelectorChange={setResolution}
+            />
+            <Spacing size="tiny" />
             <SaveButton />
             <Spacing size="tiny" />
             <Popover
@@ -87,6 +93,7 @@ const LoadedRom = () => {
                 optShowOAM={optShowOAM}
                 optShowPortals={optShowPortals}
                 toolState={toolState}
+                resolution={resolution}
               /> :
               <MapEmptyState />
           }
