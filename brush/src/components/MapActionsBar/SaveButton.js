@@ -24,6 +24,7 @@ const SaveButton = () => {
   const { romBufferMemory } = useContext(ROMContext)
   const {
     vision: {
+      state,
       tilemap,
     },
     visionIndex,
@@ -35,6 +36,7 @@ const SaveButton = () => {
       onClick={() => {
         romDownload(romBufferMemory, visionWorld, visionIndex, tilemap)
       }}
+      disabled={state === 'noSelected'}
     >
       Save map
     </Button>
