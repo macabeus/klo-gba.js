@@ -14,9 +14,12 @@ import VisionContext from '../../context/VisionContext'
 import style from './style.css'
 
 const hexToRGBAColor = ([hexColor, alpha]) => {
-  const red = hexColor >> 16 // eslint-disable-line no-bitwise
-  const green = (hexColor >> 16) & (hexColor >> 8) // eslint-disable-line no-bitwise
-  const blue = hexColor % 256
+  /* eslint-disable no-bitwise */
+  // bitwise is a good approach to convert hex to rgb
+  const red = (hexColor >> 16) & 0xFF
+  const green = (hexColor >> 8) & 0xFF
+  const blue = hexColor & 0xFF
+  /* eslint-enable no-bitwise */
 
   return `rgba(${red}, ${green}, ${blue}, ${alpha})`
 }
