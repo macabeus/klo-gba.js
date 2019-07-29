@@ -1,4 +1,4 @@
-import React, { useContext, Fragment, useState } from 'react'
+import React, { useContext, Fragment, useState, useRef } from 'react'
 import PropTypes from 'prop-types'
 import { Stage } from '@inlet/react-pixi'
 import MapFooter from '../MapFooter'
@@ -19,11 +19,16 @@ const Map = ({
   resolution,
   toolState,
 }) => {
-  const { updateTilemapPoint, vision } = useContext(VisionContext)
+  const {
+    getTilemapPoint,
+    updateTilemapPoint,
+    vision,
+  } = useContext(VisionContext)
   const {
     infos: {
       tilemap: {
         height,
+        scheme,
         totalStages,
         width,
       },
@@ -32,6 +37,7 @@ const Map = ({
 
   const [selectedPointInfos, setSelectedPointInfos] = useState(null)
   const [pixiApplication, setPixiApplication] = useState(null)
+  const tilemapLayerRef = useRef(null)
 
   useWhenVisionChanges(() => {
     setSelectedPointInfos(null)
@@ -58,13 +64,17 @@ const Map = ({
         onMount={setPixiApplication}
       >
         <TilemapLayer
-          setSelectedPointInfos={setSelectedPointInfos}
           vision={vision}
+          ref={tilemapLayerRef}
         />
         <DrawingLayer
+          getTilemapPoint={getTilemapPoint}
           height={height * 4}
           resolution={resolution}
+          scheme={scheme}
+          setSelectedPointInfos={setSelectedPointInfos}
           toolState={toolState}
+          updateTilemapLayer={() => tilemapLayerRef.current.forceUpdate()}
           updateTilemapPoint={updateTilemapPoint}
           width={width * 4}
         />
