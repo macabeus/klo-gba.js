@@ -1,43 +1,46 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Graphics } from '@inlet/react-pixi'
-import { getPointRef } from '../globalState'
+import { fromSchemeGetTileNameById } from 'scissors'
 
 const DrawingLayer = ({
+  getTilemapPoint,
   height,
   resolution,
+  scheme,
+  setSelectedPointInfos,
   toolState,
+  updateTilemapLayer,
   updateTilemapPoint,
   width,
 }) => {
   const { name: toolName, value: toolValue } = toolState
 
   const mapToolToFunc = {
-    brush: ({
-      paddingY, ref, x, y,
-    }) => {
-      ref.paintTile(toolValue, paddingY)
+    brush: ({ x, y }) => {
       updateTilemapPoint(x, y, toolValue)
+      updateTilemapLayer()
     },
 
-    eraser: ({
-      paddingY, ref, x, y,
-    }) => {
-      ref.paintTile(0x00, paddingY)
+    eraser: ({ x, y }) => {
       updateTilemapPoint(x, y, toolValue)
+      updateTilemapLayer()
     },
 
-    magnifyingGlass: ({ paddingY, ref }) => {
-      ref.clickHandle(paddingY)
+    magnifyingGlass: ({ x, y }) => {
+      const tileId = getTilemapPoint(x, y)
+      const tilemapPointInfos = {
+        message: `Tile ${fromSchemeGetTileNameById(scheme)(tileId)} (${tileId})`,
+        x,
+        y,
+      }
+
+      setSelectedPointInfos(tilemapPointInfos)
     },
   }
 
-  const onClickHandler = (x, y) => {
-    const { paddingY, ref } = getPointRef(x, y)
-    mapToolToFunc[toolName]({
-      paddingY, ref, x, y,
-    })
-  }
+  const onClickHandler = (x, y) =>
+    mapToolToFunc[toolName]({ x, y })
 
   return (
     <Graphics
@@ -59,12 +62,19 @@ const DrawingLayer = ({
 }
 
 DrawingLayer.propTypes = {
+  getTilemapPoint: PropTypes.func.isRequired,
   height: PropTypes.number.isRequired,
   resolution: PropTypes.number.isRequired,
+  scheme: PropTypes.arrayOf(PropTypes.shape({
+    ids: PropTypes.arrayOf(PropTypes.number).isRequired,
+    name: PropTypes.string.isRequired,
+  })).isRequired,
+  setSelectedPointInfos: PropTypes.func.isRequired,
   toolState: PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.any,
   }).isRequired,
+  updateTilemapLayer: PropTypes.func.isRequired,
   updateTilemapPoint: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
 }

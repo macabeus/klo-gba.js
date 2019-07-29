@@ -1,10 +1,8 @@
-import { range, last } from 'ramda'
-import { addPointRef } from '../globalState'
+import { last } from 'ramda'
 
 /**
- * This optimizion is very simple and it aims to reduce the number of components on the tilemap.
- * To do it, it just aggregates tiles with the same value and on sequence to the same Point component.
- * Because we are aggregating these points on the same component, we call it as "BucketPointsTile".
+ * This optimizion is very simple and it aims to reduce the number of points on the tilemap.
+ * To do it, it just aggregates tiles with the same value.
  */
 
 const getCurrentAction = (acc, current) => {
@@ -19,17 +17,12 @@ const getCurrentAction = (acc, current) => {
   return 'repeated-tile'
 }
 
-const increaseTheLastBucket = (acc) => {
+const increaseTheLastTile = (acc) => {
   const lastTile = last(acc)
-  const { size, x, y } = lastTile
 
   acc[acc.length - 1] = {
     ...lastTile,
-    ref: (instance) => {
-      range(0, size + 1).forEach(i =>
-        addPointRef(x, y + i, instance, y))
-    },
-    size: size + 1,
+    size: lastTile.size + 1,
   }
 
   return acc
@@ -50,7 +43,7 @@ const optimize = tiles =>
         return acc
       }
 
-      return increaseTheLastBucket(acc)
+      return increaseTheLastTile(acc)
     },
     []
   )

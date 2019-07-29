@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { range } from 'ramda'
+import { Graphics } from '@inlet/react-pixi'
 import { fromSchemeGetTileNameById } from 'scissors'
-import BucketPointsTile from '../Point/BucketPointsTile'
-import { addPointRef } from '../globalState'
+import tileNameToColor from '../../../constants/tileNameToColor'
 import optimize from './optimize'
 
 const listCoordinates = (height, width) => {
@@ -18,56 +18,57 @@ const listCoordinates = (height, width) => {
   return coordinates
 }
 
-const TilemapLayer = ({ setSelectedPointInfos, vision }) => {
-  const {
-    infos: {
-      index,
-      tilemap: {
-        height,
-        scheme,
-        width,
+// This component needs to be a class because we need to get its ref
+class TilemapLayer extends React.Component {
+  render () {
+    const {
+      infos: {
+        tilemap: {
+          height,
+          scheme,
+          width,
+        },
       },
-      world,
-    },
-    tilemap,
-  } = vision
+      tilemap,
+    } = this.props.vision
 
-  const getTileNameById = fromSchemeGetTileNameById(scheme)
+    const getTileNameById = fromSchemeGetTileNameById(scheme)
 
-  const getPoint = (x, y) => {
-    const tileValue = tilemap[x + (y * width)]
-    const tileName = getTileNameById(tileValue)
+    const getPoint = (x, y) => {
+      const tileValue = tilemap[x + (y * width)]
+      const tileName = getTileNameById(tileValue)
 
-    return {
-      getTileNameById,
-      key: `${world} ${index} ${x} ${y}`,
-      ref: (instance) => { addPointRef(x, y, instance, y) },
-      showPointInfosHandle: setSelectedPointInfos,
-      size: 1,
-      tileName,
-      tileValue,
-      x,
-      y,
+      return {
+        size: 1,
+        tileName,
+        tileValue,
+        x,
+        y,
+      }
     }
+
+    const tiles = listCoordinates(height, width)
+      .map(([x, y]) => getPoint(x, y))
+
+    const tilemapOptimized = optimize(tiles)
+
+    return (
+      <Graphics
+        draw={(g) => {
+          g.clear()
+
+          tilemapOptimized.forEach((i) => {
+            const [hexColor, alpha] = tileNameToColor[i.tileName]
+            g.beginFill(hexColor, alpha)
+            g.drawRect(4 * i.x, 4 * i.y, 4, 4 * i.size)
+          })
+        }}
+      />
+    )
   }
-
-  const tiles = listCoordinates(height, width)
-    .map(([x, y]) => getPoint(x, y))
-
-  const tilemapOptimized = optimize(tiles)
-
-  const bucketsPoints = tilemapOptimized.map(attributes =>
-    <BucketPointsTile {...attributes} />)
-
-  return (
-    <Fragment>
-      {bucketsPoints}
-    </Fragment>
-  )
 }
 
 TilemapLayer.propTypes = {
-  setSelectedPointInfos: PropTypes.func,
   vision: PropTypes.shape({
     infos: PropTypes.shape({
       tilemap: PropTypes.shape({
@@ -83,8 +84,4 @@ TilemapLayer.propTypes = {
   }).isRequired,
 }
 
-TilemapLayer.defaultProps = {
-  setSelectedPointInfos: () => {},
-}
-
-export default React.memo(TilemapLayer)
+export default TilemapLayer
