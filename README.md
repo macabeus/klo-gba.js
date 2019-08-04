@@ -9,8 +9,8 @@
 **klo-gba.js** is a web Level Editor for *Klonoa: Empire of Dreams* game. Using this tool, you can extend the limits of this awesome game! Please, buy Klonoa's games to support this franchise.
 
 Since this is a study project, I'm writing a manual about how I'm developing it, because I want that more people to learn how to do a rom hacking for others games. It's a very fun challenge!
-- [🇺🇸 Manual in English](https://gbatemp.net/threads/tutorial-reverse-engineering-step-by-step-in-klonoa-game.532112/)
-- [🇧🇷 Manual in Portuguese](http://openkorebrasil.org/index.php?/topic/5345-engenharia-reversa-no-gameboy-advance)
+- [🇺🇸 Manual in English](https://medium.com/@bruno.macabeus/reverse-engineering-a-gameboy-advance-game-introduction-ec185bd8e02?source=friends_link&sk=13ec64916dd886d5d427bdb75a73b847)
+- [🇧🇷 Manual in Portuguese](https://medium.com/@bruno.macabeus/pt-br-engenharia-reversa-num-jogo-de-gameboy-advance-introdu%C3%A7%C3%A3o-21ebffe2f794?source=friends_link&sk=ed05c9b97187694240ed3316ae325165)
 
 > **This project is still in developing** and is just a hobby project that a fan is writing.<br>
 > Then some features is lacking. In this moment, you can just see the informations about the level, but unfortunately can't edit it. But coming soon you will can create your own Kaizo levels!
