@@ -11,7 +11,10 @@ import binary from 'binary'
 import { huffmanDecode, huffmanEncode } from './huffman'
 import { lzssDecode, lzssEncode } from './lzss'
 import { loadVisionInfo } from './visions'
-import { setPatchCustomVisionLoader } from './rom'
+import {
+  setPatchCustomVisionLoader,
+  visionHasCustomTilemap,
+} from './rom'
 
 const isNumeric = pipe(t => Number(t), identical(NaN), not)
 
@@ -63,11 +66,14 @@ const extractPortals = (romBuffer, [addressStart, addressEnd]) =>
 
 const getVision = (romBuffer, world, vision) => {
   const infos = loadVisionInfo(world, vision)
+  const range = visionHasCustomTilemap(romBuffer, infos) ?
+    infos.rom.customTilemap :
+    infos.rom.tilemap
 
   // The first 3 bytes of tilemap isn't the tiles,
   // but something unknown important to plot the level at the game.
   // So this proxy is useful to abstract Brush about this detail
-  const fullTilemap = extractFullTilemap(romBuffer, infos.rom.tilemap)
+  const fullTilemap = extractFullTilemap(romBuffer, range)
 
   const tilemapProxy = new Proxy(fullTilemap, {
     get: (target, property) => {
@@ -122,10 +128,10 @@ const compressTilemap = buffer =>
 
 const saveVision = (romBuffer, world, index, tilemap) => {
   const infos = loadVisionInfo(world, index)
-  const customTilemapAddress = infos.rom.customTilemap
+  const [customTilemapStartAddress] = infos.rom.customTilemap
 
   const encoded = compressTilemap(tilemap)
-  romBuffer.set(encoded, customTilemapAddress)
+  romBuffer.set(encoded, customTilemapStartAddress)
 
   setPatchCustomVisionLoader(romBuffer)
 
