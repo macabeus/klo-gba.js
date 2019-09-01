@@ -6,7 +6,7 @@ export default {
   },
   rom: {
     tilemap: [0x1B27FC, 0x1B36F3],
-    customTilemap: 0x367700,
+    customTilemap: [0x367700, 0x3686AF],
     oam: [0xE2B90, 0xE2F59],
     portals: [0xD48C8, 0xD48EF],
   },
