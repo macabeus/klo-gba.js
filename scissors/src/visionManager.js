@@ -10,6 +10,7 @@ import {
 import binary from 'binary'
 import { huffmanDecode, huffmanEncode } from './huffman'
 import { lzssDecode, lzssEncode } from './lzss'
+import { loadVisionInfo } from './visions'
 
 const isNumeric = pipe(t => Number(t), identical(NaN), not)
 
@@ -60,7 +61,7 @@ const extractPortals = (romBuffer, [addressStart, addressEnd]) =>
     data.kind !== null)
 
 const getVision = (romBuffer, world, vision) => {
-  const infos = require(`./visions/${world}-${vision}.js`).default // eslint-disable-line
+  const infos = loadVisionInfo(world, vision)
 
   // The first 3 bytes of tilemap isn't the tiles,
   // but something unknown important to plot the level at the game.
@@ -119,7 +120,7 @@ const compressTilemap = buffer =>
   |> huffmanEncode
 
 const saveVision = (romBuffer, world, index, tilemap) => {
-  const infos = require(`./visions/${world}-${index}.js`).default // eslint-disable-line
+  const infos = loadVisionInfo(world, index)
   const [addressStart] = infos.rom.tilemap
 
   const encoded = compressTilemap(tilemap)
