@@ -1,4 +1,9 @@
 export default {
+  location: {
+    worldName: 'Ghazzaland',
+    world: 1,
+    index: 1,
+  },
   rom: {
     tilemap: [0x1B27FC, 0x1B36F3],
     oam: [0xE2B90, 0xE2F59],
