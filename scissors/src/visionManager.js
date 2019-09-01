@@ -11,6 +11,7 @@ import binary from 'binary'
 import { huffmanDecode, huffmanEncode } from './huffman'
 import { lzssDecode, lzssEncode } from './lzss'
 import { loadVisionInfo } from './visions'
+import { setPatchCustomVisionLoader } from './rom'
 
 const isNumeric = pipe(t => Number(t), identical(NaN), not)
 
@@ -121,10 +122,12 @@ const compressTilemap = buffer =>
 
 const saveVision = (romBuffer, world, index, tilemap) => {
   const infos = loadVisionInfo(world, index)
-  const [addressStart] = infos.rom.tilemap
+  const customTilemapAddress = infos.rom.customTilemap
 
   const encoded = compressTilemap(tilemap)
-  romBuffer.set(encoded, addressStart)
+  romBuffer.set(encoded, customTilemapAddress)
+
+  setPatchCustomVisionLoader(romBuffer)
 
   return romBuffer
 }
