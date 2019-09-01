@@ -27,6 +27,13 @@ const useROMBuffer = () => {
   }, [])
 
   const updateROMBufferState = (newRomBufferMemory) => {
+    if (newRomBufferMemory === null) {
+      setROMBufferState(romBufferStates.empty)
+      localforage.removeItem('romBuffer')
+
+      return
+    }
+
     setROMBufferState(romBufferStates.loaded(newRomBufferMemory))
     localforage.setItem('romBuffer', newRomBufferMemory)
   }
