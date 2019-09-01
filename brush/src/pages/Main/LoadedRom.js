@@ -8,6 +8,7 @@ import {
 } from 'former-kit'
 import ObjectsTable from '../../components/ObjectsTable'
 import VisionContext from '../../context/VisionContext'
+import ChangeRom from '../../components/ChangeRom'
 import DisplayMapOptios from '../../components/DisplayMapOptions'
 import Map from '../../components/Map'
 import MapEmptyState from '../../components/MapEmptyState'
@@ -47,6 +48,8 @@ const LoadedRom = () => {
             />
             <Spacing size="tiny" />
             <SaveButton />
+            <Spacing size="tiny" />
+            <ChangeRom />
             <Spacing size="tiny" />
             <DisplayMapOptios
               optShowGrid={optShowGrid}

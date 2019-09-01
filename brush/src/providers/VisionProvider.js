@@ -7,12 +7,16 @@ const VisionProvider = (props) => {
   const [visionWorld, setVisionWorld] = useState(1)
   const [visionIndex, setVisionIndex] = useState(1)
 
-  const [vision, setVision] = useState({
+  const emptyState = {
     infos: { index: 0, tilemap: { height: 0, scheme: [], width: 0 }, world: 0 },
     oam: [],
     state: 'noSelected',
     tilemap: new Uint8Array(),
-  })
+  }
+
+  const [vision, setVision] = useState(emptyState)
+
+  const setEmptyState = () => setVision(emptyState)
 
   const updateVision = (romBuffer, world, index) => {
     setVisionWorld(world)
@@ -35,6 +39,7 @@ const VisionProvider = (props) => {
   return (
     <VisionContext.Provider value={{
         getTilemapPoint,
+        setEmptyState,
         updateTilemapPoint,
         updateVision,
         vision,
