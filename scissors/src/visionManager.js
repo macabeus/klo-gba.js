@@ -12,6 +12,7 @@ import { huffmanDecode, huffmanEncode } from './huffman'
 import { lzssDecode, lzssEncode } from './lzss'
 import { loadVisionInfo } from './visions'
 import {
+  setSign,
   setPatchCustomVisionLoader,
   visionHasCustomTilemap,
 } from './rom'
@@ -134,6 +135,8 @@ const saveVision = (romBuffer, world, index, tilemap) => {
   romBuffer.set(encoded, customTilemapStartAddress)
 
   setPatchCustomVisionLoader(romBuffer)
+
+  setSign(romBuffer)
 
   return romBuffer
 }

@@ -13,6 +13,14 @@ const split24LengthHexIntoBytesArray = (hexValue) => {
   return [firstByte, secondByte, thirdByte, fourthByte]
 }
 
+const setSign = romBuffer =>
+  romBuffer.set([0x42, 0x30], 0x367606) // add r0, 42h
+
+const isCustomRom = (romBuffer) => {
+  const sign = romBuffer.slice(0x367606, 0x367608)
+  return sign[0] === 0x42 && sign[1] === 0x30
+}
+
 const visionHasCustomTilemap = (romBuffer, visionInfo) =>
   romBuffer[visionInfo.rom.customTilemap[0]] !== 0x00
 
@@ -65,6 +73,8 @@ const setPatchCustomVisionLoader = (romBuffer) => {
 }
 
 export {
+  isCustomRom,
+  setSign,
   setPatchCustomVisionLoader,
   visionHasCustomTilemap,
 }
