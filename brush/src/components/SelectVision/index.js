@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { Dropdown } from 'former-kit'
+import { allVisions } from 'scissors'
 import VisionContext from '../../context/VisionContext'
 import ROMContext from '../../context/ROMContext'
 
@@ -22,17 +23,18 @@ const SelectVision = () => {
     '' :
     `${visionWorld}-${visionIndex}`
 
+  const dropdownOptions = allVisions.map(info => ({
+    name: `${info.location.worldName} - ${info.location.index}`,
+    value: `${info.location.world}-${info.location.index}`,
+  }))
+
   return (
     <Dropdown
       name="selectVision"
       placeholder="Select a vision"
       onChange={e => setNewVision(e.target.value)}
       value={dropdownValue}
-      options={[
-        { name: 'Vision 1-1', value: '1-1' },
-        { name: 'Vision 1-2', value: '1-2' },
-        { name: 'Vision 1-3', value: '1-3' },
-      ]}
+      options={dropdownOptions}
     />
   )
 }
