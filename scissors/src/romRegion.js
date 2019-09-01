@@ -1,7 +1,12 @@
 import { defaultTo } from 'ramda'
 import sha1 from 'js-sha1'
+import { isCustomRom } from './rom'
 
 const getRomRegion = (buffer) => {
+  if (isCustomRom(buffer)) {
+    return 'custom'
+  }
+
   const hash = sha1(buffer)
 
   const hashToRegion = {
@@ -14,7 +19,7 @@ const getRomRegion = (buffer) => {
   return region
 }
 
-const supportedRomRegions = ['usa']
+const supportedRomRegions = ['usa', 'custom']
 
 const isSupportedRegion = region => supportedRomRegions.includes(region)
 
