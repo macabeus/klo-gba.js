@@ -8,8 +8,8 @@ const SwitchTool = ({ setToolState, toolState }) => (
     onChange={(value) => { setToolState(value) }}
     options={[
       {
-        title: 'Magnifying Glass',
-        value: 'magnifyingGlass',
+        title: 'Inspector',
+        value: 'inspector',
       },
       {
         title: 'Brush',

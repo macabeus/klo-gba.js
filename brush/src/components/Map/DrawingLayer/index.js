@@ -27,7 +27,7 @@ const DrawingLayer = ({
       updateTilemapLayer()
     },
 
-    magnifyingGlass: ({ x, y }) => {
+    inspector: ({ x, y }) => {
       const tileId = getTilemapPoint(x, y)
       const tilemapPointInfos = {
         message: `Tile ${fromSchemeGetTileNameById(scheme)(tileId)} (${tileId})`,
