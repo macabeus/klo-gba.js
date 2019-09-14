@@ -2,10 +2,10 @@ import { useState } from 'react'
 
 const useTool = () => {
   const [{ currentTool, toolsValue }, setToolsStates] = useState({
-    currentTool: 'magnifyingGlass',
+    currentTool: 'inspector',
     toolsValue: {
       brush: null,
-      magnifyingGlass: null,
+      inspector: null,
     },
   })
 
