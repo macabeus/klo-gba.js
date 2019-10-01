@@ -1,54 +1,64 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { identity } from 'ramda'
 import PropTypes from 'prop-types'
 import { Graphics } from '@inlet/react-pixi'
-
-const SIZE = 4
+import getScaledCoordinates, { SIZE } from './getScaledCoordinates'
+import withDraggable from './withDraggable'
 
 const Point = ({
   color,
+  draggable,
   hasStroke,
-  onClickHandle,
+  onHoverHandle,
   scale,
   size,
   x,
   y,
 }) => {
+  const [isHover, setIsHover] = useState(false)
   const [colour, alpha] = color
   const height = SIZE * size
   const width = SIZE
-  const [scaledX, scaledY] = scale === 1 ?
-    [
-      x * SIZE,
-      y * SIZE,
-    ] :
-    [
-      ((x * SIZE) / scale) - SIZE,
-      ((y * SIZE) / scale) - SIZE,
-    ]
+  const [rawX, setRawX] = useState(x)
+  const [rawY, setRawY] = useState(y)
+  const [scaledX, scaledY] = getScaledCoordinates(rawX, rawY, scale)
 
-  return (
-    <Graphics
-      draw={(g) => {
-        g.clear()
+  const hoc = draggable ?
+    withDraggable(
+      scale,
+      setRawX,
+      setRawY
+    )
+    : identity
 
-        g.beginFill(colour, alpha)
+  return hoc(<Graphics
+    draw={(g) => {
+      g.clear()
 
-        if (hasStroke) {
-          g.lineStyle(1, 0x777777, 1)
-        }
+      g.beginFill(colour, alpha)
 
-        g.drawRect(scaledX, scaledY, width, height)
-      }}
-      interactive={onClickHandle !== null}
-      pointerdown={onClickHandle}
-    />
-  )
+      const borderWidth = isHover ?
+        3 :
+        1
+
+      if (hasStroke) {
+        g.lineStyle(borderWidth, 0x777777, 1)
+      }
+
+      g.drawRect(scaledX, scaledY, width, height)
+    }}
+    pointerover={() => {
+      onHoverHandle()
+      setIsHover(true)
+    }}
+    pointerout={() => setIsHover(false)}
+  />)
 }
 
 Point.propTypes = {
   color: PropTypes.arrayOf(PropTypes.number).isRequired,
   hasStroke: PropTypes.bool,
-  onClickHandle: PropTypes.func,
+  onHoverHandle: PropTypes.func,
   scale: PropTypes.number,
   size: PropTypes.number,
   x: PropTypes.number.isRequired,
@@ -57,7 +67,7 @@ Point.propTypes = {
 
 Point.defaultProps = {
   hasStroke: false,
-  onClickHandle: null,
+  onHoverHandle: () => {},
   scale: 1,
   size: 1,
 }
