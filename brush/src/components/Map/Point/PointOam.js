@@ -37,8 +37,9 @@ const PointOam = ({
 
   return (<Point
     color={color}
+    draggable
     hasStroke
-    onClickHandle={pipe(getInformations, showPointInfosHandle)}
+    onHoverHandle={pipe(getInformations, showPointInfosHandle)}
     scale={8}
     x={x}
     y={y}
