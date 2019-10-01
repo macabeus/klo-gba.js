@@ -1,17 +1,7 @@
 import { allVisions } from './visions'
+import splitHexValueIntoBytesArray from './splitHexValueIntoBytesArray'
 
 const mapAddressToRomOffset = hexValue => hexValue + 0x08000000
-
-const split24LengthHexIntoBytesArray = (hexValue) => {
-  /* eslint-disable no-bitwise */
-  const firstByte = (hexValue >> 24)
-  const secondByte = (hexValue >> 16) & 0xff
-  const thirdByte = (hexValue >> 8) & 0xff
-  const fourthByte = hexValue & 0xff
-  /* eslint-enable no-bitwise */
-
-  return [firstByte, secondByte, thirdByte, fourthByte]
-}
 
 const setSign = romBuffer =>
   romBuffer.set([0x42, 0x30], 0x367606) // add r0, 42h
@@ -25,8 +15,8 @@ const visionHasCustomTilemap = (romBuffer, visionInfo) =>
   romBuffer[visionInfo.rom.customTilemap[0]] !== 0x00
 
 const setConstant = (romBuffer, address, value24hexLength) => {
-  const bytes = split24LengthHexIntoBytesArray(value24hexLength)
-  romBuffer.set(bytes.reverse(), address)
+  const bytes = splitHexValueIntoBytesArray(value24hexLength, 4)
+  romBuffer.set(bytes, address)
 }
 
 const setPatchCustomVisionLoader = (romBuffer) => {
