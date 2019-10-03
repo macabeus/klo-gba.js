@@ -2,12 +2,14 @@ import {
   filter,
   identical,
   map,
+  mapObjIndexed,
   not,
   pipe,
   prop,
   splitEvery,
 } from 'ramda'
 import binary from 'binary'
+import splitHexValueIntoBytesArray from './splitHexValueIntoBytesArray'
 import { huffmanDecode, huffmanEncode } from './huffman'
 import { lzssDecode, lzssEncode } from './lzss'
 import { loadVisionInfo } from './visions'
@@ -121,18 +123,51 @@ const getVision = (romBuffer, world, vision) => {
   }
 }
 
+const applyOAMDiff = (romBuffer, oamStartAddress, oamDiffs) => {
+  /* eslint-disable sort-keys */
+  const mapKeyToOffset = {
+    xStage1: 0,
+    yStage1: 2,
+    xStage2: 8,
+    yStage2: 10,
+    xStage3: 16,
+    yStage3: 18,
+    xStage4: 24,
+    yStage4: 26,
+    xStage5: 32,
+    yStage5: 34,
+  }
+  /* eslint-enable sort-keys */
+
+  const updateROM = (diffs, oamIndex) => {
+    const oamObjectMemoryAddressStart = oamStartAddress + (oamIndex * 44)
+
+    mapObjIndexed((value, key) => {
+      const offset = mapKeyToOffset[key]
+      const bytes = splitHexValueIntoBytesArray(value, 2)
+
+      romBuffer.set(bytes, oamObjectMemoryAddressStart + offset)
+    }, diffs)
+  }
+
+  mapObjIndexed(updateROM, oamDiffs)
+}
+
 const compressTilemap = buffer =>
   buffer
   |> prop('full')
   |> lzssEncode
   |> huffmanEncode
 
-const saveVision = (romBuffer, world, index, tilemap) => {
+const saveVision = (romBuffer, world, index, tilemap, oamDiffMap) => {
   const infos = loadVisionInfo(world, index)
   const [customTilemapStartAddress] = infos.rom.customTilemap
+  const [oamStartAddress] = infos.rom.oam
 
   const encoded = compressTilemap(tilemap)
   romBuffer.set(encoded, customTilemapStartAddress)
+
+  applyOAMDiff(romBuffer, oamStartAddress, oamDiffMap)
 
   setPatchCustomVisionLoader(romBuffer)
 

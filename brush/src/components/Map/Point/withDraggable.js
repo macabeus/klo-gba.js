@@ -2,7 +2,10 @@ import { useState } from 'react'
 import getScaledCoordinates, { SIZE } from './getScaledCoordinates'
 
 const withDraggable = (
+  onFinishDragAndDropHandle,
   scale,
+  x,
+  y,
   setX,
   setY
 ) => (Point) => {
@@ -34,6 +37,7 @@ const withDraggable = (
         setY(newY)
       },
       mouseupoutside: () => {
+        onFinishDragAndDropHandle(x, y)
         setDragging(false)
       },
     },

@@ -9,6 +9,7 @@ const Point = ({
   color,
   draggable,
   hasStroke,
+  onFinishDragAndDropHandle,
   onHoverHandle,
   scale,
   size,
@@ -25,7 +26,10 @@ const Point = ({
 
   const hoc = draggable ?
     withDraggable(
+      onFinishDragAndDropHandle,
       scale,
+      rawX,
+      rawY,
       setRawX,
       setRawY
     )

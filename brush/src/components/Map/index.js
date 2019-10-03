@@ -21,6 +21,7 @@ const Map = ({
 }) => {
   const {
     getTilemapPoint,
+    updateOAMDiffMap,
     updateTilemapPoint,
     vision,
   } = useContext(VisionContext)
@@ -79,6 +80,7 @@ const Map = ({
           width={width * 4}
         />
         {optShowOAM && <OAMLayer
+          updateOAMDiffMap={updateOAMDiffMap}
           setSelectedPointInfos={setSelectedPointInfos}
           totalStages={totalStages}
           vision={vision}
