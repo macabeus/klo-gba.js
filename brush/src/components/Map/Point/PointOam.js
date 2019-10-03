@@ -21,6 +21,8 @@ const oamIdToColor = {
 
 const PointOam = ({
   oamId,
+  oamIndex,
+  onFinishDragAndDrop,
   showPointInfosHandle,
   stage,
   x,
@@ -35,11 +37,17 @@ const PointOam = ({
     y,
   })
 
+  const saveNewOAMPosition = (newX, newY) => {
+    onFinishDragAndDrop(oamIndex, `xStage${stage}`, newX)
+    onFinishDragAndDrop(oamIndex, `yStage${stage}`, newY)
+  }
+
   return (<Point
     color={color}
     draggable
     hasStroke
     onHoverHandle={pipe(getInformations, showPointInfosHandle)}
+    onFinishDragAndDropHandle={saveNewOAMPosition}
     scale={8}
     x={x}
     y={y}
@@ -48,6 +56,8 @@ const PointOam = ({
 
 PointOam.propTypes = {
   oamId: PropTypes.number.isRequired,
+  oamIndex: PropTypes.number.isRequired,
+  onFinishDragAndDrop: PropTypes.func,
   showPointInfosHandle: PropTypes.func,
   stage: PropTypes.number.isRequired,
   x: PropTypes.number.isRequired,
@@ -55,6 +65,7 @@ PointOam.propTypes = {
 }
 
 PointOam.defaultProps = {
+  onFinishDragAndDrop: () => {},
   showPointInfosHandle: () => {},
 }
 
