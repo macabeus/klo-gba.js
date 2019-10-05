@@ -22,15 +22,17 @@ const listCoordinates = (height, width) => {
 class TilemapLayer extends React.Component {
   render () {
     const {
-      infos: {
-        tilemap: {
-          height,
-          scheme,
-          width,
+      vision: {
+        infos: {
+          tilemap: {
+            height,
+            scheme,
+            width,
+          },
         },
+        tilemap,
       },
-      tilemap,
-    } = this.props.vision
+    } = this.props
 
     const getTileNameById = fromSchemeGetTileNameById(scheme)
 
