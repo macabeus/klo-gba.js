@@ -15,7 +15,6 @@ const ZoomSelector = ({ onSelectorChange }) => {
         setIndex(newIndex)
         onSelectorChange(resolutionValues[newIndex - 1])
       }}
-      format="single"
     />
   )
 }
