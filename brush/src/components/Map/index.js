@@ -1,4 +1,9 @@
-import React, { useContext, Fragment, useState, useRef } from 'react'
+import React, {
+  useContext,
+  Fragment,
+  useState,
+  useRef,
+} from 'react'
 import PropTypes from 'prop-types'
 import { Stage } from '@inlet/react-pixi'
 import MapFooter from '../MapFooter'
@@ -45,8 +50,8 @@ const Map = ({
   })
 
   if (
-    pixiApplication !== null &&
-    pixiApplication.renderer.resolution !== resolution
+    pixiApplication !== null
+    && pixiApplication.renderer.resolution !== resolution
   ) {
     pixiApplication.renderer.resolution = resolution
     pixiApplication.render()

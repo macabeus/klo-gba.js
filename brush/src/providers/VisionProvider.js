@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { getVision } from 'scissors'
 import VisionContext from '../context/VisionContext'
 
-const VisionProvider = (props) => {
+const VisionProvider = ({ children }) => {
   const [visionWorld, setVisionWorld] = useState(1)
   const [visionIndex, setVisionIndex] = useState(1)
 
@@ -48,17 +48,17 @@ const VisionProvider = (props) => {
 
   return (
     <VisionContext.Provider value={{
-        getTilemapPoint,
-        setEmptyState,
-        updateOAMDiffMap,
-        updateTilemapPoint,
-        updateVision,
-        vision,
-        visionIndex,
-        visionWorld,
-      }}
+      getTilemapPoint,
+      setEmptyState,
+      updateOAMDiffMap,
+      updateTilemapPoint,
+      updateVision,
+      vision,
+      visionIndex,
+      visionWorld,
+    }}
     >
-      {props.children}
+      {children}
     </VisionContext.Provider>
   )
 }

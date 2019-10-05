@@ -32,8 +32,8 @@ const Point = ({
       rawY,
       setRawX,
       setRawY
-    )
-    : identity
+    ) :
+    identity
 
   return hoc(<Graphics
     draw={(g) => {
