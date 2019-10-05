@@ -13,9 +13,9 @@
   "author": "macabeus",
   "license": "MIT",
   "dependencies": {
-    "@babel/polyfill": "7.2.5",
-    "@babel/runtime": "7.3.4",
-    "@babel/plugin-transform-runtime": "7.3.4",
+    "@babel/polyfill": "7.6.0",
+    "@babel/runtime": "7.6.2",
+    "@babel/plugin-transform-runtime": "7.6.2",
     "emblematic-icons": "0.6.1",
     "former-kit-skin-pagarme": "1.0.0",
     "former-kit": "1.0.1",
@@ -31,9 +31,9 @@
     "scissors": "file:../scissors"
   },
   "devDependencies": {
-    "@babel/core": "7.3.4",
-    "@babel/plugin-proposal-pipeline-operator": "7.3.2",
-    "@babel/preset-env": "7.3.4",
+    "@babel/core": "7.6.2",
+    "@babel/plugin-proposal-pipeline-operator": "7.5.0",
+    "@babel/preset-env": "7.6.2",
     "@babel/preset-react": "7.0.0",
     "@svgr/webpack": "4.1.0",
     "babel-loader": "8.0.5",
