@@ -26,8 +26,8 @@
     "react": "16.10.2",
     "react-dom": "16.10.2",
     "react-file-reader-input": "2.0.0",
-    "pixi.js": "5.0.4",
-    "@inlet/react-pixi": "1.0.0",
+    "pixi.js": "5.1.5",
+    "@inlet/react-pixi": "1.1.2",
     "scissors": "file:../scissors"
   },
   "devDependencies": {
