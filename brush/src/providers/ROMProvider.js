@@ -24,7 +24,7 @@ const useROMBuffer = () => {
     }
 
     fetchLocalROMBufferMemory()
-  }, [])
+  }, []) /* it should run only once */ // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateROMBufferState = (newRomBufferMemory) => {
     if (newRomBufferMemory === null) {
@@ -41,7 +41,7 @@ const useROMBuffer = () => {
   return [romBufferState, updateROMBufferState]
 }
 
-const ROMProvider = (props) => {
+const ROMProvider = ({ children }) => {
   const [romBuffer, setROMBuffer] = useROMBuffer()
 
   return (
@@ -52,7 +52,7 @@ const ROMProvider = (props) => {
         setROMBuffer,
       }}
     >
-      {props.children}
+      {children}
     </ROMContext.Provider>
   )
 }
