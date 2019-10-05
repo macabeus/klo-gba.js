@@ -10,6 +10,7 @@ import OAMLayer from './OAMLayer'
 import PortalsLayer from './PortalsLayer'
 import GridLayer from './GridLayer'
 import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
+import style from './style.css'
 
 const Map = ({
   highlightCoordinates,
@@ -54,48 +55,50 @@ const Map = ({
 
   return (
     <Fragment>
-      <Stage
-        width={(width * 4) + resolution} //   workaround because, for some unknown reason, we need to update the size of the stage when we change its resolution
-        height={(height * 4) + resolution} // https://github.com/inlet/react-pixi/issues/127
-        options={{
+      <div className={style.webglWrapper}>
+        <Stage
+          width={(width * 4) + resolution} //   workaround because, for some unknown reason, we need to update the size of the stage when we change its resolution
+          height={(height * 4) + resolution} // https://github.com/inlet/react-pixi/issues/127
+          options={{
           antialias: true,
           resolution,
           transparent: true,
-        }}
-        onMount={setPixiApplication}
-      >
-        <TilemapLayer
-          vision={vision}
-          ref={tilemapLayerRef}
-        />
-        <DrawingLayer
-          getTilemapPoint={getTilemapPoint}
-          height={height * 4}
-          resolution={resolution}
-          scheme={scheme}
-          setSelectedPointInfos={setSelectedPointInfos}
-          toolState={toolState}
-          updateTilemapLayer={() => tilemapLayerRef.current.forceUpdate()}
-          updateTilemapPoint={updateTilemapPoint}
-          width={width * 4}
-        />
-        {optShowOAM && <OAMLayer
-          updateOAMDiffMap={updateOAMDiffMap}
-          setSelectedPointInfos={setSelectedPointInfos}
-          totalStages={totalStages}
-          vision={vision}
-        />}
-        {optShowPortals && <PortalsLayer vision={vision} />}
-        <HighlightCoordinates
-          coordinates={highlightCoordinates}
-          height={height}
-          width={width}
-        />
-        {optShowGrid && <GridLayer
-          height={height * 4}
-          width={width * 4}
-        />}
-      </Stage>
+          }}
+          onMount={setPixiApplication}
+        >
+          <TilemapLayer
+            vision={vision}
+            ref={tilemapLayerRef}
+          />
+          <DrawingLayer
+            getTilemapPoint={getTilemapPoint}
+            height={height * 4}
+            resolution={resolution}
+            scheme={scheme}
+            setSelectedPointInfos={setSelectedPointInfos}
+            toolState={toolState}
+            updateTilemapLayer={() => tilemapLayerRef.current.forceUpdate()}
+            updateTilemapPoint={updateTilemapPoint}
+            width={width * 4}
+          />
+          {optShowOAM && <OAMLayer
+            updateOAMDiffMap={updateOAMDiffMap}
+            setSelectedPointInfos={setSelectedPointInfos}
+            totalStages={totalStages}
+            vision={vision}
+          />}
+          {optShowPortals && <PortalsLayer vision={vision} />}
+          <HighlightCoordinates
+            coordinates={highlightCoordinates}
+            height={height}
+            width={width}
+          />
+          {optShowGrid && <GridLayer
+            height={height * 4}
+            width={width * 4}
+          />}
+        </Stage>
+      </div>
       <MapFooter informations={selectedPointInfos} />
     </Fragment>
   )
