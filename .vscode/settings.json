@@ -1,0 +1,9 @@
+{
+    "editor.tabSize": 2,
+    "javascript.validate.enable": false,
+    "typescript.validate.enable": false,
+    "eslint.workingDirectories": [
+        "./brush",
+        "./scissors"
+    ]
+}
