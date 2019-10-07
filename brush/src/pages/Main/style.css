@@ -3,6 +3,7 @@
 
 body {
   background-color: var(--color-light-platinum-100);
+  margin: 0;
 }
 
 .cardTilemap canvas {
