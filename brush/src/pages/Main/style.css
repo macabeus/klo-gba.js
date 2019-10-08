@@ -6,6 +6,10 @@ body {
   margin: 0;
 }
 
+.cardTilemap {
+  max-width: 85vw;
+}
+
 .cardTilemap canvas {
   padding-top: var(--spacing-tiny);
 }
