@@ -7,7 +7,6 @@ import {
   ThemeProvider,
 } from 'former-kit'
 import skin from 'former-kit-skin-pagarme'
-import SelectVision from './components/SelectVision'
 import Main from './pages/Main'
 import ROMProvider from './providers/ROMProvider'
 import VisionProvider from './providers/VisionProvider'
@@ -21,8 +20,6 @@ ReactDOM.render(
 
         <Layout sidebar={<KloGbaSidebar />}>
           <Header>
-            <SelectVision />
-
             <HeaderLink
               onClick={() => window.open('https://github.com/macabeus/klo-gba.js')}
             >
