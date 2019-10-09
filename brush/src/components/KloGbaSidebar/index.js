@@ -5,6 +5,7 @@ import {
 } from 'former-kit'
 import SidebarLogo from './SidebarLogo'
 import SelectVision from './SelectVision'
+import ChangeRom from './ChangeRom'
 
 const KloGbaSidebar = () => (
   <Sidebar>
@@ -12,6 +13,8 @@ const KloGbaSidebar = () => (
 
     <SidebarLinks>
       <SelectVision />
+
+      <ChangeRom />
     </SidebarLinks>
   </Sidebar>
 )
