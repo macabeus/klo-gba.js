@@ -65,9 +65,9 @@ const Map = ({
           width={(width * 4) + resolution} //   workaround because, for some unknown reason, we need to update the size of the stage when we change its resolution
           height={(height * 4) + resolution} // https://github.com/inlet/react-pixi/issues/127
           options={{
-          antialias: true,
-          resolution,
-          transparent: true,
+            antialias: true,
+            resolution,
+            transparent: true,
           }}
           onMount={setPixiApplication}
         >
