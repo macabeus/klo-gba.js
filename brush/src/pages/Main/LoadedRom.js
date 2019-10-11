@@ -7,8 +7,8 @@ import {
   Spacing,
 } from 'former-kit'
 import ObjectsTable from '../../components/ObjectsTable'
+import DisplayMapOptionsContext from '../../context/DisplayMapOptionsContext'
 import VisionContext from '../../context/VisionContext'
-import DisplayMapOptios from '../../components/DisplayMapOptions'
 import Map from '../../components/Map'
 import MapEmptyState from '../../components/MapEmptyState'
 import SaveButton from '../../components/MapActionsBar/SaveButton'
@@ -20,11 +20,9 @@ import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
 import style from './style.css'
 
 const LoadedRom = () => {
+  const { options } = useContext(DisplayMapOptionsContext)
   const { vision } = useContext(VisionContext)
   const [highlightCoordinates, setHighlightCoordinates] = useState([-1, -1])
-  const [optShowGrid, setOptShowGrid] = useState(false)
-  const [optShowOAM, setOptShowOAM] = useState(true)
-  const [optShowPortals, setOptShowPortals] = useState(true)
   const [toolState, setToolState] = useTool()
   const [resolution, setResolution] = useState(1)
 
@@ -47,24 +45,15 @@ const LoadedRom = () => {
             />
             <Spacing size="tiny" />
             <SaveButton />
-            <Spacing size="tiny" />
-            <DisplayMapOptios
-              optShowGrid={optShowGrid}
-              optShowOAM={optShowOAM}
-              optShowPortals={optShowPortals}
-              onChangeOptShowGrid={setOptShowGrid}
-              onChangeOptShowOAM={setOptShowOAM}
-              onChangeOptShowPortals={setOptShowPortals}
-            />
           </Flexbox>
 
           {
             (vision.state === 'selected') ?
               <Map
                 highlightCoordinates={highlightCoordinates}
-                optShowGrid={optShowGrid}
-                optShowOAM={optShowOAM}
-                optShowPortals={optShowPortals}
+                optShowGrid={options.showGrid}
+                optShowOAM={options.showOAM}
+                optShowPortals={options.showPortals}
                 toolState={toolState}
                 resolution={resolution}
               /> :
