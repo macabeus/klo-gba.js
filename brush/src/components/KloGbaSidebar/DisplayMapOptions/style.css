@@ -1,3 +1,4 @@
+@import "former-kit-skin-pagarme/dist/styles/colors/light.css";
 @import "former-kit-skin-pagarme/dist/styles/spacing.css";
 @import "former-kit-skin-pagarme/dist/styles/sidebar/properties.css";
 
@@ -10,5 +11,22 @@
 
   & * {
     color: var(--sidebar-title-color);
+  }
+}
+
+.zoomSelector * {
+  color: var(--color-light-carbon-60);
+  padding: 0;
+
+  & label > span:not(:first-child):not(:last-child) {
+    padding-right: var(--spacing-tiny);
+    padding-left: var(--spacing-tiny);
+  }
+
+  & button:first-child, & button:last-child {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: var(--spacing-small);
+    padding-right: var(--spacing-small);
   }
 }

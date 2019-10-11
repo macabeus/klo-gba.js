@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import DisplayMapOptionsContext from '../context/DisplayMapOptionsContext'
 
 const DisplayMapOptionsProvider = ({ children }) => {
+  const [zoom, setZoom] = useState(1)
   const [showGrid, setShowGrid] = useState(false)
   const [showOAM, setShowOAM] = useState(true)
   const [showPortals, setShowPortals] = useState(true)
@@ -14,11 +15,13 @@ const DisplayMapOptionsProvider = ({ children }) => {
           showGrid,
           showOAM,
           showPortals,
+          zoom,
         },
         setOptions: {
           setShowGrid,
           setShowOAM,
           setShowPortals,
+          setZoom,
         },
       }}
     >
