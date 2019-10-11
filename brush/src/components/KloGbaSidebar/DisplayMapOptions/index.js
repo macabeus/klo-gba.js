@@ -5,6 +5,7 @@ import {
   SidebarLink,
 } from 'former-kit'
 import DisplayMapOptionsContext from '../../../context/DisplayMapOptionsContext'
+import ZoomSelector from './ZoomSelector'
 import style from './style.css'
 
 const DisplayMapOptions = () => {
@@ -13,6 +14,8 @@ const DisplayMapOptions = () => {
   return (
     <SidebarLink title="Display map options">
       <SidebarContent className={style.content}>
+        <ZoomSelector onSelectorChange={setOptions.setZoom} />
+
         <Checkbox
           label="Show grid"
           name="optShowGrid"

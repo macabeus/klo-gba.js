@@ -14,7 +14,6 @@ import MapEmptyState from '../../components/MapEmptyState'
 import SaveButton from '../../components/MapActionsBar/SaveButton'
 import SwitchTool from '../../components/MapActionsBar/SwitchTool'
 import TileSet from '../../components/TileSet'
-import ZoomSelector from '../../components/ZoomSelector'
 import useTool from '../../hooks/useTool'
 import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
 import style from './style.css'
@@ -24,7 +23,6 @@ const LoadedRom = () => {
   const { vision } = useContext(VisionContext)
   const [highlightCoordinates, setHighlightCoordinates] = useState([-1, -1])
   const [toolState, setToolState] = useTool()
-  const [resolution, setResolution] = useState(1)
 
   useWhenVisionChanges(() => {
     setHighlightCoordinates([-1, -1])
@@ -40,9 +38,6 @@ const LoadedRom = () => {
               toolState={toolState}
             />
             <Spacing />
-            <ZoomSelector
-              onSelectorChange={setResolution}
-            />
             <Spacing size="tiny" />
             <SaveButton />
           </Flexbox>
@@ -55,7 +50,7 @@ const LoadedRom = () => {
                 optShowOAM={options.showOAM}
                 optShowPortals={options.showPortals}
                 toolState={toolState}
-                resolution={resolution}
+                resolution={options.zoom}
               /> :
               <MapEmptyState />
           }
