@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import DisplayMapOptionsContext from '../context/DisplayMapOptionsContext'
+import { zoomValues, defaultZoomIndex } from '../constants/zoomValues'
 
 const DisplayMapOptionsProvider = ({ children }) => {
-  const [zoom, setZoom] = useState(1)
+  const [zoom, setZoom] = useState(zoomValues[defaultZoomIndex])
   const [showGrid, setShowGrid] = useState(false)
   const [showOAM, setShowOAM] = useState(true)
   const [showPortals, setShowPortals] = useState(true)
