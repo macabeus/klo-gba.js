@@ -33,14 +33,14 @@ const useROMBuffer = () => {
   const cancelOnHoldROMBufferState = () =>
     setROMBufferState(romBufferStates.loaded(romBufferState.memory))
 
-  const updateROMBufferState = (newRomBufferMemory) => {
+  const setMemoryROMBufferState = (newRomBufferMemory) => {
     setROMBufferState(romBufferStates.loaded(newRomBufferMemory))
     localforage.setItem('romBuffer', newRomBufferMemory)
   }
 
   return [
     romBufferState,
-    updateROMBufferState,
+    setMemoryROMBufferState,
     putOnHoldROMBufferState,
     cancelOnHoldROMBufferState,
   ]
@@ -49,7 +49,7 @@ const useROMBuffer = () => {
 const ROMProvider = ({ children }) => {
   const [
     romBuffer,
-    setROMBuffer,
+    setMemoryROMBufferState,
     putOnHoldROMBufferState,
     cancelOnHoldROMBufferState,
   ] = useROMBuffer()
@@ -61,7 +61,7 @@ const ROMProvider = ({ children }) => {
         putOnHoldROMBufferState,
         romBufferMemory: romBuffer.memory,
         romBufferStatus: romBuffer.status,
-        setROMBuffer,
+        setMemoryROMBufferState,
       }}
     >
       {children}

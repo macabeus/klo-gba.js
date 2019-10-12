@@ -31,7 +31,7 @@ const getFileContent = async file =>
     reader.readAsArrayBuffer(file)
   })
 
-const handleChange = (setROMBuffer, onErrorHandle) =>
+const handleChange = (setMemoryROMBufferState, onErrorHandle) =>
   async (event, [[, file]]) => {
     let fileContent
 
@@ -42,15 +42,15 @@ const handleChange = (setROMBuffer, onErrorHandle) =>
       return
     }
 
-    setROMBuffer(fileContent)
+    setMemoryROMBufferState(fileContent)
   }
 
 const InputROM = ({ setError }) => {
-  const { setROMBuffer } = useContext(ROMContext)
+  const { setMemoryROMBufferState } = useContext(ROMContext)
 
   return (
     <Flexbox justifyContent="center" className={style.alertMargin}>
-      <FileReaderInput as="binary" onChange={handleChange(setROMBuffer, setError)}>
+      <FileReaderInput as="binary" onChange={handleChange(setMemoryROMBufferState, setError)}>
         <Button>Browse Files</Button>
       </FileReaderInput>
     </Flexbox>
