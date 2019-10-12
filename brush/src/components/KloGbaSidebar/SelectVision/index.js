@@ -8,6 +8,7 @@ const SelectVision = () => {
   const { romBufferMemory } = useContext(ROMContext)
   const {
     updateVision,
+    vision,
     visionIndex,
     visionWorld,
   } = useContext(VisionContext)
@@ -23,7 +24,8 @@ const SelectVision = () => {
       title={`${info.location.worldName} - ${info.location.index}`}
       onClick={() => setNewVision(`${info.location.world}-${info.location.index}`)}
       active={
-        visionWorld === `${info.location.world}`
+        vision.state === 'selected'
+        && visionWorld === `${info.location.world}`
         && visionIndex === `${info.location.index}`
       }
       key={`${info.location.world}-${info.location.index}`}
