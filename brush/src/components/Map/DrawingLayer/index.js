@@ -6,7 +6,6 @@ import { fromSchemeGetTileNameById } from 'scissors'
 const DrawingLayer = ({
   getTilemapPoint,
   height,
-  resolution,
   scheme,
   setSelectedPointInfos,
   toolState,
@@ -48,13 +47,13 @@ const DrawingLayer = ({
         g.clear()
 
         g.beginFill(0x000000, 0.01)
-        g.drawRect(0, 0, width * 4 * resolution, height * 4 * resolution)
+        g.drawRect(0, 0, width * 4, height * 4)
       }}
       interactive
       pointerdown={e =>
         onClickHandler(
-          Math.floor(e.data.global.x / 4 / resolution),
-          Math.floor(e.data.global.y / 4 / resolution)
+          Math.floor(e.data.global.x / 4),
+          Math.floor(e.data.global.y / 4)
         )
       }
     />
@@ -64,7 +63,6 @@ const DrawingLayer = ({
 DrawingLayer.propTypes = {
   getTilemapPoint: PropTypes.func.isRequired,
   height: PropTypes.number.isRequired,
-  resolution: PropTypes.number.isRequired,
   scheme: PropTypes.arrayOf(PropTypes.shape({
     ids: PropTypes.arrayOf(PropTypes.number).isRequired,
     name: PropTypes.string.isRequired,
