@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   Alert,
+  Button,
   Grid,
   Row,
   Col,
@@ -10,9 +11,11 @@ import {
 } from 'former-kit'
 import IconClose from 'emblematic-icons/svg/ClearClose32.svg'
 import InputRomButton from './InputRomButton'
+import ROMContext from '../../context/ROMContext'
 import KlonoaModal from '../../../assets/Klonoa_modal_vector.svg'
 
 const InputRomModal = () => {
+  const { cancelOnHoldROMBufferState, romBufferStatus } = useContext(ROMContext)
   const [error, setError] = useState(null)
 
   return (
@@ -36,6 +39,11 @@ const InputRomModal = () => {
               <ModalTitle title="Please, select your ROM file" />
 
               <InputRomButton setError={setError} />
+
+              {
+                romBufferStatus === 'holding'
+                && <Button relevance="low" fill="clean" onClick={cancelOnHoldROMBufferState}>Cancel</Button>
+              }
             </Flexbox>
           </Col>
         </Row>

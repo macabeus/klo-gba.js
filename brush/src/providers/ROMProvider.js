@@ -6,6 +6,7 @@ import ROMContext from '../context/ROMContext'
 const useROMBuffer = () => {
   const romBufferStates = {
     empty: { memory: null, status: 'empty' },
+    holding: memory => ({ memory, status: 'holding' }),
     loaded: memory => ({ memory, status: 'loaded' }),
     starting: { memory: null, status: 'starting' },
   }
@@ -26,27 +27,38 @@ const useROMBuffer = () => {
     fetchLocalROMBufferMemory()
   }, []) /* it should run only once */ // eslint-disable-line react-hooks/exhaustive-deps
 
+  const putOnHoldROMBufferState = () =>
+    setROMBufferState(romBufferStates.holding(romBufferState.memory))
+
+  const cancelOnHoldROMBufferState = () =>
+    setROMBufferState(romBufferStates.loaded(romBufferState.memory))
+
   const updateROMBufferState = (newRomBufferMemory) => {
-    if (newRomBufferMemory === null) {
-      setROMBufferState(romBufferStates.empty)
-      localforage.removeItem('romBuffer')
-
-      return
-    }
-
     setROMBufferState(romBufferStates.loaded(newRomBufferMemory))
     localforage.setItem('romBuffer', newRomBufferMemory)
   }
 
-  return [romBufferState, updateROMBufferState]
+  return [
+    romBufferState,
+    updateROMBufferState,
+    putOnHoldROMBufferState,
+    cancelOnHoldROMBufferState,
+  ]
 }
 
 const ROMProvider = ({ children }) => {
-  const [romBuffer, setROMBuffer] = useROMBuffer()
+  const [
+    romBuffer,
+    setROMBuffer,
+    putOnHoldROMBufferState,
+    cancelOnHoldROMBufferState,
+  ] = useROMBuffer()
 
   return (
     <ROMContext.Provider
       value={{
+        cancelOnHoldROMBufferState,
+        putOnHoldROMBufferState,
         romBufferMemory: romBuffer.memory,
         romBufferStatus: romBuffer.status,
         setROMBuffer,

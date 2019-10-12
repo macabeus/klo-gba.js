@@ -9,6 +9,7 @@ const Main = () => {
 
   const contentStates = {
     empty: EmptyRom,
+    holding: EmptyRom,
     loaded: LoadedRom,
     starting: () => null,
   }
