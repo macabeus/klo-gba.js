@@ -1,15 +1,15 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import { Table } from 'former-kit'
-import { oamIdToName } from 'scissors'
+import { objectIdToName } from 'scissors'
 import { defaultTo } from 'ramda'
 import VisionContext from '../../context/VisionContext'
 
 const ObjectsTable = ({ onRowClickHandler }) => {
-  const { oam } = useContext(VisionContext).vision
+  const { objects } = useContext(VisionContext).vision
 
-  const rows = oam
-    .map(oamEntry => oamEntry.data)
+  const rows = objects
+    .map(objectEntry => objectEntry.data)
     .map(({
       kind,
       xStage1,
@@ -19,7 +19,7 @@ const ObjectsTable = ({ onRowClickHandler }) => {
       yStage2,
       yStage3,
     }) => {
-      const name = defaultTo('unknown', oamIdToName[kind])
+      const name = defaultTo('unknown', objectIdToName[kind])
 
       return [
         {

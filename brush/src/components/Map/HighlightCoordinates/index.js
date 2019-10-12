@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Graphics } from '@inlet/react-pixi'
 
 const SIZE = 4
-const OAM_SCALE = 8
+const OBJECTS_SCALE = 8
 
 const HighlightCoordinates = ({
   coordinates,
@@ -11,8 +11,8 @@ const HighlightCoordinates = ({
   width,
 }) => {
   const [x, y] = coordinates
-  const xScaled = ((x * SIZE) / OAM_SCALE) - 2
-  const yScaled = ((y * SIZE) / OAM_SCALE) - 2
+  const xScaled = ((x * SIZE) / OBJECTS_SCALE) - 2
+  const yScaled = ((y * SIZE) / OBJECTS_SCALE) - 2
 
   return (
     <Graphics

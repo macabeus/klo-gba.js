@@ -9,8 +9,8 @@ const VisionProvider = ({ children }) => {
 
   const emptyState = {
     infos: { index: 0, tilemap: { height: 0, scheme: [], width: 0 }, world: 0 },
-    oam: [],
-    oamDiffMap: {},
+    objects: [],
+    objectsDiffMap: {},
     state: 'noSelected',
     tilemap: new Uint8Array(),
   }
@@ -27,7 +27,7 @@ const VisionProvider = ({ children }) => {
     newVision.state = 'selected'
     newVision.infos.world = world
     newVision.infos.index = index
-    newVision.oamDiffMap = {}
+    newVision.objectsDiffMap = {}
     setVision(newVision)
   }
 
@@ -38,19 +38,19 @@ const VisionProvider = ({ children }) => {
   const getTilemapPoint = (x, y) =>
     vision.tilemap[x + (y * vision.infos.tilemap.width)]
 
-  const updateOAMDiffMap = (index, key, value) => {
-    if (vision.oamDiffMap[index] === undefined) {
-      vision.oamDiffMap[index] = {}
+  const updateObjectsDiffMap = (index, key, value) => {
+    if (vision.objectsDiffMap[index] === undefined) {
+      vision.objectsDiffMap[index] = {}
     }
 
-    vision.oamDiffMap[index][key] = value
+    vision.objectsDiffMap[index][key] = value
   }
 
   return (
     <VisionContext.Provider value={{
       getTilemapPoint,
       setEmptyState,
-      updateOAMDiffMap,
+      updateObjectsDiffMap,
       updateTilemapPoint,
       updateVision,
       vision,

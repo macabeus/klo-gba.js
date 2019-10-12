@@ -1,4 +1,4 @@
-const oamIdToName = {
+const objectIdToName = {
   0x01: 'redKey',
   0x02: 'blueKey',
   0x03: 'star',
@@ -13,4 +13,4 @@ const oamIdToName = {
   0x78: 'flyingMooVerical',
 }
 
-export { oamIdToName } // eslint-disable-line import/prefer-default-export
+export { objectIdToName } // eslint-disable-line import/prefer-default-export

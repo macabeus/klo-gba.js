@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { defaultTo, pipe } from 'ramda'
-import { oamIdToName } from 'scissors'
+import { objectIdToName } from 'scissors'
 import Point from '.'
 
-const oamIdToColor = {
+const objectIdToColor = {
   0x01: [0xBC1616, 1],
   0x02: [0x1616BC, 1],
   0x03: [0xFFE80D, 1],
@@ -19,27 +19,27 @@ const oamIdToColor = {
   0x78: [0x21722B, 1],
 }
 
-const PointOam = ({
-  oamId,
-  oamIndex,
+const PointObject = ({
+  objectId,
+  objectIndex,
   onFinishDragAndDrop,
   showPointInfosHandle,
   stage,
   x,
   y,
 }) => {
-  const name = defaultTo('unknown', oamIdToName[oamId])
-  const color = defaultTo([0x000000, 1], oamIdToColor[oamId])
+  const name = defaultTo('unknown', objectIdToName[objectId])
+  const color = defaultTo([0x000000, 1], objectIdToColor[objectId])
 
   const getInformations = () => ({
-    message: `OAM ${name} (${oamId}) from stage ${stage}`,
+    message: `Object ${name} (${objectId}) from stage ${stage}`,
     x,
     y,
   })
 
-  const saveNewOAMPosition = (newX, newY) => {
-    onFinishDragAndDrop(oamIndex, `xStage${stage}`, newX)
-    onFinishDragAndDrop(oamIndex, `yStage${stage}`, newY)
+  const saveNewObjectPosition = (newX, newY) => {
+    onFinishDragAndDrop(objectIndex, `xStage${stage}`, newX)
+    onFinishDragAndDrop(objectIndex, `yStage${stage}`, newY)
   }
 
   return (<Point
@@ -47,16 +47,16 @@ const PointOam = ({
     draggable
     hasStroke
     onHoverHandle={pipe(getInformations, showPointInfosHandle)}
-    onFinishDragAndDropHandle={saveNewOAMPosition}
+    onFinishDragAndDropHandle={saveNewObjectPosition}
     scale={8}
     x={x}
     y={y}
   />)
 }
 
-PointOam.propTypes = {
-  oamId: PropTypes.number.isRequired,
-  oamIndex: PropTypes.number.isRequired,
+PointObject.propTypes = {
+  objectId: PropTypes.number.isRequired,
+  objectIndex: PropTypes.number.isRequired,
   onFinishDragAndDrop: PropTypes.func,
   showPointInfosHandle: PropTypes.func,
   stage: PropTypes.number.isRequired,
@@ -64,9 +64,9 @@ PointOam.propTypes = {
   y: PropTypes.number.isRequired,
 }
 
-PointOam.defaultProps = {
+PointObject.defaultProps = {
   onFinishDragAndDrop: () => {},
   showPointInfosHandle: () => {},
 }
 
-export default PointOam
+export default PointObject

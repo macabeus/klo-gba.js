@@ -24,11 +24,11 @@ const DisplayMapOptions = () => {
           onChange={() => setOptions.setShowGrid(!options.showGrid)}
         />
         <Checkbox
-          label="Show OAM"
-          name="optShowOAM"
-          value={`${options.showOAM}`}
-          checked={options.showOAM}
-          onChange={() => setOptions.setShowOAM(!options.showOAM)}
+          label="Show Objects"
+          name="optShowObjects"
+          value={`${options.showObjects}`}
+          checked={options.showObjects}
+          onChange={() => setOptions.setShowObjects(!options.showObjects)}
         />
         <Checkbox
           label="Show Portals"
