@@ -5,6 +5,7 @@ import React, {
   useRef,
 } from 'react'
 import PropTypes from 'prop-types'
+import * as PIXI from 'pixi.js'
 import { Stage } from '@inlet/react-pixi'
 import MapFooter from '../MapFooter'
 import HighlightCoordinates from './HighlightCoordinates'
@@ -54,7 +55,13 @@ const Map = ({
     pixiApplication !== null
     && pixiApplication.renderer.resolution !== resolution
   ) {
+    PIXI.settings.RESOLUTION = resolution
     pixiApplication.renderer.resolution = resolution
+
+    pixiApplication.renderer.plugins.interaction.destroy()
+    pixiApplication.renderer.plugins.interaction =
+      new PIXI.interaction.InteractionManager(pixiApplication.renderer)
+
     pixiApplication.render()
   }
 
@@ -78,7 +85,6 @@ const Map = ({
           <DrawingLayer
             getTilemapPoint={getTilemapPoint}
             height={height * 4}
-            resolution={resolution}
             scheme={scheme}
             setSelectedPointInfos={setSelectedPointInfos}
             toolState={toolState}
