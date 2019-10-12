@@ -26,7 +26,7 @@ const extractFullTilemap = (romBuffer, [addressStart, addressEnd]) =>
   |> huffmanDecode
   |> lzssDecode
 
-const extractOAM = (romBuffer, [addressStart, addressEnd]) =>
+const extractObjects = (romBuffer, [addressStart, addressEnd]) =>
   romBuffer.slice(addressStart, addressEnd)
   |> splitEvery(44)
   |> map(memory => ({
@@ -112,18 +112,18 @@ const getVision = (romBuffer, world, vision) => {
     },
   })
 
-  const oam = extractOAM(romBuffer, infos.rom.oam)
+  const objects = extractObjects(romBuffer, infos.rom.objects)
   const portals = extractPortals(romBuffer, infos.rom.portals)
 
   return {
     infos,
-    oam,
+    objects,
     portals,
     tilemap: tilemapProxy,
   }
 }
 
-const applyOAMDiff = (romBuffer, oamStartAddress, oamDiffs) => {
+const applyObjectsDiff = (romBuffer, objectsStartAddress, objectsDiffs) => {
   /* eslint-disable sort-keys */
   const mapKeyToOffset = {
     xStage1: 0,
@@ -139,18 +139,18 @@ const applyOAMDiff = (romBuffer, oamStartAddress, oamDiffs) => {
   }
   /* eslint-enable sort-keys */
 
-  const updateROM = (diffs, oamIndex) => {
-    const oamObjectMemoryAddressStart = oamStartAddress + (oamIndex * 44)
+  const updateROM = (diffs, objectIndex) => {
+    const objectMemoryAddressStart = objectsStartAddress + (objectIndex * 44)
 
     mapObjIndexed((value, key) => {
       const offset = mapKeyToOffset[key]
       const bytes = splitHexValueIntoBytesArray(value, 2)
 
-      romBuffer.set(bytes, oamObjectMemoryAddressStart + offset)
+      romBuffer.set(bytes, objectMemoryAddressStart + offset)
     }, diffs)
   }
 
-  mapObjIndexed(updateROM, oamDiffs)
+  mapObjIndexed(updateROM, objectsDiffs)
 }
 
 const compressTilemap = buffer =>
@@ -159,15 +159,15 @@ const compressTilemap = buffer =>
   |> lzssEncode
   |> huffmanEncode
 
-const saveVision = (romBuffer, world, index, tilemap, oamDiffMap) => {
+const saveVision = (romBuffer, world, index, tilemap, objectsDiffsMap) => {
   const infos = loadVisionInfo(world, index)
   const [customTilemapStartAddress] = infos.rom.customTilemap
-  const [oamStartAddress] = infos.rom.oam
+  const [objectsStartAddress] = infos.rom.objects
 
   const encoded = compressTilemap(tilemap)
   romBuffer.set(encoded, customTilemapStartAddress)
 
-  applyOAMDiff(romBuffer, oamStartAddress, oamDiffMap)
+  applyObjectsDiff(romBuffer, objectsStartAddress, objectsDiffsMap)
 
   setPatchCustomVisionLoader(romBuffer)
 

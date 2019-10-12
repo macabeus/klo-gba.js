@@ -12,7 +12,7 @@ import HighlightCoordinates from './HighlightCoordinates'
 import VisionContext from '../../context/VisionContext'
 import TilemapLayer from './TilemapLayer'
 import DrawingLayer from './DrawingLayer'
-import OAMLayer from './OAMLayer'
+import ObjectsLayer from './ObjectsLayer'
 import PortalsLayer from './PortalsLayer'
 import GridLayer from './GridLayer'
 import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
@@ -21,14 +21,14 @@ import style from './style.css'
 const Map = ({
   highlightCoordinates,
   optShowGrid,
-  optShowOAM,
+  optShowObjects,
   optShowPortals,
   resolution,
   toolState,
 }) => {
   const {
     getTilemapPoint,
-    updateOAMDiffMap,
+    updateObjectsDiffMap,
     updateTilemapPoint,
     vision,
   } = useContext(VisionContext)
@@ -92,8 +92,8 @@ const Map = ({
             updateTilemapPoint={updateTilemapPoint}
             width={width * 4}
           />
-          {optShowOAM && <OAMLayer
-            updateOAMDiffMap={updateOAMDiffMap}
+          {optShowObjects && <ObjectsLayer
+            updateObjectsDiffMap={updateObjectsDiffMap}
             setSelectedPointInfos={setSelectedPointInfos}
             totalStages={totalStages}
             vision={vision}
@@ -118,7 +118,7 @@ const Map = ({
 Map.propTypes = {
   highlightCoordinates: PropTypes.arrayOf(PropTypes.number),
   optShowGrid: PropTypes.bool,
-  optShowOAM: PropTypes.bool,
+  optShowObjects: PropTypes.bool,
   optShowPortals: PropTypes.bool,
   resolution: PropTypes.number,
   toolState: PropTypes.shape({
@@ -130,7 +130,7 @@ Map.propTypes = {
 Map.defaultProps = {
   highlightCoordinates: [-1, -1],
   optShowGrid: false,
-  optShowOAM: true,
+  optShowObjects: true,
   optShowPortals: true,
   resolution: 1,
 }

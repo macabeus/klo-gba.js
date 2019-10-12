@@ -4,13 +4,15 @@ import { saveVision } from 'scissors'
 import ROMContext from '../../context/ROMContext'
 import VisionContext from '../../context/VisionContext'
 
-const romDownload = (romBufferMemory, world, index, tilemap, oamDiffMap) => {
+const romDownload = (
+  romBufferMemory, world, index, tilemap, objectsDiffMap
+) => {
   const newMemoryROM = saveVision(
     romBufferMemory,
     world,
     index,
     tilemap,
-    oamDiffMap
+    objectsDiffMap
   )
 
   const blob = new Blob([newMemoryROM])
@@ -30,7 +32,7 @@ const SaveButton = () => {
   const { romBufferMemory } = useContext(ROMContext)
   const {
     vision: {
-      oamDiffMap,
+      objectsDiffMap,
       state,
       tilemap,
     },
@@ -46,7 +48,7 @@ const SaveButton = () => {
           visionWorld,
           visionIndex,
           tilemap,
-          oamDiffMap
+          objectsDiffMap
         )
       }}
       disabled={state === 'noSelected'}

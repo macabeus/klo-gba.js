@@ -1,29 +1,29 @@
 import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import { range } from 'ramda'
-import PointOam from '../Point/PointOam'
+import PointObject from '../Point/PointObject'
 
-const OAMLayer = ({
+const ObjectsLayer = ({
   setSelectedPointInfos,
   totalStages,
-  updateOAMDiffMap,
+  updateObjectsDiffMap,
   vision,
 }) => {
-  const { oam } = vision
+  const { objects } = vision
 
-  const oamList = oam
-    .map(oamEntry => oamEntry.data)
-    .map((oamData, oamIndex) =>
+  const objectsList = objects
+    .map(objectEntry => objectEntry.data)
+    .map((objectData, objectIndex) =>
       range(1, totalStages + 1).map((i) => {
-        const x = oamData[`xStage${i}`]
-        const y = oamData[`yStage${i}`]
+        const x = objectData[`xStage${i}`]
+        const y = objectData[`yStage${i}`]
 
         return (
-          <PointOam
-            onFinishDragAndDrop={updateOAMDiffMap}
+          <PointObject
+            onFinishDragAndDrop={updateObjectsDiffMap}
             key={`${x} ${y} ${i}`}
-            oamId={oamData.kind}
-            oamIndex={oamIndex}
+            objectId={objectData.kind}
+            objectIndex={objectIndex}
             stage={i}
             showPointInfosHandle={setSelectedPointInfos}
             x={x}
@@ -34,26 +34,26 @@ const OAMLayer = ({
 
   return (
     <Fragment>
-      {oamList}
+      {objectsList}
     </Fragment>
   )
 }
 
-OAMLayer.propTypes = {
+ObjectsLayer.propTypes = {
   setSelectedPointInfos: PropTypes.func,
   totalStages: PropTypes.number.isRequired,
-  updateOAMDiffMap: PropTypes.func,
+  updateObjectsDiffMap: PropTypes.func,
   vision: PropTypes.shape({
-    oam: PropTypes.arrayOf(PropTypes.shape({
+    objects: PropTypes.arrayOf(PropTypes.shape({
       data: PropTypes.object.isRequired,
       memory: PropTypes.object.isRequired,
     })).isRequired,
   }).isRequired,
 }
 
-OAMLayer.defaultProps = {
+ObjectsLayer.defaultProps = {
   setSelectedPointInfos: () => {},
-  updateOAMDiffMap: () => {},
+  updateObjectsDiffMap: () => {},
 }
 
-export default OAMLayer
+export default ObjectsLayer

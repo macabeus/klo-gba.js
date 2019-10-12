@@ -47,7 +47,7 @@ const LoadedRom = () => {
               <Map
                 highlightCoordinates={highlightCoordinates}
                 optShowGrid={options.showGrid}
-                optShowOAM={options.showOAM}
+                optShowObjects={options.showObjects}
                 optShowPortals={options.showPortals}
                 toolState={toolState}
                 resolution={options.zoom}
