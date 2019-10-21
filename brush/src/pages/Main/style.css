@@ -13,3 +13,13 @@ body {
 .cardTilemap canvas {
   padding-top: var(--spacing-tiny);
 }
+
+.containerSecondRow {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.cardObjectsDetail {
+  flex-shrink: 2;
+  margin-left: var(--spacing-small);
+}

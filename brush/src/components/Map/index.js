@@ -24,6 +24,7 @@ const Map = ({
   optShowObjects,
   optShowPortals,
   resolution,
+  setSelectedObject,
   toolState,
 }) => {
   const {
@@ -96,6 +97,7 @@ const Map = ({
             updateObjectsDiffMap={updateObjectsDiffMap}
             setSelectedPointInfos={setSelectedPointInfos}
             totalStages={totalStages}
+            setSelectedObject={setSelectedObject}
             vision={vision}
           />}
           {optShowPortals && <PortalsLayer vision={vision} />}
@@ -121,6 +123,7 @@ Map.propTypes = {
   optShowObjects: PropTypes.bool,
   optShowPortals: PropTypes.bool,
   resolution: PropTypes.number,
+  setSelectedObject: PropTypes.func,
   toolState: PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.any,
@@ -133,6 +136,7 @@ Map.defaultProps = {
   optShowObjects: true,
   optShowPortals: true,
   resolution: 1,
+  setSelectedObject: () => {},
 }
 
 export default Map

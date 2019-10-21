@@ -6,6 +6,7 @@ import {
   Flexbox,
   Spacing,
 } from 'former-kit'
+import ObjectDetail from '../../components/ObjectDetail'
 import ObjectsTable from '../../components/ObjectsTable'
 import DisplayMapOptionsContext from '../../context/DisplayMapOptionsContext'
 import VisionContext from '../../context/VisionContext'
@@ -21,11 +22,13 @@ import style from './style.css'
 const LoadedRom = () => {
   const { options } = useContext(DisplayMapOptionsContext)
   const { vision } = useContext(VisionContext)
+  const [selectedObject, setSelectedObject] = useState(null)
   const [highlightCoordinates, setHighlightCoordinates] = useState([-1, -1])
   const [toolState, setToolState] = useTool()
 
   useWhenVisionChanges(() => {
     setHighlightCoordinates([-1, -1])
+    setSelectedObject(null)
   })
 
   return (
@@ -49,6 +52,7 @@ const LoadedRom = () => {
                 optShowGrid={options.showGrid}
                 optShowObjects={options.showObjects}
                 optShowPortals={options.showPortals}
+                setSelectedObject={setSelectedObject}
                 toolState={toolState}
                 resolution={options.zoom}
               /> :
@@ -59,12 +63,21 @@ const LoadedRom = () => {
 
       <Spacing />
 
-      <Card>
-        <CardTitle title="Tile Set" />
-        <CardContent>
-          <TileSet setToolState={setToolState} />
-        </CardContent>
-      </Card>
+      <Flexbox className={style.containerSecondRow}>
+        <Card>
+          <CardTitle title="Tile Set" />
+          <CardContent>
+            <TileSet setToolState={setToolState} />
+          </CardContent>
+        </Card>
+
+        <Card className={style.cardObjectsDetail}>
+          <CardTitle title="Object Detail" />
+          <CardContent>
+            <ObjectDetail objectIndex={selectedObject} />
+          </CardContent>
+        </Card>
+      </Flexbox>
 
       <Spacing />
 

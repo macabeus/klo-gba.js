@@ -4,6 +4,7 @@ import { range } from 'ramda'
 import PointObject from '../Point/PointObject'
 
 const ObjectsLayer = ({
+  setSelectedObject,
   setSelectedPointInfos,
   totalStages,
   updateObjectsDiffMap,
@@ -25,6 +26,7 @@ const ObjectsLayer = ({
             objectId={objectData.kind}
             objectIndex={objectIndex}
             stage={i}
+            onClickHandle={setSelectedObject}
             showPointInfosHandle={setSelectedPointInfos}
             x={x}
             y={y}
@@ -40,6 +42,7 @@ const ObjectsLayer = ({
 }
 
 ObjectsLayer.propTypes = {
+  setSelectedObject: PropTypes.func,
   setSelectedPointInfos: PropTypes.func,
   totalStages: PropTypes.number.isRequired,
   updateObjectsDiffMap: PropTypes.func,
@@ -52,6 +55,7 @@ ObjectsLayer.propTypes = {
 }
 
 ObjectsLayer.defaultProps = {
+  setSelectedObject: () => {},
   setSelectedPointInfos: () => {},
   updateObjectsDiffMap: () => {},
 }
