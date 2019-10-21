@@ -9,6 +9,7 @@ const Point = ({
   color,
   draggable,
   hasStroke,
+  onClickHandle,
   onFinishDragAndDropHandle,
   onHoverHandle,
   scale,
@@ -51,6 +52,7 @@ const Point = ({
 
       g.drawRect(scaledX, scaledY, width, height)
     }}
+    pointerdown={onClickHandle}
     pointerover={() => {
       onHoverHandle()
       setIsHover(true)
@@ -62,6 +64,7 @@ const Point = ({
 Point.propTypes = {
   color: PropTypes.arrayOf(PropTypes.number).isRequired,
   hasStroke: PropTypes.bool,
+  onClickHandle: PropTypes.func,
   onHoverHandle: PropTypes.func,
   scale: PropTypes.number,
   size: PropTypes.number,
@@ -71,6 +74,7 @@ Point.propTypes = {
 
 Point.defaultProps = {
   hasStroke: false,
+  onClickHandle: () => {},
   onHoverHandle: () => {},
   scale: 1,
   size: 1,

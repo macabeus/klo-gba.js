@@ -12,6 +12,11 @@ const withDraggable = (
   const [dragging, setDragging] = useState(false)
   const [parent, setParent] = useState(null)
 
+  const finishedDragAndDrop = () => {
+    onFinishDragAndDropHandle(x, y)
+    setDragging(false)
+  }
+
   return {
     ...Point,
     props: {
@@ -36,10 +41,8 @@ const withDraggable = (
         setX(newX)
         setY(newY)
       },
-      mouseupoutside: () => {
-        onFinishDragAndDropHandle(x, y)
-        setDragging(false)
-      },
+      mouseupoutside: finishedDragAndDrop,
+      pointerup: finishedDragAndDrop,
     },
   }
 }

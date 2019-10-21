@@ -22,6 +22,7 @@ const objectIdToColor = {
 const PointObject = ({
   objectId,
   objectIndex,
+  onClickHandle,
   onFinishDragAndDrop,
   showPointInfosHandle,
   stage,
@@ -42,10 +43,13 @@ const PointObject = ({
     onFinishDragAndDrop(objectIndex, `yStage${stage}`, newY)
   }
 
+  const onClick = () => onClickHandle(objectIndex)
+
   return (<Point
     color={color}
     draggable
     hasStroke
+    onClickHandle={onClick}
     onHoverHandle={pipe(getInformations, showPointInfosHandle)}
     onFinishDragAndDropHandle={saveNewObjectPosition}
     scale={8}
@@ -57,6 +61,7 @@ const PointObject = ({
 PointObject.propTypes = {
   objectId: PropTypes.number.isRequired,
   objectIndex: PropTypes.number.isRequired,
+  onClickHandle: PropTypes.func,
   onFinishDragAndDrop: PropTypes.func,
   showPointInfosHandle: PropTypes.func,
   stage: PropTypes.number.isRequired,
@@ -65,6 +70,7 @@ PointObject.propTypes = {
 }
 
 PointObject.defaultProps = {
+  onClickHandle: () => {},
   onFinishDragAndDrop: () => {},
   showPointInfosHandle: () => {},
 }

@@ -2,10 +2,13 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { getVision } from 'scissors'
 import VisionContext from '../context/VisionContext'
+import useForceUpdate from '../hooks/useForceUpdate'
 
 const VisionProvider = ({ children }) => {
   const [visionWorld, setVisionWorld] = useState(1)
   const [visionIndex, setVisionIndex] = useState(1)
+
+  const forceUpdate = useForceUpdate()
 
   const emptyState = {
     infos: { index: 0, tilemap: { height: 0, scheme: [], width: 0 }, world: 0 },
@@ -44,6 +47,8 @@ const VisionProvider = ({ children }) => {
     }
 
     vision.objectsDiffMap[index][key] = value
+
+    forceUpdate()
   }
 
   return (
