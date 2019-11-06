@@ -69,7 +69,7 @@ const Kind = ({ objectIndex, objectKind }) => {
   )
 
   return (
-    <span className={style.kind}>
+    <span className={style.attribute}>
       <strong>Kind:</strong>
 
       <ToggleDropdownKind
