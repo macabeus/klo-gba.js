@@ -1,8 +1,10 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
+import { Flexbox } from 'former-kit'
 import { range } from 'ramda'
-import { objectIdToName } from 'scissors'
 import VisionContext from '../../context/VisionContext'
+import Kind from './Kind'
+import style from './style.css'
 
 const ObjectDetail = ({ objectIndex }) => {
   const {
@@ -25,8 +27,12 @@ const ObjectDetail = ({ objectIndex }) => {
   const getFinalData = name => objectCustomizedData[name] || objectData[name]
 
   return (
-    <div>
-      <p><strong>Kind:</strong> {objectIdToName[objectData.kind]}</p>
+    <Flexbox className={style.container}>
+      <Kind
+        objectIndex={objectIndex}
+        objectKind={objectData.kind}
+      />
+
       {
         range(1, totalStages + 1).map(i => (
           <p key={i}>
@@ -34,7 +40,7 @@ const ObjectDetail = ({ objectIndex }) => {
           </p>
         ))
       }
-    </div>
+    </Flexbox>
   )
 }
 

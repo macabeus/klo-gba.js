@@ -1,0 +1,14 @@
+@import "former-kit-skin-pagarme/dist/styles/spacing.css";
+
+.container {
+  flex-direction: column;
+}
+
+.kind {
+  display: flex;
+  align-items: center;
+
+  & strong {
+    padding-right: var(--spacing-tiny);
+  }
+}
