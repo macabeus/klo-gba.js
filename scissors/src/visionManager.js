@@ -1,5 +1,6 @@
 import {
   filter,
+  fromPairs,
   identical,
   map,
   mapObjIndexed,
@@ -45,7 +46,8 @@ const extractObjects = (romBuffer, [addressStart, addressEnd]) =>
       .skip(4)
       .word16lu('xStage5')
       .word16lu('yStage5')
-      .skip(5)
+      .skip(4)
+      .word8lu('sprite')
       .word8lu('kind')
       .vars,
     memory,
@@ -115,9 +117,14 @@ const getVision = (romBuffer, world, vision) => {
   const objects = extractObjects(romBuffer, infos.rom.objects)
   const portals = extractPortals(romBuffer, infos.rom.portals)
 
+  const objectsKindToSprite =
+    objects.map(({ data: { kind, sprite } }) => [kind, sprite])
+    |> fromPairs
+
   return {
     infos,
     objects,
+    objectsKindToSprite,
     portals,
     tilemap: tilemapProxy,
   }
@@ -125,17 +132,19 @@ const getVision = (romBuffer, world, vision) => {
 
 const applyObjectsDiff = (romBuffer, objectsStartAddress, objectsDiffs) => {
   /* eslint-disable sort-keys */
-  const mapKeyToOffset = {
-    xStage1: 0,
-    yStage1: 2,
-    xStage2: 8,
-    yStage2: 10,
-    xStage3: 16,
-    yStage3: 18,
-    xStage4: 24,
-    yStage4: 26,
-    xStage5: 32,
-    yStage5: 34,
+  const mapKeyToOffsetAndSize = {
+    xStage1: [0, 2],
+    yStage1: [2, 2],
+    xStage2: [8, 2],
+    yStage2: [10, 2],
+    xStage3: [16, 2],
+    yStage3: [18, 2],
+    xStage4: [24, 2],
+    yStage4: [26, 2],
+    xStage5: [32, 2],
+    yStage5: [34, 2],
+    sprite: [40, 1],
+    kind: [41, 1],
   }
   /* eslint-enable sort-keys */
 
@@ -143,8 +152,8 @@ const applyObjectsDiff = (romBuffer, objectsStartAddress, objectsDiffs) => {
     const objectMemoryAddressStart = objectsStartAddress + (objectIndex * 44)
 
     mapObjIndexed((value, key) => {
-      const offset = mapKeyToOffset[key]
-      const bytes = splitHexValueIntoBytesArray(value, 2)
+      const [offset, size] = mapKeyToOffsetAndSize[key]
+      const bytes = splitHexValueIntoBytesArray(value, size)
 
       romBuffer.set(bytes, objectMemoryAddressStart + offset)
     }, diffs)

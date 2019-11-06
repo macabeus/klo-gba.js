@@ -42,6 +42,10 @@ const VisionProvider = ({ children }) => {
     vision.tilemap[x + (y * vision.infos.tilemap.width)]
 
   const updateObjectsDiffMap = (index, key, value) => {
+    if (key === 'kind') {
+      vision.objects[index].data.kind = value
+    }
+
     if (vision.objectsDiffMap[index] === undefined) {
       vision.objectsDiffMap[index] = {}
     }
