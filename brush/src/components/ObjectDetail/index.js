@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { Flexbox } from 'former-kit'
 import { range } from 'ramda'
 import VisionContext from '../../context/VisionContext'
+import Coordinates from './Coordinates'
 import Kind from './Kind'
 import style from './style.css'
 
-const ObjectDetail = ({ objectIndex }) => {
+const ObjectDetail = ({ objectIndex, setHighlightCoordinates }) => {
   const {
     infos: {
       tilemap: {
@@ -35,9 +36,13 @@ const ObjectDetail = ({ objectIndex }) => {
 
       {
         range(1, totalStages + 1).map(i => (
-          <p key={i}>
-            <strong>Coordenates Stage {i}:</strong> {getFinalData(`xStage${i}`)} {getFinalData(`yStage${i}`)}
-          </p>
+          <Coordinates
+            key={i}
+            setHighlightCoordinates={setHighlightCoordinates}
+            stage={i}
+            x={getFinalData(`xStage${i}`)}
+            y={getFinalData(`yStage${i}`)}
+          />
         ))
       }
     </Flexbox>
@@ -46,10 +51,12 @@ const ObjectDetail = ({ objectIndex }) => {
 
 ObjectDetail.propTypes = {
   objectIndex: PropTypes.number,
+  setHighlightCoordinates: PropTypes.func,
 }
 
 ObjectDetail.defaultProps = {
   objectIndex: null,
+  setHighlightCoordinates: () => {},
 }
 
 export default ObjectDetail
