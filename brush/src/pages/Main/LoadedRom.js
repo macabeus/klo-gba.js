@@ -6,6 +6,7 @@ import {
   Flexbox,
   Spacing,
 } from 'former-kit'
+import ClearHighlightCoordinates from '../../components/ClearHighlightCoordinates'
 import ObjectDetail from '../../components/ObjectDetail'
 import ObjectsTable from '../../components/ObjectsTable'
 import DisplayMapOptionsContext from '../../context/DisplayMapOptionsContext'
@@ -35,11 +36,17 @@ const LoadedRom = () => {
     <Fragment>
       <Card>
         <CardContent className={style.cardTilemap}>
-          <Flexbox justifyContent="flex-end">
+          <Flexbox alignItems="center" justifyContent="flex-end">
             <SwitchTool
               setToolState={setToolState}
               toolState={toolState}
             />
+            {
+              highlightCoordinates[0] !== -1
+              && <ClearHighlightCoordinates
+                setHighlightCoordinates={setHighlightCoordinates}
+              />
+            }
             <Spacing />
             <Spacing size="tiny" />
             <SaveButton />
@@ -74,7 +81,10 @@ const LoadedRom = () => {
         <Card className={style.cardObjectsDetail}>
           <CardTitle title="Object Detail" />
           <CardContent>
-            <ObjectDetail objectIndex={selectedObject} />
+            <ObjectDetail
+              objectIndex={selectedObject}
+              setHighlightCoordinates={setHighlightCoordinates}
+            />
           </CardContent>
         </Card>
       </Flexbox>
