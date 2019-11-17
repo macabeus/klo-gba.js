@@ -1,0 +1,18 @@
+{
+  "name": "react-gbajs",
+  "version": "0.0.1",
+  "description": "GBA emulator and wrapper for React",
+  "main": "dist/react-gbajs.js",
+  "scripts": {
+    "start": "webpack --watch --mode development --config webpack.config.js",
+    "build": "webpack --mode production --config webpack.config.js"
+  },
+  "author": "macabeus",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "7.6.2",
+    "babel-loader": "8.0.5",
+    "webpack-cli": "3.3.9",
+    "webpack": "4.41.0"
+  }
+}
