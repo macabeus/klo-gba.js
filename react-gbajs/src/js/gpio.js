@@ -1,4 +1,4 @@
-function GameBoyAdvanceGPIO(core, rom) {
+window.GameBoyAdvanceGPIO = function GameBoyAdvanceGPIO(core, rom) {
 	this.core = core;
 	this.rom = rom;
 

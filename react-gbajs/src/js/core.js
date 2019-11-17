@@ -1,5 +1,4 @@
-function ARMCore() {
-	this.inherit();
+window.ARMCore = function ARMCore() {
 	this.SP = 13;
 	this.LR = 14;
 	this.PC = 15;

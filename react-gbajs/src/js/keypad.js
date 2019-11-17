@@ -1,4 +1,4 @@
-function GameBoyAdvanceKeypad() {
+window.GameBoyAdvanceKeypad = function GameBoyAdvanceKeypad() {
 	this.KEYCODE_LEFT = 37;
 	this.KEYCODE_UP = 38;
 	this.KEYCODE_RIGHT = 39;
