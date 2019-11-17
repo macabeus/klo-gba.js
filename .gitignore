@@ -4,3 +4,5 @@
 /scissors/node_modules
 /scissors/src/wasm/*.js
 /scissors/src/wasm/*.wasm
+/react-gbajs/dist
+/react-gbajs/node_modules
