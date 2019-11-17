@@ -1,0 +1,99 @@
+Arguments: 
+  /Users/macabeus/.nvm/versions/node/v11.10.1/bin/node /usr/local/Cellar/yarn/1.13.0/libexec/bin/yarn.js
+
+PATH: 
+  /Users/macabeus/.nvm/versions/node/v11.10.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public
+
+Yarn version: 
+  1.13.0
+
+Node version: 
+  11.10.1
+
+Platform: 
+  darwin x64
+
+Trace: 
+  Error: https://registry.yarnpkg.com/react-gbajs: Not found
+      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.13.0/libexec/lib/cli.js:66255:18)
+      at Request.self.callback (/usr/local/Cellar/yarn/1.13.0/libexec/lib/cli.js:129397:22)
+      at Request.emit (events.js:197:13)
+      at Request.<anonymous> (/usr/local/Cellar/yarn/1.13.0/libexec/lib/cli.js:130369:10)
+      at Request.emit (events.js:197:13)
+      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.13.0/libexec/lib/cli.js:130291:12)
+      at Object.onceWrapper (events.js:285:13)
+      at IncomingMessage.emit (events.js:202:15)
+      at endReadableNT (_stream_readable.js:1129:12)
+      at processTicksAndRejections (internal/process/next_tick.js:76:17)
+
+npm manifest: 
+  {
+    "name": "brush",
+    "version": "0.0.1",
+    "description": "Map viewer for the levels",
+    "homepage": "http://macalogs.com.br/klo-gba.js/",
+    "scripts": {
+      "predeploy": "npm run build",
+      "deploy": "gh-pages -d dist",
+      "start": "webpack-dev-server --mode development --open --config config/webpack.config.js",
+      "build": "webpack --mode production --config config/webpack.config.js",
+      "lint": "./node_modules/eslint/bin/eslint.js . ; exit 0"
+    },
+    "author": "macabeus",
+    "license": "MIT",
+    "dependencies": {
+      "@babel/polyfill": "7.6.0",
+      "@babel/runtime": "7.6.2",
+      "@babel/plugin-transform-runtime": "7.6.2",
+      "emblematic-icons": "0.7.1",
+      "former-kit-skin-pagarme": "1.5.1",
+      "former-kit": "1.7.0",
+      "gh-pages": "2.1.1",
+      "localforage": "1.7.3",
+      "prop-types": "15.7.2",
+      "ramda": "0.26.1",
+      "react": "16.10.2",
+      "react-dom": "16.10.2",
+      "react-file-reader-input": "2.0.0",
+      "react-gbajs": "*",
+      "pixi.js": "5.1.5",
+      "@inlet/react-pixi": "1.1.2",
+      "scissors": "*"
+    },
+    "devDependencies": {
+      "@babel/core": "7.6.2",
+      "@babel/plugin-proposal-pipeline-operator": "7.5.0",
+      "@babel/preset-env": "7.6.2",
+      "@babel/preset-react": "7.0.0",
+      "@svgr/webpack": "4.1.0",
+      "babel-loader": "8.0.5",
+      "babel-eslint": "10.0.1",
+      "buffer-loader": "0.1.0",
+      "copy-webpack-plugin": "5.0.4",
+      "eslint": "6.5.1",
+      "css-loader": "2.1.0",
+      "eslint-config-pagarme-react": "3.0.0",
+      "file-loader": "3.0.1",
+      "html-webpack-plugin": "3.2.0",
+      "postcss-cssnext": "3.1.0",
+      "postcss-hexrgba": "1.0.2",
+      "postcss-import": "12.0.1",
+      "postcss-loader": "3.0.0",
+      "postcss-sass-each": "0.1.0",
+      "postcss-url": "8.0.0",
+      "react-dev-utils": "9.1.0",
+      "style-loader": "1.0.0",
+      "stylelint-config-pagarme-react": "2.0.0",
+      "stylelint-webpack-plugin": "1.0.1",
+      "stylelint": "11.0.0",
+      "webpack-cli": "3.3.9",
+      "webpack": "4.41.0",
+      "webpack-dev-server": "3.8.2"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

@@ -15,7 +15,7 @@ const rules = [
 ]
 
 module.exports = {
-  devtool: 'source-map',
+  // devtool: 'source-map',
   entry: './src/index.js',
   module: {
     rules,
@@ -24,6 +24,6 @@ module.exports = {
     filename: 'react-gbajs.js',
     libraryTarget: 'commonjs2',
     path: path.join(__dirname, './dist'),
-    sourceMapFilename: 'react-gbajs.js.map',
+    // sourceMapFilename: 'react-gbajs.js.map',
   },
 }
