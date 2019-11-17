@@ -643,7 +643,7 @@ GameBoyAdvanceOBJLayer.prototype.objComparator = function(a, b) {
 	return a.index - b.index;
 };
 
-function GameBoyAdvanceSoftwareRenderer() {
+window.GameBoyAdvanceSoftwareRenderer = function GameBoyAdvanceSoftwareRenderer() {
 	this.LAYER_BG0 = 0;
 	this.LAYER_BG1 = 1;
 	this.LAYER_BG2 = 2;

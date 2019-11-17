@@ -1,4 +1,4 @@
-ARMCoreThumb = function (cpu) {
+window.ARMCoreThumb = ARMCoreThumb = function (cpu) {
 	this.cpu = cpu;
 };
 

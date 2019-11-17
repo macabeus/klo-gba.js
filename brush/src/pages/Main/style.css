@@ -7,11 +7,21 @@ body {
 }
 
 .cardTilemap {
-  max-width: 85vw;
+  max-width: calc(85vw - 530px);
 }
 
 .cardTilemap canvas {
   padding-top: var(--spacing-tiny);
+}
+
+.containerFirstRow {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.cardEmulator {
+  max-width: 530px;
+  margin-left: var(--spacing-small);
 }
 
 .containerSecondRow {

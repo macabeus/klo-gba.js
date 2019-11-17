@@ -74,6 +74,8 @@ function GameBoyAdvance() {
 	};
 };
 
+window.GameBoyAdvance = GameBoyAdvance
+
 GameBoyAdvance.prototype.setCanvas = function(canvas) {
 	var self = this;
 	if (canvas.offsetWidth != 240 || canvas.offsetHeight != 160) {
@@ -116,17 +118,13 @@ GameBoyAdvance.prototype.hasRom = function() {
 	return !!this.rom;
 };
 
-GameBoyAdvance.prototype.loadRomFromFile = function(romFile, callback) {
-	var reader = new FileReader();
-	var self = this;
-	reader.onload = function(e) {
-		var result = self.setRom(e.target.result);
-		if (callback) {
-			callback(result);
-		}
-	}
-	reader.readAsArrayBuffer(romFile);
-};
+GameBoyAdvance.prototype.loadRomFromFile = function(romBuffer, callback) {
+  this.setRom(romBuffer.buffer)
+
+  if (callback) {
+    callback(romBuffer.buffer)
+  }
+}
 
 GameBoyAdvance.prototype.reset = function() {
 	this.audio.pause(true);
