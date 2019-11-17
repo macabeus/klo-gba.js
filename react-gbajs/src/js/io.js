@@ -1,4 +1,4 @@
-function GameBoyAdvanceIO() {
+window.GameBoyAdvanceIO = function GameBoyAdvanceIO() {
 	// Video
 	this.DISPCNT = 0x000;
 	this.GREENSWP = 0x002;

@@ -1,5 +1,4 @@
-function MemoryView(memory, offset) {
-	this.inherit();
+window.MemoryView = function MemoryView(memory, offset) {
 	this.buffer = memory;
 	this.view = new DataView(this.buffer, typeof(offset) === "number" ? offset : 0);
 	this.mask = memory.byteLength - 1;
@@ -59,7 +58,7 @@ MemoryView.prototype.replaceData = function(memory, offset) {
 	}
 };
 
-function MemoryBlock(size, cacheBits) {
+window.MemoryBlock = function MemoryBlock(size, cacheBits) {
 	MemoryView.call(this, new ArrayBuffer(size));
 	this.ICACHE_PAGE_BITS = cacheBits;
 	this.PAGE_MASK = (2 << this.ICACHE_PAGE_BITS) - 1;
@@ -157,7 +156,6 @@ BIOSView.prototype.store16 = function(offset, value) {};
 BIOSView.prototype.store32 = function(offset, value) {};
 
 function BadMemory(mmu, cpu) {
-	this.inherit();
 	this.cpu = cpu;
 	this.mmu = mmu
 };
@@ -195,8 +193,7 @@ BadMemory.prototype.store32 = function(offset, value) {};
 
 BadMemory.prototype.invalidatePage = function(address) {};
 
-function GameBoyAdvanceMMU() {
-	this.inherit();
+window.GameBoyAdvanceMMU = function GameBoyAdvanceMMU() {
 	this.REGION_BIOS = 0x0;
 	this.REGION_WORKING_RAM = 0x2;
 	this.REGION_WORKING_IRAM = 0x3;

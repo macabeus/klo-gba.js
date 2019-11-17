@@ -1,3 +1,5 @@
+import './mmu'
+
 function SRAMSavedata(size) {
 	MemoryView.call(this, new ArrayBuffer(size), 0);
 
@@ -177,7 +179,7 @@ FlashSavedata.prototype.replaceData = function(memory) {
 	this.bank = bank ? this.bank1 : this.bank0;
 };
 
-function EEPROMSavedata(size, mmu) {
+window.EEPROMSavedata = function EEPROMSavedata(size, mmu) {
 	MemoryView.call(this, new ArrayBuffer(size), 0);
 
 	this.writeAddress = 0;

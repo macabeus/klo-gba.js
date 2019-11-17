@@ -1,4 +1,4 @@
-function GameBoyAdvanceAudio() {
+window.GameBoyAdvanceAudio = function GameBoyAdvanceAudio() {
 	window.AudioContext = window.AudioContext || window.webkitAudioContext;
 	if (window.AudioContext) {
 		var self = this;

@@ -8,6 +8,10 @@ const rules = [
       loader: 'babel-loader',
     },
   },
+  {
+    loader: require.resolve('arraybuffer-loader'),
+    test: /\.bin$/,
+  },
 ]
 
 module.exports = {

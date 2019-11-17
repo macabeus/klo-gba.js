@@ -7,6 +7,7 @@ import {
   Spacing,
 } from 'former-kit'
 import ClearHighlightCoordinates from '../../components/ClearHighlightCoordinates'
+import Emualtor from '../../components/Emulator'
 import ObjectDetail from '../../components/ObjectDetail'
 import ObjectsTable from '../../components/ObjectsTable'
 import DisplayMapOptionsContext from '../../context/DisplayMapOptionsContext'
@@ -34,39 +35,48 @@ const LoadedRom = () => {
 
   return (
     <Fragment>
-      <Card>
-        <CardContent className={style.cardTilemap}>
-          <Flexbox alignItems="center" justifyContent="flex-end">
-            <SwitchTool
-              setToolState={setToolState}
-              toolState={toolState}
-            />
-            {
-              highlightCoordinates[0] !== -1
-              && <ClearHighlightCoordinates
-                setHighlightCoordinates={setHighlightCoordinates}
-              />
-            }
-            <Spacing />
-            <Spacing size="tiny" />
-            <SaveButton />
-          </Flexbox>
-
-          {
-            (vision.state === 'selected') ?
-              <Map
-                highlightCoordinates={highlightCoordinates}
-                optShowGrid={options.showGrid}
-                optShowObjects={options.showObjects}
-                optShowPortals={options.showPortals}
-                setSelectedObject={setSelectedObject}
+      <Flexbox className={style.containerFirstRow}>
+        <Card>
+          <CardContent className={style.cardTilemap}>
+            <Flexbox alignItems="center" justifyContent="flex-end">
+              <SwitchTool
+                setToolState={setToolState}
                 toolState={toolState}
-                resolution={options.zoom}
-              /> :
-              <MapEmptyState />
-          }
-        </CardContent>
-      </Card>
+              />
+              {
+                highlightCoordinates[0] !== -1
+                && <ClearHighlightCoordinates
+                  setHighlightCoordinates={setHighlightCoordinates}
+                />
+              }
+              <Spacing />
+              <Spacing size="tiny" />
+              <SaveButton />
+            </Flexbox>
+
+            {
+              (vision.state === 'selected') ?
+                <Map
+                  highlightCoordinates={highlightCoordinates}
+                  optShowGrid={options.showGrid}
+                  optShowObjects={options.showObjects}
+                  optShowPortals={options.showPortals}
+                  setSelectedObject={setSelectedObject}
+                  toolState={toolState}
+                  resolution={options.zoom}
+                /> :
+                <MapEmptyState />
+            }
+          </CardContent>
+        </Card>
+
+        <Card className={style.cardEmulator}>
+          <CardTitle title="Emulator" />
+          <CardContent>
+            <Emualtor />
+          </CardContent>
+        </Card>
+      </Flexbox>
 
       <Spacing />
 
