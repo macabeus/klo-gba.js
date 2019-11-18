@@ -24,6 +24,10 @@ body {
   margin-left: var(--spacing-small);
 }
 
+.cardEmulator > div > div:first-child {
+  padding-bottom: var(--spacing-tiny);
+}
+
 .containerSecondRow {
   display: flex;
   flex-wrap: nowrap;

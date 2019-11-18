@@ -26,4 +26,7 @@ module.exports = {
     path: path.join(__dirname, './dist'),
     sourceMapFilename: 'react-gbajs.js.map',
   },
+  externals: {
+    react: 'react',
+  },
 }
