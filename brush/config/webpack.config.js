@@ -11,7 +11,7 @@ const htmlPlugin = new HtmlWebPackPlugin({
 
 const copyPlugin = new CopyPlugin([
   {
-    from: 'node_modules/scissors/dist/',
+    from: '../node_modules/scissors/dist/',
     ignore: ['*.js', '*.js.map'],
     to: 'static/wasm/',
   },
