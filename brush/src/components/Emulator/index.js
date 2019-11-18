@@ -7,7 +7,7 @@ const Emulator = () => {
 
   return (
     <>
-      <GBAEmulator romBufferMemory={romBufferMemory} />
+      <GBAEmulator romBufferMemory={romBufferMemory} volume={0} />
       <span>
         Controls:{' '}
         <strong>z</strong> → a;{' '}
