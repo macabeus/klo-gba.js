@@ -20,6 +20,9 @@ import './js/gba'
 import './resources/xhr'
 import biosBin from './resources/bios.bin'
 
+const setVolume = (gba, value) =>
+  gba.audio.masterVolume = Math.pow(2, value) - 1
+
 const fadeOut = (id, nextId, kill) => {
   var e = document.getElementById(id);
   var e2 = document.getElementById(nextId);
@@ -169,10 +172,6 @@ const drawEmulator = (buffer) => {
     window.open(canvas.toDataURL('image/png'), 'screenshot');
   }
 
-  function setVolume(value) {
-    gba.audio.masterVolume = Math.pow(2, value) - 1;
-  }
-
   function setPixelated(pixelated) {
     var screen = document.getElementById('screen');
     var context = screen.getContext('2d');
@@ -250,7 +249,7 @@ const drawEmulator = (buffer) => {
   return gba
 }
 
-const ReactGbaJs = ({ romBufferMemory }) => {
+const ReactGbaJs = ({ romBufferMemory, volume }) => {
   const [gba, setGba] = useState(null)
 
   useEffect(() => {
@@ -262,6 +261,14 @@ const ReactGbaJs = ({ romBufferMemory }) => {
     setGba(newGbaInstance)
   }, [sha1(romBufferMemory)])
 
+  useEffect(() => {
+    if (gba === null) {
+      return
+    }
+
+    setVolume(gba, volume)
+  }, [gba, volume])
+
   return (
     <canvas id="screen" width="480" height="320" />
   )
@@ -269,6 +276,7 @@ const ReactGbaJs = ({ romBufferMemory }) => {
 
 ReactGbaJs.propTypes = {
   romBufferMemory: PropTypes.object.isRequired,
+  volume: PropTypes.number.isRequired,
 }
 
 export default ReactGbaJs
