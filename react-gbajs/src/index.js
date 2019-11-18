@@ -1,3 +1,6 @@
+import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import sha1 from 'js-sha1'
 import './js/util'
 import './js/core'
 import './js/arm'
@@ -16,6 +19,76 @@ import './js/gpio'
 import './js/gba'
 import './resources/xhr'
 import biosBin from './resources/bios.bin'
+
+const fadeOut = (id, nextId, kill) => {
+  var e = document.getElementById(id);
+  var e2 = document.getElementById(nextId);
+  if (!e) {
+    return;
+  }
+  var removeSelf = function() {
+    if (kill) {
+      e.parentElement.removeChild(e);
+    } else {
+      e.setAttribute('class', 'dead');
+      e.removeEventListener('webkitTransitionEnd', removeSelf);
+      e.removeEventListener('oTransitionEnd', removeSelf);
+      e.removeEventListener('transitionend', removeSelf);
+    }
+    if (e2) {
+      e2.setAttribute('class', 'hidden');
+      setTimeout(function() {
+        e2.removeAttribute('class');
+      }, 0);
+    }
+  }
+
+  e.addEventListener('webkitTransitionEnd', removeSelf, false);
+  e.addEventListener('oTransitionEnd', removeSelf, false);
+  e.addEventListener('transitionend', removeSelf, false);
+  e.setAttribute('class', 'hidden');
+}
+
+const lcdFade = (context, target, callback) => {
+  var i = 0;
+  var drawInterval = setInterval(function() {
+    i++;
+    var pixelData = context.getImageData(0, 0, 240, 160);
+    for (var y = 0; y < 160; ++y) {
+      for (var x = 0; x < 240; ++x) {
+        var xDiff = Math.abs(x - 120);
+        var yDiff = Math.abs(y - 80) * 0.8;
+        var xFactor = (120 - i - xDiff) / 120;
+        var yFactor = (80 - i - ((y & 1) * 10) - yDiff + Math.pow(xDiff, 1 / 2)) / 80;
+        pixelData.data[(x + y * 240) * 4 + 3] *= Math.pow(xFactor, 1 / 3) * Math.pow(yFactor, 1 / 2);
+      }
+    }
+    context.putImageData(pixelData, 0, 0);
+    target.clearRect(0, 0, 480, 320);
+    if (i > 40) {
+      clearInterval(drawInterval);
+    } else {
+      callback();
+    }
+  }, 50);
+}
+
+const reset = gba => {
+  gba.pause();
+  gba.reset();
+  var crash = document.getElementById('crash');
+  if (crash) {
+    var context = gba.targetCanvas.getContext('2d');
+    context.clearRect(0, 0, 480, 320);
+    gba.video.drawCallback();
+    crash.parentElement.removeChild(crash);
+    var canvas = document.getElementById('screen');
+    canvas.removeAttribute('class');
+  } else {
+    lcdFade(gba.context, gba.targetCanvas.getContext('2d'), gba.video.drawCallback);
+  }
+  fadeOut('ingame', 'preload');
+}
 
 const drawEmulator = (buffer) => {
   var gba
@@ -51,35 +124,6 @@ const drawEmulator = (buffer) => {
 
   gba.setBios(biosBin);
 
-  function fadeOut(id, nextId, kill) {
-    var e = document.getElementById(id);
-    var e2 = document.getElementById(nextId);
-    if (!e) {
-      return;
-    }
-    var removeSelf = function() {
-      if (kill) {
-        e.parentElement.removeChild(e);
-      } else {
-        e.setAttribute('class', 'dead');
-        e.removeEventListener('webkitTransitionEnd', removeSelf);
-        e.removeEventListener('oTransitionEnd', removeSelf);
-        e.removeEventListener('transitionend', removeSelf);
-      }
-      if (e2) {
-        e2.setAttribute('class', 'hidden');
-        setTimeout(function() {
-          e2.removeAttribute('class');
-        }, 0);
-      }
-    }
-
-    e.addEventListener('webkitTransitionEnd', removeSelf, false);
-    e.addEventListener('oTransitionEnd', removeSelf, false);
-    e.addEventListener('transitionend', removeSelf, false);
-    e.setAttribute('class', 'hidden');
-  }
-
   function run(file) {
     gba.loadRomFromFile(file, function(result) {
       if (result) {
@@ -98,23 +142,6 @@ const drawEmulator = (buffer) => {
         }, 3000);
       }
     });
-  }
-
-  function reset() {
-    gba.pause();
-    gba.reset();
-    var crash = document.getElementById('crash');
-    if (crash) {
-      var context = gba.targetCanvas.getContext('2d');
-      context.clearRect(0, 0, 480, 320);
-      gba.video.drawCallback();
-      crash.parentElement.removeChild(crash);
-      var canvas = document.getElementById('screen');
-      canvas.removeAttribute('class');
-    } else {
-      lcdFade(gba.context, gba.targetCanvas.getContext('2d'), gba.video.drawCallback);
-    }
-    fadeOut('ingame', 'preload');
   }
 
   function uploadSavedataPending(file) {
@@ -140,30 +167,6 @@ const drawEmulator = (buffer) => {
   function screenshot() {
     var canvas = gba.indirectCanvas;
     window.open(canvas.toDataURL('image/png'), 'screenshot');
-  }
-
-  function lcdFade(context, target, callback) {
-    var i = 0;
-    var drawInterval = setInterval(function() {
-      i++;
-      var pixelData = context.getImageData(0, 0, 240, 160);
-      for (var y = 0; y < 160; ++y) {
-        for (var x = 0; x < 240; ++x) {
-          var xDiff = Math.abs(x - 120);
-          var yDiff = Math.abs(y - 80) * 0.8;
-          var xFactor = (120 - i - xDiff) / 120;
-          var yFactor = (80 - i - ((y & 1) * 10) - yDiff + Math.pow(xDiff, 1 / 2)) / 80;
-          pixelData.data[(x + y * 240) * 4 + 3] *= Math.pow(xFactor, 1 / 3) * Math.pow(yFactor, 1 / 2);
-        }
-      }
-      context.putImageData(pixelData, 0, 0);
-      target.clearRect(0, 0, 480, 320);
-      if (i > 40) {
-        clearInterval(drawInterval);
-      } else {
-        callback();
-      }
-    }, 50);
   }
 
   function setVolume(value) {
@@ -243,6 +246,29 @@ const drawEmulator = (buffer) => {
   }, false);
 
   run(buffer)
+
+  return gba
 }
 
-export default drawEmulator
+const ReactGbaJs = ({ romBufferMemory }) => {
+  const [gba, setGba] = useState(null)
+
+  useEffect(() => {
+    if (gba !== null) {
+      reset(gba)
+    }
+
+    const newGbaInstance = drawEmulator(romBufferMemory)
+    setGba(newGbaInstance)
+  }, [sha1(romBufferMemory)])
+
+  return (
+    <canvas id="screen" width="480" height="320" />
+  )
+}
+
+ReactGbaJs.propTypes = {
+  romBufferMemory: PropTypes.object.isRequired,
+}
+
+export default ReactGbaJs
