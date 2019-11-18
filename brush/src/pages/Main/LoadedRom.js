@@ -16,6 +16,7 @@ import Map from '../../components/Map'
 import MapEmptyState from '../../components/MapEmptyState'
 import SaveButton from '../../components/MapActionsBar/SaveButton'
 import SwitchTool from '../../components/MapActionsBar/SwitchTool'
+import EmulatorUpdateVision from '../../components/EmulatorUpdateVision'
 import TileSet from '../../components/TileSet'
 import useTool from '../../hooks/useTool'
 import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
@@ -71,8 +72,11 @@ const LoadedRom = () => {
         </Card>
 
         <Card className={style.cardEmulator}>
-          <CardTitle title="Emulator" />
           <CardContent>
+            <Flexbox alignItems="center" justifyContent="flex-end">
+              <EmulatorUpdateVision />
+            </Flexbox>
+
             <Emualtor />
           </CardContent>
         </Card>

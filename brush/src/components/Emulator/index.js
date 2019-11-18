@@ -2,15 +2,20 @@ import React, { useContext } from 'react'
 import GBAEmulator from 'react-gbajs'
 import ROMContext from '../../context/ROMContext'
 
-const InputRomModal = () => {
+const Emulator = () => {
   const { romBufferMemory } = useContext(ROMContext)
 
   return (
     <>
-      <canvas id="screen" width="480" height="320" />
-      <button onClick={() => GBAEmulator(romBufferMemory)}>Start emulator</button>
+      <GBAEmulator romBufferMemory={romBufferMemory} />
+      <span>
+        Controls:{' '}
+        <strong>z</strong> → a;{' '}
+        <strong>x</strong> → b;{' '}
+        <strong>start</strong> → enter
+      </span>
     </>
   )
 }
 
-export default InputRomModal
+export default Emulator
