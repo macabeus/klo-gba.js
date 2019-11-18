@@ -1,0 +1,11 @@
+{
+  "private": true,
+  "scripts": {
+    "postinstall": "cd scissors && yarn build && cd ../react-gbajs && yarn build"
+  },
+  "workspaces": [
+    "brush/",
+    "react-gbajs/",
+    "scissors/"
+  ]
+}

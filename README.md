@@ -37,7 +37,7 @@ Since this conference is geared towards security, this talk is focused on the re
 
 ## Architecture of this project
 
-klo-gba.js is a monorepo built with two projects: `🖌 brush` and `✂️ scissors`. Both projects are written using JS, will be compiled by Babel and uses Webpack.
+klo-gba.js is a monorepo built with three projects: 🖌 `brush`, :scissors: `scissors` and 🕹 `react-gbajs`. These projects are written using JS, will be compiled by Babel and uses Webpack.
 
 ### Brush
 
@@ -48,6 +48,10 @@ This project uses the React component library [Former-Kit](https://github.com/pa
 ### Scissors
 
 It is reponsible to provide informations about each level. To do it so Scissors extracts the informations from a buffer of the ROM and also has some hardcoded informations about each level.
+
+### react-gbajs
+
+Web GBA emulator. It is just the React wrapper of the application [gbajs](https://github.com/endrift/gbajs).
 
 # How to run
 
@@ -64,23 +68,34 @@ It is reponsible to provide informations about each level. To do it so Scissors 
 > bash ./shellscript/compile-webassembly.sh
 ```
 
-3 - At the path `klo-gba.js/scissors`, install the dependencies and start Scissors project:
+3 - We are using Yarn's Workspaces. So at the project's root, you'll should install the dependencies:
+
+```
+> yarn
+```
+
+4 - So you could build and watch the `scissors` project:
 
 ```
 > cd klo-gba.js/scissors
-> npm i
-> npm start
+> yarn start
 ```
 
-4 - At another terminal tab, go to the path `klo-gba.js/brush`, install the dependencies and start Brush project:
+5 - At another terminal tab, go to the path `klo-gba.js/react-gbajs`, and start the build and watch:
+
+```
+> cd klo-gba.js/react-gbajs
+> yarn start
+```
+
+6 - And finally, at another terminal tab, go to the path `klo-gba.js/brush`, and start the build and watch:
 
 ```
 > cd klo-gba.js/brush
-> npm i
-> npm start
+> yarn start
 ```
 
-5 - Then the service will start at the URL `http://localhost:8080/`
+7 - Then the service will start at the URL `http://localhost:8080/`
 
 ## How to deploy
 
