@@ -25,6 +25,7 @@ const Map = ({
   optShowPortals,
   resolution,
   setSelectedObject,
+  setToolState,
   toolState,
 }) => {
   const {
@@ -88,6 +89,7 @@ const Map = ({
             height={height * 4}
             scheme={scheme}
             setSelectedPointInfos={setSelectedPointInfos}
+            setToolState={setToolState}
             toolState={toolState}
             updateTilemapLayer={() => tilemapLayerRef.current.forceUpdate()}
             updateTilemapPoint={updateTilemapPoint}
@@ -124,6 +126,7 @@ Map.propTypes = {
   optShowPortals: PropTypes.bool,
   resolution: PropTypes.number,
   setSelectedObject: PropTypes.func,
+  setToolState: PropTypes.func,
   toolState: PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.any,
@@ -137,6 +140,7 @@ Map.defaultProps = {
   optShowPortals: true,
   resolution: 1,
   setSelectedObject: () => {},
+  setToolState: () => {},
 }
 
 export default Map

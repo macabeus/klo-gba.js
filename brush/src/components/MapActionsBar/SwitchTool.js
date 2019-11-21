@@ -16,6 +16,10 @@ const SwitchTool = ({ setToolState, toolState }) => (
         value: 'brush',
       },
       {
+        title: 'Eyedropper',
+        value: 'eyedropper',
+      },
+      {
         title: 'Eraser',
         value: 'eraser',
       },

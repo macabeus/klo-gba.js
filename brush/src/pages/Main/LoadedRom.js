@@ -63,6 +63,7 @@ const LoadedRom = () => {
                   optShowObjects={options.showObjects}
                   optShowPortals={options.showPortals}
                   setSelectedObject={setSelectedObject}
+                  setToolState={setToolState}
                   toolState={toolState}
                   resolution={options.zoom}
                 /> :
