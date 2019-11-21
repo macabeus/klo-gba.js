@@ -4095,30 +4095,30 @@ fork-ts-checker-webpack-plugin@1.5.0:
     tapable "^1.0.0"
     worker-rpc "^0.1.0"
 
-former-kit-skin-pagarme@1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-1.5.0.tgz#6d3d9dd51e3b6834261911f656498dbab85dccd4"
-  integrity sha512-07amXZD793F4ZVyfoGkg9ZXS0lDk297OG9efEMf8RYCqmmtHpnx0moFU7ghUWYn17cqgJOafz2nj18DJmNlg8Q==
+former-kit-skin-pagarme@1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-1.5.2.tgz#ca4847916f32eafd6640ad0143d763269a4aa0dc"
+  integrity sha512-7bNjeC/CSQtGzy7iFfG6a5XwNiWOL6NAbuxRfS/CpYlVFdWu0yEI/DNfgouOiWpOIGSGpuOlI6FPFtAj0hxP8Q==
   dependencies:
     emblematic-icons "0.7.1"
     react-dates "18.4.1"
 
-former-kit-skin-pagarme@1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-1.5.1.tgz#f2585f6d419701af34ed470793e950ccffbe3e33"
-  integrity sha512-niSfJuaY7NqCMeiVuVRkvDbCoppTsEF3Rt7ptVni2MJSNfTtwn2o8lNwCuupsW4zT21x2wWeITOUEcYvDbxQOA==
+former-kit-skin-pagarme@1.5.3:
+  version "1.5.3"
+  resolved "https://registry.yarnpkg.com/former-kit-skin-pagarme/-/former-kit-skin-pagarme-1.5.3.tgz#1d3e599c3ab434cb0d35ff0db603b8b705bc6644"
+  integrity sha512-tuVK/5iy7v/bLfm8xRVKyjAHrXoDgCx/h6lYmXPzd70t/OjImWPEz9tWx7IzlAgXIOfpTkkadS7IlLjxBbR3Yw==
   dependencies:
     emblematic-icons "0.7.1"
     react-dates "18.4.1"
 
-former-kit@1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-1.7.0.tgz#3bb4a18654319b153cc4a226641e29069ab91e00"
-  integrity sha512-zNwPtktvFcBSzzhXCWg7Y9pWry1FP6Zt5CTHW0RBN/qgOC6VWaD2A3ro/GtDMvXaBUrPomtjqzJulwxy0c4dYA==
+former-kit@1.7.2:
+  version "1.7.2"
+  resolved "https://registry.yarnpkg.com/former-kit/-/former-kit-1.7.2.tgz#3ccb2f9a9cd58e0d3e177ea75d8c500fffd41576"
+  integrity sha512-Ani/QSeO+1D/6x9/e85hLDx1WRwqBtvpPoJR3IgEMovLPsrML6IgNCvh06oVUpdOpPzOJHRtOw2SOpyCZJqwIQ==
   dependencies:
     classnames "2.2.6"
     emblematic-icons "0.7.1"
-    former-kit-skin-pagarme "1.5.0"
+    former-kit-skin-pagarme "1.5.2"
     promise "8.0.2"
     prop-types "15.6.2"
     ramda "0.26.1"
