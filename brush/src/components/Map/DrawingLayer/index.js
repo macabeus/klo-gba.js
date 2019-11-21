@@ -8,6 +8,7 @@ const DrawingLayer = ({
   height,
   scheme,
   setSelectedPointInfos,
+  setToolState,
   toolState,
   updateTilemapLayer,
   updateTilemapPoint,
@@ -24,6 +25,11 @@ const DrawingLayer = ({
     eraser: ({ x, y }) => {
       updateTilemapPoint(x, y, toolValue)
       updateTilemapLayer()
+    },
+
+    eyedropper: ({ x, y }) => {
+      const tileId = getTilemapPoint(x, y)
+      setToolState('brush', tileId)
     },
 
     inspector: ({ x, y }) => {
@@ -68,6 +74,7 @@ DrawingLayer.propTypes = {
     name: PropTypes.string.isRequired,
   })).isRequired,
   setSelectedPointInfos: PropTypes.func.isRequired,
+  setToolState: PropTypes.func.isRequired,
   toolState: PropTypes.shape({
     name: PropTypes.string.isRequired,
     value: PropTypes.any,
