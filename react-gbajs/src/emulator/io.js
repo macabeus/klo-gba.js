@@ -164,6 +164,9 @@ GameBoyAdvanceIO.prototype.freeze = function() {
 GameBoyAdvanceIO.prototype.defrost = function(frost) {
 	this.registers = new Uint16Array(frost.registers);
 	// Video registers don't serialize themselves
+
+	debugger
+
 	for (var i = 0; i <= this.BLDY; i += 2) {
 		this.store16(this.registers[i >> 1]);
 	}

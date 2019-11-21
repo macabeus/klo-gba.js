@@ -45,6 +45,7 @@ const Serializer = {
 	serialize: function(stream) {
 		var parts = [];
 		var size = 4;
+		var i
 		for (i in stream) {
 			if (stream.hasOwnProperty(i)) {
 				var tag;
@@ -123,6 +124,7 @@ const Serializer = {
 			object[head] = body;
 		}
 		if (pointer.mark() > remaining) {
+			debugger
 			throw "Size of serialized data exceeded";
 		}
 		pointer.pop();
@@ -184,9 +186,14 @@ const Serializer = {
 		reader.onload = function(data) {
 			var image = document.createElement('img');
 			image.setAttribute('src', data.target.result);
+			image.setAttribute('height', 320);
+			image.setAttribute('width', 480);
+
 			var canvas = document.createElement('canvas');
-			canvas.setAttribute('height', image.height);
-			canvas.setAttribute('width', image.width);
+			canvas.setAttribute('height', 320);
+			canvas.setAttribute('width', 480);
+			canvas.height = 320
+			canvas.width = 480
 			var context = canvas.getContext('2d');
 			context.drawImage(image, 0, 0);
 			var pixels = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -206,7 +213,7 @@ const Serializer = {
 					}
 				}
 			}
-			newBlob = new Blob(data.map(function (byte) {
+			const newBlob = new Blob(data.map(function (byte) {
 				var array = new Uint8Array(1);
 				array[0] = byte;
 				return array;
@@ -244,3 +251,5 @@ Serializer.pointer.prototype.readString = function(view) {
 	}
 	return bytes.join('');
 };
+
+window.Serializer = Serializer
