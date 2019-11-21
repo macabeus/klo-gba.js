@@ -5,7 +5,6 @@ const useTool = () => {
     currentTool: 'inspector',
     toolsValue: {
       brush: null,
-      inspector: null,
     },
   })
 
