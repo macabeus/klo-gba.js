@@ -1,32 +1,37 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { SegmentedSwitch } from 'former-kit'
+import useToolKeyboardShortcut from '../../hooks/useToolKeyboardShortcut'
 
-const SwitchTool = ({ setToolState, toolState }) => (
-  <SegmentedSwitch
-    name="tool"
-    onChange={(value) => { setToolState(value) }}
-    options={[
-      {
-        title: 'Inspector',
-        value: 'inspector',
-      },
-      {
-        title: 'Brush',
-        value: 'brush',
-      },
-      {
-        title: 'Eyedropper',
-        value: 'eyedropper',
-      },
-      {
-        title: 'Eraser',
-        value: 'eraser',
-      },
-    ]}
-    value={toolState.name}
-  />
-)
+const SwitchTool = ({ setToolState, toolState }) => {
+  useToolKeyboardShortcut(setToolState)
+
+  return (
+    <SegmentedSwitch
+      name="tool"
+      onChange={(value) => { setToolState(value) }}
+      options={[
+        {
+          title: 'Inspector',
+          value: 'inspector',
+        },
+        {
+          title: 'Brush',
+          value: 'brush',
+        },
+        {
+          title: 'Eyedropper',
+          value: 'eyedropper',
+        },
+        {
+          title: 'Eraser',
+          value: 'eraser',
+        },
+      ]}
+      value={toolState.name}
+    />
+  )
+}
 
 SwitchTool.propTypes = {
   setToolState: PropTypes.func.isRequired,
