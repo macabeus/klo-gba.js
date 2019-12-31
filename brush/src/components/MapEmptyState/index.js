@@ -12,7 +12,10 @@ const MapEmptyState = () => (
       <strong>n → </strong>inspector;{' '}
       <strong>b → </strong>brush;{' '}
       <strong>i → </strong>eyedropper;{' '}
-      <strong>e → </strong>eraser
+      <strong>e → </strong>eraser<br />
+      <br />
+      And you could use <strong>u</strong>{' '}
+      to update the vision running on emulator! (=^ ω ^=)
     </p>
   </span>
 )
