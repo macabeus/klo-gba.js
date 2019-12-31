@@ -23,7 +23,8 @@
     padding-left: var(--spacing-tiny);
   }
 
-  & button:first-child, & button:last-child {
+  & button:first-child,
+  & button:last-child {
     padding-top: 0;
     padding-bottom: 0;
     padding-left: var(--spacing-small);
