@@ -34,8 +34,9 @@ const DrawingLayer = ({
 
     inspector: ({ x, y }) => {
       const tileId = getTilemapPoint(x, y)
+      const hexTileId = `0x${tileId.toString(16).toUpperCase()}`
       const tilemapPointInfos = {
-        message: `Tile ${fromSchemeGetTileNameById(scheme)(tileId)} (${tileId})`,
+        message: `Tile ${fromSchemeGetTileNameById(scheme)(tileId)} (${hexTileId})`,
         x,
         y,
       }
