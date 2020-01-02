@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { defaultTo, pipe } from 'ramda'
+import { defaultTo } from 'ramda'
 import { objectIdToName } from 'scissors'
 import Point from '.'
 
@@ -32,11 +32,12 @@ const PointObject = ({
   const name = defaultTo('unknown', objectIdToName[objectId])
   const color = defaultTo([0x000000, 1], objectIdToColor[objectId])
 
-  const getInformations = () => ({
-    message: `Object ${name} (${objectId}) from stage ${stage}`,
+  const hexObjectId = `0x${objectId.toString(16).toUpperCase()}`
+  const informations = {
+    message: `Object ${name} (${hexObjectId}) from stage ${stage}`,
     x,
     y,
-  })
+  }
 
   const saveNewObjectPosition = (newX, newY) => {
     onFinishDragAndDrop(objectIndex, `xStage${stage}`, newX)
@@ -50,7 +51,7 @@ const PointObject = ({
     draggable
     hasStroke
     onClickHandle={onClick}
-    onHoverHandle={pipe(getInformations, showPointInfosHandle)}
+    onHoverHandle={() => showPointInfosHandle(informations)}
     onFinishDragAndDropHandle={saveNewObjectPosition}
     scale={8}
     x={x}
