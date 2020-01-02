@@ -12,7 +12,7 @@ const isCustomRom = (romBuffer) => {
 }
 
 const visionHasCustomTilemap = (romBuffer, visionInfo) =>
-  romBuffer[visionInfo.rom.customTilemap[0]] !== 0x00
+  romBuffer[visionInfo.rom.customTilemap] !== 0x00
 
 const setConstant = (romBuffer, address, value24hexLength) => {
   const bytes = splitHexValueIntoBytesArray(value24hexLength, 4)
@@ -24,8 +24,8 @@ const setPatchCustomVisionLoader = (romBuffer) => {
     visionHasCustomTilemap(romBuffer, visionInfo))
 
   const addresses = allVisions.map(visionInfo => ({
-    custom: mapAddressToRomOffset(visionInfo.rom.customTilemap[0]),
-    original: mapAddressToRomOffset(visionInfo.rom.tilemap[0]),
+    custom: mapAddressToRomOffset(visionInfo.rom.customTilemap),
+    original: mapAddressToRomOffset(visionInfo.rom.tilemap),
   }))
 
   // set bl to go to our patch

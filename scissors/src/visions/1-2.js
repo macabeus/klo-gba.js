@@ -5,8 +5,8 @@ export default {
     index: 2,
   },
   rom: {
-    tilemap: [0x1B3E5C, 0x1B4AC3],
-    customTilemap: [0x3686B0, 0x36937F],
+    tilemap: 0x1B3E5C,
+    customTilemap: 0x3686B0,
     objects: [0xE3CC0, 0xE3FAC],
     portals: [0xD4970, 0xD49A0],
   },
