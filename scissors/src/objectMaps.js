@@ -9,8 +9,8 @@ const objectIdToName = {
   0x2E: 'One Up',
   0x6F: 'Box',
   0x76: 'Moo',
-  0x77: 'Flying Moo ↔',
-  0x78: 'Flying Moo ↕',
+  0x77: 'Flying Moo ⭤',
+  0x78: 'Flying Moo ⭥',
 }
 
 export { objectIdToName } // eslint-disable-line import/prefer-default-export
