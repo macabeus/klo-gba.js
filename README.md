@@ -103,7 +103,58 @@ Web GBA emulator. It is just the React wrapper of the application [gbajs](https:
 
 ```
 > cd klo-gba.js/brush
-> npm run deploy
+> yarn run deploy
 ```
 
 2 - When it finishs, you can see the new website on `http://macalogs.com.br/klo-gba.js/` (or at the respective URL; you can see which is on repository's Settings tab)
+
+# Contribution
+
+The reverse engineering is well explained in [these posts](https://medium.com/@bruno.macabeus/reverse-engineering-a-gameboy-advance-game-introduction-ec185bd8e02?source=friends_link&sk=13ec64916dd886d5d427bdb75a73b847), and the codebase and its architecture are mainly explained on the [seventh chapter](https://macabeus.medium.com/reverse-engineering-a-gameboy-advance-game-lets-paint-our-website-part-7-aafb7813eedc).
+
+## How to add a new vision
+
+Currently, klo-gba.js has only the first visions. If you want to add a new one, you'll need to:
+
+### Create the new vision file
+
+Create a new file in the folder [`scissors/src/visions`](scissors/src/visions) using as template the file [`template.js`](scissors/src/visions/template.js), and update [`scissors/src/visions/index.js`](scissors/src/visions/index.js)
+
+Fill it following the below instructions.
+
+### Tilemap
+
+1. Open [no$gba](https://www.nogba.com/) and add a brekpoint on `0805143C`
+2. On game, enter on a vision
+3. You'll stop on the breakpoint. Firstly the game will unpack the vision's assets, not the tilemap. So you'll need to re-run until find when the game start to unpack the tilemap. To check it, look when there are changes on bytes following of ~`020039CC`. When you see it changes by the first time, remember how much times you needed to re-run (for example, if you needed to re-run 4 times to start to see a change on ~`020039CC`)
+4. Leave the vision and enter into it again, and then re-run how much times minus 1 you needed to see changes on `020039CC` (for example, 4 - 1 = 3 times), and get the value at **r0** (for example, on vision 5 is `081B8A28`)
+5. You should put this values on `tilemap` without the first 2 digits. For instance: `tilemap: 0x1B8A28`
+
+### Size
+
+1. Within a vision, add a breakpoint on `0800FF7E` and run the game
+2. Go to the address pointed by **r0** and change this byte to `00`. It will be our tile A
+3. In the game, you should move Klonoa away from this byte and then return. You'll see that our tile A now is empty
+4. Now we should get the tile B (that is bellow A). Set again the breakpoint, and remove how much tiles bellow Klonoa to drop him 1 level
+5. Find the tile B looking around him
+6. Subtract the address of tile A and tile B. The result is the vision width (on vision 5 is `270`)
+7. Now divide the width with the length of the tilemap (you can get it running this application locally and oppeing the vision). The result is the height (on vision 5 is `120`)
+
+### Objects
+
+1. Go to the previous vision file, and get the address which start the OAM, for example, at the vision 1-3 is `E4DF0`
+2. Go to this address at no$gba (in this example, is `080E4DF0`)
+3. You'll see that there is many zeros between this section and at the next section, so the address of the next section is the OAM map of the next vision, just get this address at put on the vision file
+4. If not work, add a breakpoint on the address `0804505C`, start again the vision, and replace the start address with the value at **r1**.
+
+If some object appears as unknown, you'll need to add this new kind on klo-gba.js, at the file [`objectMaps.js`](scissors/src/objectMaps.js).
+
+### Portals
+
+1. Add a breakpoint on the address `0800CAF8`
+2. Enter on the vision. So the emulator will stop at the breakpoint, and the start address of portals will be stores at **r1**
+3. To discover the last address is just guessing: just add 8 on this address until plot a pretty tilemap.
+
+### Scheme
+
+1. Using no$gba or using klo-gba.js, click on the tile, get its id and use one of the colors name at [`tileNameToColor.js`](brush/src/constants/tileNameToColor.js) file. If this tile is new, add a new color on this file.
