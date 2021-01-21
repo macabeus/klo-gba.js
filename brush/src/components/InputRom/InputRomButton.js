@@ -4,6 +4,7 @@ import { Button, Flexbox } from 'former-kit'
 import { getRomRegion, isSupportedRegion } from 'scissors'
 import FileReaderInput from 'react-file-reader-input'
 import RomRegionNotSupported from '../../errors/romRegioNotSupported'
+import RomInvalidExtension from '../../errors/romInvalidExtension'
 import ROMContext from '../../context/ROMContext'
 import style from './style.css'
 
@@ -33,6 +34,11 @@ const getFileContent = async file =>
 
 const handleChange = (setMemoryROMBufferState, onErrorHandle) =>
   async (event, [[, file]]) => {
+    if (file.name.match(/((zip)|(rar))$/)) {
+      onErrorHandle(new RomInvalidExtension())
+      return
+    }
+
     let fileContent
 
     try {
