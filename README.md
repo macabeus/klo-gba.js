@@ -16,8 +16,9 @@ Very nice! Let's chat more!
 ## Posts
 
 Since this is a study project, I'm writing a manual about how I'm developing it, because I want that more people to learn how to do a rom hacking for others games. It's a very fun challenge!
-- [🇺🇸 Manual in English](https://medium.com/@bruno.macabeus/reverse-engineering-a-gameboy-advance-game-introduction-ec185bd8e02?source=friends_link&sk=13ec64916dd886d5d427bdb75a73b847)
+- [🇺🇸 Manual in English](https://medium.com/@bruno.macabeus/reverse-engineering-a-gameboy-advance-game-introduction-ec185bd8e02)
 - [🇧🇷 Manual in Portuguese](https://medium.com/@bruno.macabeus/pt-br-engenharia-reversa-num-jogo-de-gameboy-advance-introdu%C3%A7%C3%A3o-21ebffe2f794?source=friends_link&sk=ed05c9b97187694240ed3316ae325165)
+- [🇪🇸 Manual in Spanish](https://macabeus.medium.com/ingenier%C3%ADa-inversa-de-un-juego-de-game-boy-advance-gu%C3%ADa-completa-dd5167f70263)
 
 ## Talks
 
