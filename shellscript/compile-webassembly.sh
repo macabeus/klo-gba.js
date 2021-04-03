@@ -6,7 +6,7 @@ function docker_run_emscripten {
   docker run \
     --rm -it \
     -v $(pwd)/scissors/src/wasm:/src \
-    trzeci/emscripten \
+    trzeci/emscripten:1.38.43 \
     emcc -s WASM=1 -s ALLOW_MEMORY_GROWTH=1 -s MODULARIZE=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=[\"FS\"] -s EXPORT_NAME=\"$filename\" -o ./$filename.js $filename.c
 }
 
