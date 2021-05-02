@@ -814,7 +814,7 @@ GameBoyAdvanceSoftwareRenderer.prototype.clear = function(mmu) {
 		this.drawBackdrop
 	];
 
-	this,objwinActive = false;
+	this.objwinActive = false;
 	this.alphaEnabled = false;
 
 	this.scanline = {
