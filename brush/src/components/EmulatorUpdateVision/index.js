@@ -9,6 +9,7 @@ const keyCodeU = 85
 const EmulatorUpdateVision = () => {
   const { romBufferMemory, setMemoryROMBufferState } = useContext(ROMContext)
   const {
+    gbaEnterVision,
     vision: {
       objectsDiffMap,
       state,
@@ -19,17 +20,21 @@ const EmulatorUpdateVision = () => {
   } = useContext(VisionContext)
 
   const updateVisionHandle = useCallback(
-    () =>
-      saveVision(
+    () => {
+      const newRomBuffer = saveVision(
         romBufferMemory,
         visionWorld,
         visionIndex,
         tilemap,
         objectsDiffMap
       )
-      |> setMemoryROMBufferState,
+      setMemoryROMBufferState(newRomBuffer)
+
+      gbaEnterVision(visionWorld, visionIndex)
+    },
     [
       romBufferMemory,
+      gbaEnterVision,
       visionWorld,
       visionIndex,
       tilemap,
