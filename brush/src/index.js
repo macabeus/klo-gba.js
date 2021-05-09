@@ -5,6 +5,7 @@ import {
   ThemeProvider,
 } from 'former-kit'
 import skin from 'former-kit-skin-pagarme'
+import { GbaProvider } from 'react-gbajs'
 import Main from './pages/Main'
 import DisplayMapOptionsProvider from './providers/DisplayMapOptionsProvider'
 import ROMProvider from './providers/ROMProvider'
@@ -13,17 +14,19 @@ import KloGbaSidebar from './components/KloGbaSidebar'
 
 ReactDOM.render(
   <ThemeProvider theme={skin}>
-    <ROMProvider>
-      <VisionProvider>
-        <DisplayMapOptionsProvider>
+    <GbaProvider>
+      <ROMProvider>
+        <VisionProvider>
+          <DisplayMapOptionsProvider>
 
-          <Layout sidebar={<KloGbaSidebar />}>
-            <Main />
-          </Layout>
+            <Layout sidebar={<KloGbaSidebar />}>
+              <Main />
+            </Layout>
 
-        </DisplayMapOptionsProvider>
-      </VisionProvider>
-    </ROMProvider>
+          </DisplayMapOptionsProvider>
+        </VisionProvider>
+      </ROMProvider>
+    </GbaProvider>
   </ThemeProvider>,
   document.getElementById('app')
 )

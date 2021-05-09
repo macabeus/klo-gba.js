@@ -1,28 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
-import sha1 from 'js-sha1'
-import drawEmulator from '../emulator'
 import reset from '../emulator/reset'
-import setVolume from '../emulator/setVolume'
+import emulatorSetVolume from '../emulator/setVolume'
+import GbaContext from './gba-context'
 
-const ReactGbaJs = ({ romBufferMemory, volume }) => {
-  const [gba, setGba] = useState(null)
-
-  useEffect(() => {
-    if (gba !== null) {
-      reset(gba)
-    }
-
-    const newGbaInstance = drawEmulator(romBufferMemory)
-    setGba(newGbaInstance)
-  }, [sha1(romBufferMemory)])
+const ReactGbaJs = ({ volume }) => {
+  const { gba } = useContext(GbaContext)
 
   useEffect(() => {
-    if (gba === null) {
+    if (gba === undefined) {
       return
     }
 
-    setVolume(gba, volume)
+    emulatorSetVolume(gba, volume)
   }, [gba, volume])
 
   return (
@@ -31,7 +21,6 @@ const ReactGbaJs = ({ romBufferMemory, volume }) => {
 }
 
 ReactGbaJs.propTypes = {
-  romBufferMemory: PropTypes.object.isRequired,
   volume: PropTypes.number.isRequired,
 }
 

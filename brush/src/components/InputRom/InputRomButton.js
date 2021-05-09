@@ -32,7 +32,7 @@ const getFileContent = async file =>
     reader.readAsArrayBuffer(file)
   })
 
-const handleChange = (setMemoryROMBufferState, onErrorHandle) =>
+const handleChange = (onFileLoadedHandle, onErrorHandle) =>
   async (event, [[, file]]) => {
     if (file.name.match(/((zip)|(rar))$/)) {
       onErrorHandle(new RomInvalidExtension())
@@ -48,7 +48,7 @@ const handleChange = (setMemoryROMBufferState, onErrorHandle) =>
       return
     }
 
-    setMemoryROMBufferState(fileContent)
+    onFileLoadedHandle(fileContent)
   }
 
 const InputROM = ({ setError }) => {

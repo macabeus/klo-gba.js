@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash.clonedeep';
+
 window.MemoryView = function MemoryView(memory, offset) {
 	this.buffer = memory;
 	this.view = new DataView(this.buffer, typeof(offset) === "number" ? offset : 0);
@@ -324,14 +326,14 @@ GameBoyAdvanceMMU.prototype.clear = function() {
 
 GameBoyAdvanceMMU.prototype.freeze = function() {
 	return {
-		'ram': Serializer.prefix(this.memory[this.REGION_WORKING_RAM].buffer),
-		'iram': Serializer.prefix(this.memory[this.REGION_WORKING_IRAM].buffer),
+		'ram': [...new Uint16Array(cloneDeep(this.memory[this.REGION_WORKING_RAM].buffer))],
+		'iram': [...new Uint16Array(cloneDeep(this.memory[this.REGION_WORKING_IRAM].buffer))],
 	};
 };
 
 GameBoyAdvanceMMU.prototype.defrost = function(frost) {
-	this.memory[this.REGION_WORKING_RAM].replaceData(frost.ram);
-	this.memory[this.REGION_WORKING_IRAM].replaceData(frost.iram);
+	this.memory[this.REGION_WORKING_RAM].replaceData(new Uint16Array(frost.ram).buffer);
+	this.memory[this.REGION_WORKING_IRAM].replaceData(new Uint16Array(frost.iram).buffer);
 };
 
 GameBoyAdvanceMMU.prototype.loadBios = function(bios, real) {

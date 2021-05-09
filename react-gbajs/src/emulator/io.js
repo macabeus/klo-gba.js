@@ -1,3 +1,5 @@
+import cloneDeep from 'lodash.clonedeep';
+
 window.GameBoyAdvanceIO = function GameBoyAdvanceIO() {
 	// Video
 	this.DISPCNT = 0x000;
@@ -157,16 +159,14 @@ GameBoyAdvanceIO.prototype.clear = function() {
 
 GameBoyAdvanceIO.prototype.freeze = function() {
 	return {
-		'registers': Serializer.prefix(this.registers.buffer)
+		registers: [...cloneDeep(this.registers)],
+		cpuExecMode: this.cpu.execMode,
 	};
 };
 
 GameBoyAdvanceIO.prototype.defrost = function(frost) {
 	this.registers = new Uint16Array(frost.registers);
-	// Video registers don't serialize themselves
-	for (var i = 0; i <= this.BLDY; i += 2) {
-		this.store16(this.registers[i >> 1]);
-	}
+	this.cpu.switchExecMode(frost.cpuExecMode)
 };
 
 GameBoyAdvanceIO.prototype.load8 = function(offset) {

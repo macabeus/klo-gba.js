@@ -176,9 +176,6 @@ GameBoyAdvance.prototype.advanceFrame = function() {
 };
 
 GameBoyAdvance.prototype.runStable = function() {
-	if (this.interval) {
-		return; // Already running
-	}
 	var self = this;
 	var timer = 0;
 	var frames = 0;

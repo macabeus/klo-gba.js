@@ -1,6 +1,35 @@
+import cloneDeep from 'lodash.clonedeep';
+import getPrimitiveProperties from '../helpers/get-primitive-properties';
+import restorePrimitiveProperties from '../helpers/restore-primitive-properties';
+
 function MemoryAligned16(size) {
 	this.buffer = new Uint16Array(size >> 1);
 };
+
+function createDrawBackdropFunction(video) {
+	this.bg = true;
+	this.priority = -1;
+	this.index = video.LAYER_BACKDROP;
+	this.enabled = true;
+
+	this.drawScanline = function (backing, layer, start, end) {
+		// TODO: interactions with blend modes and OBJWIN
+		for (var x = start; x < end; ++x) {
+			if (!(backing.stencil[x] & video.WRITTEN_MASK)) {
+				backing.color[x] = video.palette.accessColor(this.index, 0);
+				backing.stencil[x] = video.WRITTEN_MASK;
+			} else if (backing.stencil[x] & video.TARGET1_MASK) {
+				backing.color[x] = video.palette.mix(
+					video.blendB,
+					video.palette.accessColor(this.index, 0),
+					video.blendA,
+					backing.color[x]
+				);
+				backing.stencil[x] = video.WRITTEN_MASK;
+			}
+		}
+	};
+}
 
 MemoryAligned16.prototype.load8 = function(offset) {
 	return (this.loadU8(offset) << 24) >> 24;
@@ -55,6 +84,16 @@ function GameBoyAdvanceVRAM(size) {
 
 GameBoyAdvanceVRAM.prototype = Object.create(MemoryAligned16.prototype);
 
+GameBoyAdvanceVRAM.prototype.freeze = function() {
+	return {
+		buffer: [...new Uint16Array(cloneDeep(this.buffer))],
+	};
+};
+
+GameBoyAdvanceVRAM.prototype.defrost = function(frost) {
+	this.buffer = this.vram = new Uint16Array(frost.buffer);
+};
+
 function GameBoyAdvanceOAM(size) {
 	MemoryAligned16.call(this, size);
 	this.oam = this.buffer;
@@ -74,6 +113,45 @@ function GameBoyAdvanceOAM(size) {
 };
 
 GameBoyAdvanceOAM.prototype = Object.create(MemoryAligned16.prototype);
+
+GameBoyAdvanceOAM.prototype.freeze = function() {
+	return {
+		buffer: [...new Uint16Array(cloneDeep(this.buffer))],
+		objs: cloneDeep(this.objs).map(i => {
+			i.oam = undefined
+			return i
+		}),
+		scalerot: cloneDeep(this.scalerot)
+	};
+};
+
+GameBoyAdvanceOAM.prototype.defrost = function(frost) {
+	this.buffer = this.oam = new Uint16Array(frost.buffer).buffer;
+	this.objs = frost.objs.map((i, index) => {
+		const obj = new GameBoyAdvanceOBJ(this, index);
+
+		obj.x = i.x;
+		obj.y = i.y;
+		obj.scalerot = i.scalerot;
+		obj.doublesize = i.doublesize;
+		obj.disable = i.disable;
+		obj.mode = i.mode;
+		obj.mosaic = i.mosaic;
+		obj.multipalette = i.multipalette;
+		obj.shape = i.shape;
+		obj.scalerotParam = i.scalerotParam;
+		obj.hflip = i.hflip;
+		obj.vflip = i.vflip;
+		obj.tileBase = i.tileBase;
+		obj.priority = i.priority;
+		obj.palette = i.palette;
+		obj.cachedWidth = i.cachedWidth;
+		obj.cachedHeight = i.cachedHeight;
+
+		return obj
+	});
+	this.scalerot = frost.scalerot;
+};
 
 GameBoyAdvanceOAM.prototype.overwrite = function(memory) {
 	for (var i = 0; i < (this.buffer.byteLength >> 1); ++i) {
@@ -173,6 +251,22 @@ function GameBoyAdvancePalette() {
 		this.colors[0] // Backdrop
 	];
 	this.blendY = 1;
+};
+
+GameBoyAdvancePalette.prototype.freeze = function () {
+	return {
+		colors: cloneDeep(this.colors),
+		adjustedColors: cloneDeep(this.adjustedColors),
+		passthroughColors: cloneDeep(this.passthroughColors),
+		blendY: cloneDeep(this.blendY),
+	};
+};
+
+GameBoyAdvancePalette.prototype.defrost = function (frost) {
+	this.colors = frost.colors;
+	this.adjustedColors = frost.adjustedColors;
+	this.passthroughColors = frost.passthroughColors;
+	this.blendY = frost.blendY;
 };
 
 GameBoyAdvancePalette.prototype.overwrite = function(memory) {
@@ -663,25 +757,7 @@ window.GameBoyAdvanceSoftwareRenderer = function GameBoyAdvanceSoftwareRenderer(
 
 	this.PRIORITY_MASK = this.LAYER_MASK | this.BACKGROUND_MASK;
 
-	this.drawBackdrop = new (function(video) {
-		this.bg = true;
-		this.priority = -1;
-		this.index = video.LAYER_BACKDROP;
-		this.enabled = true;
-
-		this.drawScanline = function(backing, layer, start, end) {
-			// TODO: interactions with blend modes and OBJWIN
-			for (var x = start; x < end; ++x) {
-				if (!(backing.stencil[x] & video.WRITTEN_MASK)) {
-					backing.color[x] = video.palette.accessColor(this.index, 0);
-					backing.stencil[x] = video.WRITTEN_MASK;
-				} else if (backing.stencil[x] & video.TARGET1_MASK) {
-					backing.color[x] = video.palette.mix(video.blendB, video.palette.accessColor(this.index, 0), video.blendA, backing.color[x]);
-					backing.stencil[x] = video.WRITTEN_MASK;
-				}
-			}
-		}
-	})(this);
+	this.drawBackdrop = createDrawBackdropFunction.bind(this);
 };
 
 GameBoyAdvanceSoftwareRenderer.prototype.clear = function(mmu) {
@@ -853,10 +929,105 @@ GameBoyAdvanceSoftwareRenderer.prototype.clearSubsets = function(mmu, regions) {
 	}
 };
 
-GameBoyAdvanceSoftwareRenderer.prototype.freeze = function() {
+GameBoyAdvanceSoftwareRenderer.prototype.freezeBg = function () {
+	return this.bg.map((b) => getPrimitiveProperties(b));
 };
 
-GameBoyAdvanceSoftwareRenderer.prototype.defrost = function(frost) {
+GameBoyAdvanceSoftwareRenderer.prototype.defrostBg = function (frost) {
+	this.bg.forEach((b, i) => {
+		restorePrimitiveProperties(b, frost[i]);
+		b.video = this;
+		b.vram = this.vram;
+		b.pushPixel = GameBoyAdvanceSoftwareRenderer.pushPixel;
+		b.drawScanline = this.drawScanlineBGMode0;
+	});
+};
+
+GameBoyAdvanceSoftwareRenderer.prototype.freezeObjLayers = function () {
+	const frost = {
+		objLayers: this.objLayers.map((o) => getPrimitiveProperties(o)),
+		objwinLayer: getPrimitiveProperties(this.objwinLayer),
+	};
+
+	return frost;
+};
+
+GameBoyAdvanceSoftwareRenderer.prototype.defrostObjLayers = function (frost) {
+	this.objLayers.forEach((o, i) => {
+		restorePrimitiveProperties(o, frost.objLayers[i]);
+	});
+	restorePrimitiveProperties(this.objwinLayer, frost.objwinLayer);
+};
+
+GameBoyAdvanceSoftwareRenderer.prototype.freezeDrawBackdrop = function () {
+	return getPrimitiveProperties(this.drawBackdrop);
+};
+GameBoyAdvanceSoftwareRenderer.prototype.defrostDrawBackdrop = function (
+	frost
+) {
+	this.drawBackdrop = createDrawBackdropFunction.bind(this);
+	restorePrimitiveProperties(this.drawBackdrop, frost);
+};
+
+GameBoyAdvanceSoftwareRenderer.prototype.freeze = function (encodeBase64) {
+	const primitives = getPrimitiveProperties(this);
+	const state = {
+		primitives,
+		palette: this.palette.freeze(),
+		vram: this.vram.freeze(),
+		oam: this.oam.freeze(),
+		windows: cloneDeep(this.windows),
+		target1: cloneDeep(this.target1),
+		target2: cloneDeep(this.target2),
+		scanline: {
+			color: [...this.scanline.color],
+			stencil: [...this.scanline.stencil],
+		},
+		sharedColor: cloneDeep(this.sharedColor),
+		sharedMap: cloneDeep(this.sharedMap),
+		bg: this.freezeBg(),
+		objLayers: this.freezeObjLayers(),
+		drawBackdrop: this.freezeDrawBackdrop(),
+	};
+
+	return state;
+};
+
+GameBoyAdvanceSoftwareRenderer.prototype.defrost = function (frost) {
+	restorePrimitiveProperties(this, frost.primitives);
+
+	this.palette.defrost(frost.palette);
+	this.vram.defrost(frost.vram);
+	this.oam.defrost(frost.oam);
+
+	this.windows = frost.windows;
+	this.target1 = frost.target1;
+	this.target2 = frost.target2;
+	this.scanline = {
+		color: new Uint16Array(frost.scanline.color),
+		stencil: new Uint16Array(frost.scanline.stencil),
+	};
+	this.sharedColor = frost.sharedColor;
+	this.sharedMap = frost.sharedMap;
+
+	this.defrostBg(frost.bg);
+	this.defrostObjLayers(frost.objLayers);
+	this.defrostDrawBackdrop(frost.drawBackdrop);
+
+	this.drawLayers = [
+		this.bg[0],
+		this.bg[1],
+		this.bg[2],
+		this.bg[3],
+		this.objLayers[0],
+		this.objLayers[1],
+		this.objLayers[2],
+		this.objLayers[3],
+		this.objwinLayer,
+		this.drawBackdrop,
+	];
+
+	this.resetLayers();
 };
 
 GameBoyAdvanceSoftwareRenderer.prototype.setBacking = function(backing) {
