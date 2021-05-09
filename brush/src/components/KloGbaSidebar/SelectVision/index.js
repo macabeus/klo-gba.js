@@ -7,6 +7,7 @@ import ROMContext from '../../../context/ROMContext'
 const SelectVision = () => {
   const { romBufferMemory } = useContext(ROMContext)
   const {
+    gbaEnterVision,
     updateVision,
     vision,
     visionIndex,
@@ -17,6 +18,7 @@ const SelectVision = () => {
     const [newVisionWorld, newVisionIndex] = newVision.split('-')
 
     updateVision(romBufferMemory, newVisionWorld, newVisionIndex)
+    gbaEnterVision(newVisionWorld, newVisionIndex)
   }
 
   const visionsLinks = allVisions.map(info => (
