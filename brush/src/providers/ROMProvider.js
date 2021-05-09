@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import localforage from 'localforage'
+import { GbaContext } from 'react-gbajs'
 import ROMContext from '../context/ROMContext'
 
 const useROMBuffer = () => {
@@ -12,6 +13,10 @@ const useROMBuffer = () => {
   }
 
   const [romBufferState, setROMBufferState] = useState(romBufferStates.starting)
+
+  const {
+    setRomBufferMemory: setROMBufferMemoryGba,
+  } = useContext(GbaContext)
 
   useEffect(() => {
     const fetchLocalROMBufferMemory = async () => {
@@ -35,6 +40,7 @@ const useROMBuffer = () => {
 
   const setMemoryROMBufferState = (newRomBufferMemory) => {
     setROMBufferState(romBufferStates.loaded(newRomBufferMemory))
+    setROMBufferMemoryGba(newRomBufferMemory)
     localforage.setItem('romBuffer', newRomBufferMemory)
   }
 

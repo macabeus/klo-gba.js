@@ -60,7 +60,7 @@ GameBoyAdvanceVideo.prototype.freeze = function() {
 		'nextHblankIRQ': this.nextHblankIRQ,
 		'nextVblankIRQ': this.nextVblankIRQ,
 		'nextVcounterIRQ': this.nextVcounterIRQ,
-		'renderPath': this.renderPath.freeze(this.core.encodeBase64)
+		'renderPath': this.renderPath.freeze()
 	};
 };
 
