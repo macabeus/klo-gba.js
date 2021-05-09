@@ -119,11 +119,25 @@ Currently, klo-gba.js has only the first visions. If you want to add a new one, 
 
 ### Create the new vision file
 
-Create a new file in the folder [`scissors/src/visions`](scissors/src/visions) using as template the file [`template.js`](scissors/src/visions/template.js), and update [`scissors/src/visions/index.js`](scissors/src/visions/index.js)
+Two files should be created to add a new vision: an info file and the entering gba state on the vision. After creating these two files, you should update [`scissors/src/visions/index.js`](scissors/src/visions/index.js) linking your new files.
 
-Fill it following the below instructions.
+#### Entering GBA state
 
-### Tilemap
+This file is the GBA state when a new vision is being loaded. To get this data, add a `debugger` on [`brush/src/hooks/useGbaSaveRestoreState.js`](brush/src/hooks/useGbaSaveRestoreState.js) before of `setSavedState(saveState())` and run this command on the browser's console when a vision is being loaded:
+
+```
+copy(JSON.stringify(saveState()))
+```
+
+Then [format the json ](https://jsonlint.com/) and save this data on the [`scissors/src/visions/entering-gba-state`](scissors/src/visions/entering-gba-state) folder.
+
+#### Infos
+
+Create a new file in the folder [`scissors/src/visions/infos`](scissors/src/visions/infos) using as template the file [`template.js`](scissors/src/visions/infos/template.js).
+
+Fill this file following the below instructions:
+
+##### Tilemap
 
 1. Open [no$gba](https://www.nogba.com/) and add a brekpoint on `0805143C`
 2. On game, enter on a vision
@@ -131,7 +145,7 @@ Fill it following the below instructions.
 4. Leave the vision and enter into it again, and then re-run how much times minus 1 you needed to see changes on `020039CC` (for example, 4 - 1 = 3 times), and get the value at **r0** (for example, on vision 5 is `081B8A28`)
 5. You should put this values on `tilemap` without the first 2 digits. For instance: `tilemap: 0x1B8A28`
 
-### Size
+##### Size
 
 1. Within a vision, add a breakpoint on `0800FF7E` and run the game
 2. Go to the address pointed by **r0** and change this byte to `00`. It will be our tile A
@@ -141,7 +155,7 @@ Fill it following the below instructions.
 6. Subtract the address of tile A and tile B. The result is the vision width (on vision 5 is `270`)
 7. Now divide the width with the length of the tilemap (you can get it running this application locally and oppeing the vision). The result is the height (on vision 5 is `120`)
 
-### Objects
+##### Objects
 
 1. Go to the previous vision file, and get the address which start the OAM, for example, at the vision 1-3 is `E4DF0`
 2. Go to this address at no$gba (in this example, is `080E4DF0`)
@@ -150,12 +164,12 @@ Fill it following the below instructions.
 
 If some object appears as unknown, you'll need to add this new kind on klo-gba.js, at the file [`objectMaps.js`](scissors/src/objectMaps.js).
 
-### Portals
+##### Portals
 
 1. Add a breakpoint on the address `0800CAF8`
 2. Enter on the vision. So the emulator will stop at the breakpoint, and the start address of portals will be stores at **r1**
 3. To discover the last address is just guessing: just add 8 on this address until plot a pretty tilemap.
 
-### Scheme
+##### Scheme
 
 1. Using no$gba or using klo-gba.js, click on the tile, get its id and use one of the colors name at [`tileNameToColor.js`](brush/src/constants/tileNameToColor.js) file. If this tile is new, add a new color on this file.

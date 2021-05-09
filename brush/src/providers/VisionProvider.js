@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import { getVision } from 'scissors'
+import { enteringVisionGbaState, getVision } from 'scissors'
+import { GbaContext } from 'react-gbajs'
 import VisionContext from '../context/VisionContext'
 import useForceUpdate from '../hooks/useForceUpdate'
 
 const VisionProvider = ({ children }) => {
+  const { restoreState } = useContext(GbaContext)
+
   const [visionWorld, setVisionWorld] = useState(1)
   const [visionIndex, setVisionIndex] = useState(1)
 
@@ -34,6 +37,9 @@ const VisionProvider = ({ children }) => {
     setVision(newVision)
   }
 
+  const gbaEnterVision = (world, index) =>
+    restoreState(enteringVisionGbaState(world, index))
+
   const updateTilemapPoint = (x, y, newTileId) => {
     vision.tilemap[x + (y * vision.infos.tilemap.width)] = newTileId
   }
@@ -57,6 +63,7 @@ const VisionProvider = ({ children }) => {
 
   return (
     <VisionContext.Provider value={{
+      gbaEnterVision,
       getTilemapPoint,
       setEmptyState,
       updateObjectsDiffMap,
