@@ -7,7 +7,7 @@ const Community = () => (
   <SidebarLink title="Community">
     <SidebarLink
       title="Discord"
-      onClick={() => window.open('https://discord.gg/jteBPsC')}
+      onClick={() => window.open('https://disboard.org/server/103975433493581824')}
     />
     <SidebarLink
       title="Medium Posts"
