@@ -1,0 +1,6 @@
+.communityContainer {
+  position: absolute;
+  width: inherit;
+  min-width: inherit;
+  bottom: 0;
+}
