@@ -1,23 +1,37 @@
 import React from 'react'
-import {
-  SidebarLink,
-} from 'former-kit'
+import discordIcon from '../../../../assets/discord-icon.png'
+import gitHubIcon from '../../../../assets/github-icon.png'
+import mediumIcon from '../../../../assets/medium-icon.png'
+import twitterIcon from '../../../../assets/twitter-icon.png'
+import CommunityIcon from './CommunityIcon'
+import style from './style.css'
 
 const Community = () => (
-  <SidebarLink title="Community">
-    <SidebarLink
-      title="Discord"
-      onClick={() => window.open('https://disboard.org/server/103975433493581824')}
+  <div className={style.container}>
+    <CommunityIcon
+      name="discord"
+      imageUrl={discordIcon}
+      link="https://disboard.org/server/103975433493581824"
     />
-    <SidebarLink
-      title="Medium Posts"
-      onClick={() => window.open('https://medium.com/@bruno.macabeus/reverse-engineering-a-gameboy-advance-game-introduction-ec185bd8e02')}
+
+    <CommunityIcon
+      name="github"
+      imageUrl={gitHubIcon}
+      link="https://github.com/macabeus/klo-gba.js"
     />
-    <SidebarLink
-      title="GitHub"
-      onClick={() => window.open('https://github.com/macabeus/klo-gba.js')}
+
+    <CommunityIcon
+      name="medium"
+      imageUrl={mediumIcon}
+      link="https://medium.com/@bruno.macabeus/reverse-engineering-a-gameboy-advance-game-introduction-ec185bd8e02"
     />
-  </SidebarLink>
+
+    <CommunityIcon
+      name="twitter"
+      imageUrl={twitterIcon}
+      link="https://twitter.com/bmacabeus"
+    />
+  </div>
 )
 
 export default Community
