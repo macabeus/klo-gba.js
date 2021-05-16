@@ -41,7 +41,23 @@ const InputRomModal = () => {
               <p>
                 The ROM should be the USA version of{' '}
                 <strong>Klonoa: Empire of Dreams</strong>.{' '}
-                Please, <a href="https://www.amazon.com/s?k=Klonoa+Empire+of+Dreams+cartridge">buy one</a> and <a href="https://feuniverse.us/t/dumping-roms-from-gba-cartridges-a-primer/3667">dump its data</a>.
+                Please,{' '}
+                <a
+                  href="https://www.amazon.com/s?k=Klonoa+Empire+of+Dreams+cartridge"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  buy one
+                </a>
+                {' '}and{' '}
+                <a
+                  href="https://feuniverse.us/t/dumping-roms-from-gba-cartridges-a-primer/3667"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  dump its data
+                </a>
+                .
               </p>
 
               <InputRomButton setError={setError} />
