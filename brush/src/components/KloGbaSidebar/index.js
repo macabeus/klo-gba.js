@@ -8,6 +8,7 @@ import SelectVision from './SelectVision'
 import DisplayMapOptions from './DisplayMapOptions'
 import ChangeRom from './ChangeRom'
 import Community from './Community'
+import Hacks from './Hacks'
 import style from './style.css'
 
 const KloGbaSidebar = () => (
@@ -18,6 +19,8 @@ const KloGbaSidebar = () => (
       <SelectVision />
 
       <DisplayMapOptions />
+
+      <Hacks />
 
       <ChangeRom />
     </SidebarLinks>

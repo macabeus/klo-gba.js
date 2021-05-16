@@ -20,6 +20,8 @@ function GameBoyAdvance() {
 	this.keypad = new GameBoyAdvanceKeypad();
 	this.sio = new GameBoyAdvanceSIO();
 
+	this.frozenAddresses = {};
+
 	// TODO: simplify this graph
 	this.cpu.mmu = this.mmu;
 	this.cpu.irq = this.irq;
@@ -70,6 +72,14 @@ function GameBoyAdvance() {
 };
 
 window.GameBoyAdvance = GameBoyAdvance
+
+GameBoyAdvance.prototype.addFreezeAddress = function({ address, size, value }) {
+	this.frozenAddresses[address] = { size, value };
+};
+
+GameBoyAdvance.prototype.removeFreezeAddress = function(address) {
+	delete this.frozenAddresses[address];
+};
 
 GameBoyAdvance.prototype.setCanvas = function(canvas) {
 	var self = this;
@@ -144,8 +154,26 @@ GameBoyAdvance.prototype.reset = function() {
 };
 
 GameBoyAdvance.prototype.step = function() {
+	const mmuMemoryIram = this.mmu.memory[this.mmu.REGION_WORKING_IRAM];
+
 	while (this.doStep()) {
 		this.cpu.step();
+
+		for (const address in this.frozenAddresses) {
+			const { size, value } = this.frozenAddresses[address];
+
+			switch (size) {
+				case 8:
+					mmuMemoryIram.store8(address, value);
+					break;
+				case 16:
+					mmuMemoryIram.store16(address, value);
+					break;
+				case 16:
+					mmuMemoryIram.store32(address, value);
+					break;
+			}
+		}
 	}
 };
 
