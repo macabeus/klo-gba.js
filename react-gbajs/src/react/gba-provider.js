@@ -8,6 +8,7 @@ const GbaProvider = ({ children }) => {
   const [gba, setGba] = useState()
   const [volume, setVolume] = useState(null)
   const [romBufferMemory, setRomBufferMemory] = useState()
+  const [frozenAddresses, setFrozenAddresses] = useState({})
 
   const play = (newRomBufferMemory) => {
     setRomBufferMemory(newRomBufferMemory)
@@ -25,6 +26,9 @@ const GbaProvider = ({ children }) => {
     gba.runStable()
   }
 
+  const updateFrozenAddreses = () =>
+    setFrozenAddresses(cloneDeep(gba.frozenAddresses))
+
   return (
     <GbaContext.Provider value={{
       gba,
@@ -32,6 +36,15 @@ const GbaProvider = ({ children }) => {
       play,
       saveState,
       restoreState,
+      frozenAddresses,
+      addFreezeAddress: gba && ((args) => {
+        gba.addFreezeAddress(args)
+        updateFrozenAddreses()
+      }),
+      removeFreezeAddress: gba && ((args) => {
+        gba.removeFreezeAddress(args)
+        updateFrozenAddreses()
+      }),
     }}
     >
       {children}
