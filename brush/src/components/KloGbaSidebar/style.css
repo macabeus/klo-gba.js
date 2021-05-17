@@ -1,6 +1,9 @@
+@import "former-kit-skin-pagarme/dist/styles/z-index.css";
+
 .communityContainer {
   position: absolute;
   width: inherit;
   min-width: inherit;
   bottom: 0;
+  z-index: calc(var(--modal-overlay-z-index) + 1);
 }

@@ -17,6 +17,10 @@
   opacity: 0.4;
 }
 
+.iconWhenModalIsPresent {
+  opacity: 0.8;
+}
+
 .icon:hover {
   opacity: 1;
 }
