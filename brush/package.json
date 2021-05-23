@@ -26,7 +26,7 @@
     "react": "16.10.2",
     "react-dom": "16.10.2",
     "react-file-reader-input": "2.0.0",
-    "react-gbajs": "*",
+    "react-gbajs": "0.0.1",
     "pixi.js": "5.1.5",
     "@inlet/react-pixi": "1.1.2",
     "scissors": "*"
