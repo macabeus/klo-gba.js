@@ -6,7 +6,7 @@ import VisionContext from '../context/VisionContext'
 import useForceUpdate from '../hooks/useForceUpdate'
 
 const VisionProvider = ({ children }) => {
-  const { restoreState } = useContext(GbaContext)
+  const { updateState } = useContext(GbaContext)
 
   const [visionWorld, setVisionWorld] = useState(1)
   const [visionIndex, setVisionIndex] = useState(1)
@@ -37,8 +37,11 @@ const VisionProvider = ({ children }) => {
     setVision(newVision)
   }
 
-  const gbaEnterVision = (world, index) =>
-    restoreState(enteringVisionGbaState(world, index))
+  const gbaEnterVision = (world, index, newRomBuffer = undefined) =>
+    updateState({
+      newRomBuffer,
+      restoreState: enteringVisionGbaState(world, index),
+    })
 
   const updateTilemapPoint = (x, y, newTileId) => {
     vision.tilemap[x + (y * vision.infos.tilemap.width)] = newTileId
