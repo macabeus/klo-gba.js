@@ -11,7 +11,7 @@ const GbaProvider = ({ children }) => {
   const [frozenAddresses, setFrozenAddresses] = useState({})
 
   const play = (newRomBufferMemory) => {
-    setRomBufferMemory(newRomBufferMemory)
+    setRomBufferMemory(new Uint8Array([...newRomBufferMemory]))
 
     const newGbaInstance = drawEmulator(newRomBufferMemory)
     setGba(newGbaInstance)
@@ -20,9 +20,20 @@ const GbaProvider = ({ children }) => {
   const saveState = () =>
     gba.freeze()
 
-  const restoreState = (savedState) => {
-    gba.setRom(romBufferMemory.buffer)
-    gba.defrost(cloneDeep(savedState))
+  const updateState = ({ restoreState, newRomBuffer }) => {
+    if (newRomBuffer !== undefined) {
+      const newRomBufferReference = new Uint8Array([...newRomBuffer])
+
+      setRomBufferMemory(newRomBufferReference)
+      gba.setRom(newRomBufferReference.buffer)
+    } else {
+      gba.setRom(romBufferMemory.buffer)
+    }
+
+    if (restoreState !== undefined) {
+      gba.defrost(cloneDeep(restoreState))
+    }
+
     gba.runStable()
   }
 
@@ -32,10 +43,9 @@ const GbaProvider = ({ children }) => {
   return (
     <GbaContext.Provider value={{
       gba,
-      setRomBufferMemory,
       play,
       saveState,
-      restoreState,
+      updateState,
       frozenAddresses,
       addFreezeAddress: gba && ((args) => {
         gba.addFreezeAddress(args)

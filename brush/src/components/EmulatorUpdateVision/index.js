@@ -28,9 +28,10 @@ const EmulatorUpdateVision = () => {
         tilemap,
         objectsDiffMap
       )
+
       setMemoryROMBufferState(newRomBuffer)
 
-      gbaEnterVision(visionWorld, visionIndex)
+      gbaEnterVision(visionWorld, visionIndex, newRomBuffer)
     },
     [
       romBufferMemory,
