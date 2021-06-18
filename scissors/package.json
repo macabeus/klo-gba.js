@@ -6,21 +6,21 @@
   "scripts": {
     "start": "webpack --watch --mode development --config webpack.config.js",
     "build": "webpack --mode production --config webpack.config.js",
-    "lint": "./node_modules/eslint/bin/eslint.js . ; exit 0"
+    "lint": "./node_modules/.bin/eslint . ; exit 0"
   },
   "author": "macabeus",
   "license": "MIT",
   "dependencies": {
     "binary": "0.3.0",
     "js-sha1": "0.6.0",
-    "ramda": "0.26.1"
+    "ramda": "0.27.1"
   },
   "devDependencies": {
     "@babel/core": "7.6.2",
     "@babel/plugin-proposal-pipeline-operator": "7.5.0",
-    "babel-eslint": "10.0.3",
+    "babel-eslint": "10.1.0",
     "babel-loader": "8.0.5",
-    "eslint": "6.5.1",
+    "eslint": "7.29.0",
     "eslint-config-pagarme-react": "3.0.0",
     "file-loader": "4.2.0",
     "webpack-cli": "3.3.9",
