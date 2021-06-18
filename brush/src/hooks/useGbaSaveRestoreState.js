@@ -12,8 +12,8 @@ const keyCodeToAction = ({
 const useGbaSaveRestoreState = () => {
   const [savedState, setSavedState] = useState()
   const {
+    play,
     saveState,
-    updateState,
   } = useContext(GbaContext)
 
   useEffect(() => {
@@ -25,7 +25,7 @@ const useGbaSaveRestoreState = () => {
       }
 
       if (action === 'restore' && savedState !== undefined) {
-        updateState({ restoreState: savedState })
+        play({ restoreState: savedState })
       }
     }
 
@@ -36,7 +36,7 @@ const useGbaSaveRestoreState = () => {
       window.removeEventListener('keydown', switchHandle)
       window.removeEventListener('keyup', switchHandle)
     }
-  }, [savedState, updateState, saveState])
+  }, [savedState, play, saveState])
 }
 
 export default useGbaSaveRestoreState

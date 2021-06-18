@@ -7545,16 +7545,15 @@ react-file-reader-input@2.0.0:
   resolved "https://registry.yarnpkg.com/react-file-reader-input/-/react-file-reader-input-2.0.0.tgz#44d2a466731d2cc3f51dee9970f204585742243b"
   integrity sha512-1XgkCpwMnNQsuOIy938UCntz8Xzwt9ECwHaH3cCfIQK1SPpH+y7gCYtqEcb6Rm0hAUq7Lp9+Ljoti9zGMswYrQ==
 
-react-gbajs@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/react-gbajs/-/react-gbajs-0.0.1.tgz#d1c5186669faf839b44fea4fbdd706bb6337d8bd"
-  integrity sha512-yl/LQqc1oOti5YwHXBytoZM7nYaOEJW5YGdZ/o6n5u8upgAJFj5Yq77dX2NLa86aChchhU0F8Ie/HLcktMWoog==
+react-gbajs@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-gbajs/-/react-gbajs-1.0.0.tgz#971789b90f825b51168c5f6e750c01490781c380"
+  integrity sha512-QQXF/qVuPrSwYWhFW0d6o/1MLCSu8GIcVsPdGpbhkml2YnHAgHXDIDeGM/M9OfITv68z3MD1hZnl8nxt+e/6FA==
   dependencies:
     "@babel/plugin-transform-runtime" "7.6.2"
     "@babel/polyfill" "7.7.0"
     "@babel/runtime" "7.7.2"
     lodash.clonedeep "4.5.0"
-    prop-types "15.7.2"
 
 react-input-mask@2.0.4:
   version "2.0.4"

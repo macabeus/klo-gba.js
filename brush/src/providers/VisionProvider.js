@@ -6,7 +6,7 @@ import VisionContext from '../context/VisionContext'
 import useForceUpdate from '../hooks/useForceUpdate'
 
 const VisionProvider = ({ children }) => {
-  const { updateState } = useContext(GbaContext)
+  const { play } = useContext(GbaContext)
 
   const [visionWorld, setVisionWorld] = useState(1)
   const [visionIndex, setVisionIndex] = useState(1)
@@ -38,7 +38,7 @@ const VisionProvider = ({ children }) => {
   }
 
   const gbaEnterVision = (world, index, newRomBuffer = undefined) =>
-    updateState({
+    play({
       newRomBuffer,
       restoreState: enteringVisionGbaState(world, index),
     })
