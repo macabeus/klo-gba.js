@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import { range } from 'ramda'
 import PointObject from '../Point/PointObject'
@@ -35,9 +35,9 @@ const ObjectsLayer = ({
       }))
 
   return (
-    <Fragment>
+    <>
       {objectsList}
-    </Fragment>
+    </>
   )
 }
 

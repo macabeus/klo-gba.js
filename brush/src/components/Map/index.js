@@ -1,6 +1,5 @@
 import React, {
   useContext,
-  Fragment,
   useState,
   useRef,
 } from 'react'
@@ -68,7 +67,7 @@ const Map = ({
   }
 
   return (
-    <Fragment>
+    <>
       <div className={style.webglWrapper}>
         <Stage
           width={(width * 4) + resolution} //   workaround because, for some unknown reason, we need to update the size of the stage when we change its resolution
@@ -115,7 +114,7 @@ const Map = ({
         </Stage>
       </div>
       <MapFooter informations={selectedPointInfos} />
-    </Fragment>
+    </>
   )
 }
 
