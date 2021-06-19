@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import PortalPoint from '../Point/PortalPoint'
 
@@ -18,9 +18,9 @@ const PortalsLayer = ({ vision }) => {
     ))
 
   return (
-    <Fragment>
+    <>
       {portalList}
-    </Fragment>
+    </>
   )
 }
 

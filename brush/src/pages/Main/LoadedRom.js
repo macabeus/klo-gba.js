@@ -1,4 +1,4 @@
-import React, { useContext, useState, Fragment } from 'react'
+import React, { useContext, useState } from 'react'
 import {
   Card,
   CardContent,
@@ -35,7 +35,7 @@ const LoadedRom = () => {
   })
 
   return (
-    <Fragment>
+    <>
       <Flexbox className={style.containerFirstRow}>
         <Card>
           <CardContent className={style.cardTilemap}>
@@ -112,7 +112,7 @@ const LoadedRom = () => {
           <ObjectsTable onRowClickHandler={setHighlightCoordinates} />
         </CardContent>
       </Card>
-    </Fragment>
+    </>
   )
 }
 

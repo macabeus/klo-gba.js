@@ -61,8 +61,7 @@ const DrawingLayer = ({
         onClickHandler(
           Math.floor(e.data.global.x / 4),
           Math.floor(e.data.global.y / 4)
-        )
-      }
+        )}
     />
   )
 }
