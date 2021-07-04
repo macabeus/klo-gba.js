@@ -92,9 +92,9 @@ const getVision = (romBuffer, world, vision) => {
     infos.rom.customTilemap :
     infos.rom.tilemap
 
-  // The first 3 bytes of tilemap isn't the tiles,
-  // but something unknown important to plot the level at the game.
-  // So this proxy is useful to abstract Brush about this detail
+  // The first 4 bytes of the tilemap isn't the tiles itself,
+  // but a metadata important to uncompress the data.
+  // So this proxy is useful to abstract to Brush this detail.
   const fullTilemap = extractFullTilemap(romBuffer, addressStart)
 
   const tilemapProxy = new Proxy(fullTilemap, {
@@ -102,7 +102,7 @@ const getVision = (romBuffer, world, vision) => {
       if (isNumeric(property)) {
         const numericProp = Number(property)
 
-        return target[numericProp + 3]
+        return target[numericProp + 4]
       }
 
       if (property === 'length') {
@@ -120,7 +120,7 @@ const getVision = (romBuffer, world, vision) => {
 
       if (isNumeric(property)) {
         const numericProp = Number(property)
-        self[numericProp + 3] = value
+        self[numericProp + 4] = value
 
         return self
       }
