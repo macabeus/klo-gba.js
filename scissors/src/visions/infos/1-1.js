@@ -12,8 +12,6 @@ export default {
   },
   tilemap: {
     totalStages: 3,
-    height: 60,
-    width: 420,
     scheme: [
       {
         name: 'grass',

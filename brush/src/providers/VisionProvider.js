@@ -14,11 +14,12 @@ const VisionProvider = ({ children }) => {
   const forceUpdate = useForceUpdate()
 
   const emptyState = {
-    infos: { index: 0, tilemap: { height: 0, scheme: [], width: 0 }, world: 0 },
+    infos: { index: 0, tilemap: { scheme: [] }, world: 0 },
     objects: [],
     objectsDiffMap: {},
     state: 'noSelected',
     tilemap: new Uint8Array(),
+    tilemapSize: { height: 0, width: 0 },
   }
 
   const [vision, setVision] = useState(emptyState)
@@ -44,11 +45,11 @@ const VisionProvider = ({ children }) => {
     })
 
   const updateTilemapPoint = (x, y, newTileId) => {
-    vision.tilemap[x + (y * vision.infos.tilemap.width)] = newTileId
+    vision.tilemap[x + (y * vision.tilemapSize.width)] = newTileId
   }
 
   const getTilemapPoint = (x, y) =>
-    vision.tilemap[x + (y * vision.infos.tilemap.width)]
+    vision.tilemap[x + (y * vision.tilemapSize.width)]
 
   const updateObjectsDiffMap = (index, key, value) => {
     if (key === 'kind') {

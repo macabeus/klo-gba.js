@@ -25,12 +25,14 @@ class TilemapLayer extends React.Component {
       vision: {
         infos: {
           tilemap: {
-            height,
             scheme,
-            width,
           },
         },
         tilemap,
+        tilemapSize: {
+          height,
+          width,
+        },
       },
     } = this.props
 
@@ -74,15 +76,17 @@ TilemapLayer.propTypes = {
   vision: PropTypes.shape({
     infos: PropTypes.shape({
       tilemap: PropTypes.shape({
-        height: PropTypes.number.isRequired,
         scheme: PropTypes.arrayOf(PropTypes.shape({
           ids: PropTypes.arrayOf(PropTypes.number).isRequired,
           name: PropTypes.string.isRequired,
         })),
-        width: PropTypes.number.isRequired,
       }).isRequired,
     }).isRequired,
     tilemap: PropTypes.object.isRequired,
+    tilemapSize: PropTypes.shape({
+      height: PropTypes.number.isRequired,
+      width: PropTypes.number.isRequired,
+    }).isRequired,
   }).isRequired,
 }
 

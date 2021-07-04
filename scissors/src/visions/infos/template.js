@@ -12,8 +12,6 @@ export default {
   },
   tilemap: {
     totalStages: 0, // TODO
-    height: 0, // TODO
-    width: 0, // TODO
     scheme: [
       {
         name: '', // TODO
