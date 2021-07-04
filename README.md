@@ -134,16 +134,6 @@ Fill this file following the below instructions:
 4. Leave the vision and enter into it again, and then re-run how much times minus 1 you needed to see changes on `020039CC` (for example, 4 - 1 = 3 times), and get the value at **r0** (for example, on vision 5 is `081B8A28`)
 5. You should put this values on `tilemap` without the first 2 digits. For instance: `tilemap: 0x1B8A28`
 
-##### Size
-
-1. Within a vision, add a breakpoint on `0800FF7E` and run the game
-2. Go to the address pointed by **r0** and change this byte to `00`. It will be our tile A
-3. In the game, you should move Klonoa away from this byte and then return. You'll see that our tile A now is empty
-4. Now we should get the tile B (that is bellow A). Set again the breakpoint, and remove how much tiles bellow Klonoa to drop him 1 level
-5. Find the tile B looking around him
-6. Subtract the address of tile A and tile B. The result is the vision width (on vision 5 is `270`)
-7. Now divide the width with the length of the tilemap (you can get it running this application locally and oppeing the vision). The result is the height (on vision 5 is `120`)
-
 ##### Objects
 
 1. Go to the previous vision file, and get the address which start the OAM, for example, at the vision 1-3 is `E4DF0`

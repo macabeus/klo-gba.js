@@ -36,11 +36,13 @@ const Map = ({
   const {
     infos: {
       tilemap: {
-        height,
         scheme,
         totalStages,
-        width,
       },
+    },
+    tilemapSize: {
+      height,
+      width,
     },
   } = vision
 

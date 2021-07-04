@@ -12,8 +12,6 @@ export default {
   },
   tilemap: {
     totalStages: 4,
-    height: 120,
-    width: 270,
     scheme: [
       {
         name: 'rope',

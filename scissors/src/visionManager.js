@@ -69,6 +69,23 @@ const extractPortals = (romBuffer, [addressStart, addressEnd]) =>
   |> filter(({ data }) =>
     data.kind !== null)
 
+const getVisionSize = (romBuffer, world, vision) => {
+  const bytesPerVision = 6
+  const totalVisionsPerWorld = 9
+  const worldsOffset = (world - 1) * totalVisionsPerWorld * bytesPerVision
+  const visionsOffset = (vision - 1) * bytesPerVision
+
+  const { height, width } = binary.parse(romBuffer)
+    .skip(0x51C80)
+    .skip(worldsOffset + visionsOffset)
+    .word16lu('width')
+    .skip(0x142)
+    .word16lu('height')
+    .vars
+
+  return { height, width }
+}
+
 const getVision = (romBuffer, world, vision) => {
   const infos = loadVisionInfo(world, vision)
   const addressStart = visionHasCustomTilemap(romBuffer, infos) ?
@@ -117,6 +134,8 @@ const getVision = (romBuffer, world, vision) => {
   const objects = extractObjects(romBuffer, infos.rom.objects)
   const portals = extractPortals(romBuffer, infos.rom.portals)
 
+  const tilemapSize = getVisionSize(romBuffer, Number(world), Number(vision))
+
   const objectsKindToSprite =
     objects.map(({ data: { kind, sprite } }) => [kind, sprite])
     |> fromPairs
@@ -127,6 +146,7 @@ const getVision = (romBuffer, world, vision) => {
     objectsKindToSprite,
     portals,
     tilemap: tilemapProxy,
+    tilemapSize,
   }
 }
 

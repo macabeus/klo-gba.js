@@ -12,8 +12,6 @@ export default {
   },
   tilemap: {
     totalStages: 5,
-    height: 59,
-    width: 300,
     scheme: [
       {
         name: 'rock',
