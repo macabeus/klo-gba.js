@@ -1,6 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { range } from 'ramda'
+import {
+  drop,
+  splitEvery,
+  range,
+} from 'ramda'
 import { Graphics } from '@inlet/react-pixi'
 import { fromSchemeGetTileNameById } from 'scissors'
 import tileNameToColor from '../../../constants/tileNameToColor'
@@ -56,16 +60,45 @@ class TilemapLayer extends React.Component {
 
     const tilemapOptimized = optimize(tiles)
 
+    const rgb2hex = (rgb) =>
+      ((rgb[0] << 16) + (rgb[1] << 8) + rgb[2])
+
+    const { palette, tileset } = window
+    const tilesetList =
+      splitEvery(64, tileset)
+
+    const drawTile = (g, tile, offsetX, offsetY, repeat) => {
+      for (let r = 0; r < repeat; r += 1) {
+        for (let tileIndex = 0; tileIndex < (8 * 8); tileIndex += 1) {
+          const paletteIndex = tile[tileIndex]
+
+          const x = tileIndex % 8
+          const y = (Math.floor(tileIndex / 8)) + (r * 8)
+
+          const [red, green, blue] = palette[paletteIndex]
+          g.beginFill(rgb2hex([red, green, blue]))
+          g.drawRect(x + (offsetX), y + (offsetY), 1, 1)
+        }
+      }
+    }
+
     return (
       <Graphics
         draw={(g) => {
           g.clear()
 
-          tilemapOptimized.forEach((i) => {
-            const [hexColor, alpha] = tileNameToColor[i.tileName]
-            g.beginFill(hexColor, alpha)
-            g.drawRect(4 * i.x, 4 * i.y, 4, 4 * i.size)
-          })
+          for (let index = 0; index < tilemapOptimized.length; index += 1) {
+            const i = tilemapOptimized[index]
+
+            if (i.tileValue === 0x00) {
+              continue
+            }
+
+            const offsetX = i.x * 8
+            const offsetY = i.y * 8
+
+            drawTile(g, tilesetList[i.tileValue], offsetX, offsetY, i.size)
+          }
         }}
       />
     )

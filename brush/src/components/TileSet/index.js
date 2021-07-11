@@ -1,35 +1,68 @@
 import React, { useContext } from 'react'
 import PropTypes from 'prop-types'
 import {
+  drop,
   groupBy,
   map,
   mapObjIndexed,
+  splitEvery,
   uniq,
   values,
   reject,
 } from 'ramda'
 import { fromSchemeGetTileNameById } from 'scissors'
-import tileNameToColor from '../../constants/tileNameToColor'
 import VisionContext from '../../context/VisionContext'
 import style from './style.css'
 
-const hexToRGBAColor = ([hexColor, alpha]) => {
-  const red = (hexColor >> 16) & 0xFF
-  const green = (hexColor >> 8) & 0xFF
-  const blue = hexColor & 0xFF
+const documentCanvasGenerator = (index) => (
+  width,
+  height
+) => {
+  const canvas = document.getElementById(`canvas${index}`)
 
-  return `rgba(${red}, ${green}, ${blue}, ${alpha})`
+  canvas.width = width
+  canvas.height = height
+  canvas.style = 'margin: 1px'
+
+  return canvas
+}
+
+const drawTile = (tile, canvasGenerator, palette) => {
+  const canvas = canvasGenerator(8, 8)
+
+  const context = canvas.getContext('2d')
+
+  tile.forEach((paletteIndex, tileIndex) => {
+    const x = tileIndex % 8
+    const y = Math.floor(tileIndex / 8)
+
+    const [red, green, blue] = palette[paletteIndex]
+
+    context.fillStyle = `rgb(${red}, ${green}, ${blue})`
+    context.fillRect(x, y, 1, 1)
+  })
+
+  return canvas
+}
+
+const draw = () => {
+  const { tileset } = window
+  const tilesetList =
+    splitEvery(64, tileset)
+    |> drop(1)
+
+  tilesetList.forEach(
+    (tile, index) =>
+      drawTile(tile, documentCanvasGenerator(index + 1), window.palette)
+  )
 }
 
 const mapTilesIdsToBlock = map(({ id, name, onClickHandle }) => (
-  <p
-    className={style.block}
+  <canvas
     key={`${name} ${id}`}
-    style={{ backgroundColor: hexToRGBAColor(tileNameToColor[name]) }}
+    id={`canvas${id}`}
     onClick={onClickHandle}
-  >
-    {id}
-  </p>
+  />
 ))
 
 const makeTilesGroup = (tiles, name) => (
@@ -67,9 +100,12 @@ const TileSet = ({ setToolState }) => {
     |> values
 
   return (
-    <span className={style.tileSet}>
-      {groups}
-    </span>
+    <>
+      <button type="button" onClick={draw}>draw</button>
+      <span className={style.tileSet}>
+        {groups}
+      </span>
+    </>
   )
 }
 

@@ -31,7 +31,7 @@ const InputRomModal = () => {
         }
         <Row>
           <Col palm={6} tv={6} desk={6} tablet={6}>
-            <KlonoaModal style={{ padding: '4px' }} />
+            <KlonoaModal style={{ padding: '8px' }} />
           </Col>
 
           <Col palm={6} tv={6} desk={6} tablet={6}>

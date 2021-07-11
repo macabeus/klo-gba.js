@@ -54,13 +54,13 @@ const DrawingLayer = ({
         g.clear()
 
         g.beginFill(0x000000, 0.01)
-        g.drawRect(0, 0, width * 4, height * 4)
+        g.drawRect(0, 0, width * 8, height * 8)
       }}
       interactive
       pointerdown={e =>
         onClickHandler(
-          Math.floor(e.data.global.x / 4),
-          Math.floor(e.data.global.y / 4)
+          Math.floor(e.data.global.x / 8),
+          Math.floor(e.data.global.y / 8)
         )}
     />
   )

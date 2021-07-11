@@ -12,7 +12,7 @@ const Emulator = () => {
     setOnError(false)
 
     if (romBufferStatus === 'loaded') {
-      playGba({ newRomBuffer: romBufferMemory })
+      // playGba({ newRomBuffer: romBufferMemory })
     }
   }, [romBufferStatus]) /* should not be called when romBufferState.memory updates */ // eslint-disable-line react-hooks/exhaustive-deps
 

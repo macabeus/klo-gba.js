@@ -33,8 +33,8 @@ const withDraggable = (
 
         const newPosition = event.data.getLocalPosition(parent)
         const [newX, newY] = getScaledCoordinates(
-          newPosition.x * SIZE,
-          newPosition.y * SIZE,
+          newPosition.x + SIZE,
+          newPosition.y + SIZE,
           scale
         )
 

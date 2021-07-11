@@ -72,8 +72,8 @@ const Map = ({
     <>
       <div className={style.webglWrapper}>
         <Stage
-          width={(width * 4) + resolution} //   workaround because, for some unknown reason, we need to update the size of the stage when we change its resolution
-          height={(height * 4) + resolution} // https://github.com/inlet/react-pixi/issues/127
+          width={(width * 8) + resolution} //   workaround because, for some unknown reason, we need to update the size of the stage when we change its resolution
+          height={(height * 8) + resolution} // https://github.com/inlet/react-pixi/issues/127
           options={{
             antialias: true,
             resolution,
@@ -87,14 +87,14 @@ const Map = ({
           />
           <DrawingLayer
             getTilemapPoint={getTilemapPoint}
-            height={height * 4}
+            height={height * 8}
             scheme={scheme}
             setSelectedPointInfos={setSelectedPointInfos}
             setToolState={setToolState}
             toolState={toolState}
             updateTilemapLayer={() => tilemapLayerRef.current.forceUpdate()}
             updateTilemapPoint={updateTilemapPoint}
-            width={width * 4}
+            width={width * 8}
           />
           {optShowObjects && <ObjectsLayer
             updateObjectsDiffMap={updateObjectsDiffMap}
@@ -110,8 +110,8 @@ const Map = ({
             width={width}
           />
           {optShowGrid && <GridLayer
-            height={height * 4}
-            width={width * 4}
+            height={height * 8}
+            width={width * 8}
           />}
         </Stage>
       </div>

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Graphics } from '@inlet/react-pixi'
 
-const SIZE = 4
+const SIZE = 8
 const OBJECTS_SCALE = 8
 
 const HighlightCoordinates = ({
@@ -19,13 +19,13 @@ const HighlightCoordinates = ({
       draw={(g) => {
         g.clear()
 
-        g.lineStyle(4, 0x000000, 0.4)
+        g.lineStyle(8, 0x000000, 0.4)
           .moveTo(0, yScaled)
-          .lineTo(width * 4, yScaled)
+          .lineTo(width * 8, yScaled)
 
-        g.lineStyle(4, 0x000000, 0.4)
+        g.lineStyle(8, 0x000000, 0.4)
           .moveTo(xScaled, 0)
-          .lineTo(xScaled, height * 4)
+          .lineTo(xScaled, height * 8)
       }}
     />
   )

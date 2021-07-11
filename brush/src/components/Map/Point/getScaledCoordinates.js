@@ -1,4 +1,4 @@
-const SIZE = 4
+const SIZE = 8
 
 const getScaledCoordinates = (x, y, scale) => (scale === 1 ?
   [

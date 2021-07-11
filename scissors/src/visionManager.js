@@ -1,4 +1,5 @@
 import {
+  drop,
   filter,
   fromPairs,
   identical,
@@ -69,6 +70,66 @@ const extractPortals = (romBuffer, [addressStart, addressEnd]) =>
   |> filter(({ data }) =>
     data.kind !== null)
 
+const getPalette = (romBuffer, world, vision) => {
+  const bytesPerVision = 4
+  const totalVisionsPerWorld = 9
+  const worldsOffset = (world - 1) * totalVisionsPerWorld * bytesPerVision
+  const visionsOffset = (vision - 1) * bytesPerVision
+
+  const { rawPaletteAddress } = binary.parse(romBuffer)
+    .skip(0x188F60)
+    .skip(worldsOffset + visionsOffset)
+    .word32lu('rawPaletteAddress')
+    .vars
+
+  const paletteAddress = rawPaletteAddress - 0x08000000
+
+  const palette = romBuffer.slice(paletteAddress + 4)
+    |> huffmanDecode
+    |> lzssDecode
+    |> drop(4)
+    |> splitEvery(2)
+    |> map(([firstByte, secondByte]) => {
+      const gba15 = (secondByte << 8) + firstByte
+
+      const red = (gba15 & 31) << 3
+      const green = ((gba15 >> 5) & 31) << 3
+      const blue = ((gba15 >> 10) & 31) << 3
+
+      return [red, green, blue]
+    })
+
+  window.palette = palette
+}
+
+const getTileset = (romBuffer, world, vision) => {
+  const bytesPerVision = 12
+  const totalVisionsPerWorld = 9
+  const worldsOffset = (world - 1) * totalVisionsPerWorld * bytesPerVision
+  const visionsOffset = (vision - 1) * bytesPerVision
+
+  const { rawTilesetAddress } = binary.parse(romBuffer)
+    .skip(0x189048)
+    .skip(worldsOffset + visionsOffset)
+    .word32lu('rawTilesetAddress')
+    .vars
+
+  const tilesetAddress = rawTilesetAddress - 0x08000000
+
+  const tileset = romBuffer.slice(tilesetAddress + 4)
+    |> huffmanDecode
+    |> lzssDecode
+    |> drop(4)
+
+  // pallete
+  getPalette(romBuffer, world, vision)
+
+  //
+  window.tileset = tileset
+
+  return tileset
+}
+
 const getVisionSize = (romBuffer, world, vision) => {
   const bytesPerVision = 6
   const totalVisionsPerWorld = 9
@@ -135,6 +196,9 @@ const getVision = (romBuffer, world, vision) => {
   const portals = extractPortals(romBuffer, infos.rom.portals)
 
   const tilemapSize = getVisionSize(romBuffer, Number(world), Number(vision))
+
+  const tileset = getTileset(romBuffer, Number(world), Number(vision))
+  console.log({ tileset })
 
   const objectsKindToSprite =
     objects.map(({ data: { kind, sprite } }) => [kind, sprite])
