@@ -10,13 +10,13 @@ const GridLayer = ({ height, width }) => (
 
       range(0, height).forEach(i =>
         g.lineStyle(1, 0x000000, 0.2)
-          .moveTo(0, i * 4)
-          .lineTo(width, i * 4))
+          .moveTo(0, i * 8)
+          .lineTo(width, i * 8))
 
       range(0, width).forEach(i =>
         g.lineStyle(1, 0x000000, 0.2)
-          .moveTo(i * 4, 0)
-          .lineTo(i * 4, height))
+          .moveTo(i * 8, 0)
+          .lineTo(i * 8, height))
     }}
   />
 )
