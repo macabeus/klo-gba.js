@@ -12,11 +12,5 @@ export default {
   },
   tilemap: {
     totalStages: 0, // TODO
-    scheme: [
-      {
-        name: '', // TODO
-        ids: [0x0, 0x0], // TODO
-      },
-    ],
   }
 }

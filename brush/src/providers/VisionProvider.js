@@ -14,7 +14,7 @@ const VisionProvider = ({ children }) => {
   const forceUpdate = useForceUpdate()
 
   const emptyState = {
-    infos: { index: 0, tilemap: { scheme: [] }, world: 0 },
+    infos: { index: 0, tilemap: { }, world: 0 },
     objects: [],
     objectsDiffMap: {},
     state: 'noSelected',
