@@ -81,6 +81,12 @@ int strcmpi(char* s1, char* s2){
                                  // * length, RAW_MAXIM
                                  // 4 + 0x00000200 + 0x00FFFFFF + padding
 
+#define ERROR_NOT_HUFFMAN_ENCODED 1
+
+EMSCRIPTEN_KEEPALIVE char error_not_huffman_encoded() {
+  return ERROR_NOT_HUFFMAN_ENCODED;
+}
+
 /*----------------------------------------------------------------------------*/
 typedef struct _huffman_node {
   unsigned int          symbol;
@@ -103,7 +109,6 @@ huffman_code  **codes;
 unsigned int    num_bits, max_symbols, num_leafs, num_nodes;
 
 /*----------------------------------------------------------------------------*/
-#define BREAK(text) { printf(text); return; }
 #define EXIT(text)  { printf(text); exit(-1); }
 
 /*----------------------------------------------------------------------------*/
@@ -113,7 +118,7 @@ char *Load(char *filename, int *length, int min, int max);
 void  Save(char *filename, char *buffer, int length);
 char *Memory(int length, int size);
 
-void  HUF_Decode();
+char  HUF_Decode();
 void  HUF_Encode();
 char *HUF_Code(unsigned char *raw_buffer, int raw_len, int *new_len);
 
@@ -203,7 +208,8 @@ char *Memory(int length, int size) {
 }
 
 /*----------------------------------------------------------------------------*/
-void EMSCRIPTEN_KEEPALIVE HUF_Decode() {
+EMSCRIPTEN_KEEPALIVE
+char HUF_Decode() {
   char *filename = "file";
   unsigned char *pak_buffer, *raw_buffer, *pak, *raw, *pak_end, *raw_end;
   unsigned int   pak_len, raw_len, header;
@@ -218,7 +224,7 @@ void EMSCRIPTEN_KEEPALIVE HUF_Decode() {
 #endif
   if ((header != CMD_CODE_24) && (header != CMD_CODE_28)) {
     free(pak_buffer);
-    BREAK(", WARNING: file is not Huffman encoded!\n");
+    return ERROR_NOT_HUFFMAN_ENCODED;
   }
 
   num_bits = header & 0xF;
@@ -276,6 +282,8 @@ void EMSCRIPTEN_KEEPALIVE HUF_Decode() {
 
   free(raw_buffer);
   free(pak_buffer);
+
+  return 0;
 }
 
 /*----------------------------------------------------------------------------*/

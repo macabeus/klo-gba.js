@@ -24,7 +24,11 @@ huffmanModule.onRuntimeInitialized = () => {}
 const huffmanDecode = (buffer) => {
   FS.writeFile('file', buffer)
 
-  huffmanModule._HUF_Decode() // eslint-disable-line no-underscore-dangle
+  const result = huffmanModule._HUF_Decode() // eslint-disable-line no-underscore-dangle
+
+  if (result === huffmanModule._error_not_huffman_encoded()) { // eslint-disable-line no-underscore-dangle
+    throw new HuffmanDecodeError('It is not huffman encoded')
+  }
 
   try {
     return huffmanModule.FS.readFile('file', { encoding: 'binary' })
