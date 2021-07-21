@@ -24,7 +24,11 @@ lzssModule.onRuntimeInitialized = () => {}
 const lzssDecode = (buffer) => {
   FS.writeFile('filelzss', buffer)
 
-  lzssModule._LZS_Decode() // eslint-disable-line no-underscore-dangle
+  const result = lzssModule._LZS_Decode() // eslint-disable-line no-underscore-dangle
+
+  if (result === lzssModule._error_not_lzss_encoded()) { // eslint-disable-line no-underscore-dangle
+    throw new LzssDecodeError('It is not LZSS encoded')
+  }
 
   try {
     return lzssModule.FS.readFile('filelzss', { encoding: 'binary' })

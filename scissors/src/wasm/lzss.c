@@ -81,13 +81,18 @@ int strcmpi(char* s1, char* s2){
                                  // * flags, (RAW_MAXIM + 7) / 8
                                  // 4 + 0x00FFFFFF + 0x00200000 + padding
 
+#define ERROR_NOT_LZSS_ENCODED 1
+
+EMSCRIPTEN_KEEPALIVE char error_not_lzss_encoded() {
+  return ERROR_NOT_LZSS_ENCODED;
+}
+
 /*----------------------------------------------------------------------------*/
 unsigned char ring[LZS_N + LZS_F - 1];
 int           dad[LZS_N + 1], lson[LZS_N + 1], rson[LZS_N + 1 + 256];
 int           pos_ring, len_ring, lzs_vram;
 
 /*----------------------------------------------------------------------------*/
-#define BREAK(text) { printf(text); return; }
 #define EXIT(text)  { printf(text); exit(-1); }
 
 /*----------------------------------------------------------------------------*/
@@ -98,7 +103,7 @@ char *Load(char *filename, int *length, int min, int max);
 void  Save(char *filename, char *buffer, int length);
 char *Memory(int length, int size);
 
-void  LZS_Decode();
+char  LZS_Decode();
 void  LZS_Encode();
 char *LZS_Code(unsigned char *raw_buffer, int raw_len, int *new_len, int best);
 
@@ -174,7 +179,8 @@ char *Memory(int length, int size) {
 }
 
 /*----------------------------------------------------------------------------*/
-void EMSCRIPTEN_KEEPALIVE LZS_Decode() {
+EMSCRIPTEN_KEEPALIVE
+char LZS_Decode() {
   char *filename = "filelzss";
   unsigned char *pak_buffer, *raw_buffer, *pak, *raw, *pak_end, *raw_end;
   unsigned int   pak_len, raw_len, header, len, pos;
@@ -185,7 +191,7 @@ void EMSCRIPTEN_KEEPALIVE LZS_Decode() {
   header = *pak_buffer;
   if (header != CMD_CODE_10) {
     free(pak_buffer);
-    BREAK(", WARNING: file is not LZSS encoded!\n");
+    return ERROR_NOT_LZSS_ENCODED;
   }
 
   raw_len = *(unsigned int *)pak_buffer >> 8;
@@ -230,6 +236,8 @@ void EMSCRIPTEN_KEEPALIVE LZS_Decode() {
 
   free(raw_buffer);
   free(pak_buffer);
+
+  return 0;
 }
 
 /*----------------------------------------------------------------------------*/
