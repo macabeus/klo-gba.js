@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Graphics } from '@inlet/react-pixi'
 
-const SIZE = 4
-const SCALE = 8
+const SIZE = 8
 
 const PortalPoint = ({ x, y }) => (
   <Graphics
@@ -14,8 +13,8 @@ const PortalPoint = ({ x, y }) => (
       const radius = SIZE * 2
       const innerRadius = SIZE
       const points = 6
-      const scaledX = ((x * innerRadius) / SCALE) + 4
-      const scaledY = ((y * innerRadius) / SCALE) - 8
+      const scaledX = ((x * innerRadius) / SIZE) + 8
+      const scaledY = ((y * innerRadius) / SIZE) - 8
 
       g.beginFill(color)
       g.drawStar(scaledX, scaledY, points, radius, innerRadius)

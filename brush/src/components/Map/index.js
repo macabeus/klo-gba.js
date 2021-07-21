@@ -36,22 +36,28 @@ const Map = ({
   const {
     infos: {
       tilemap: {
-        scheme,
         totalStages,
       },
     },
+    palette,
     tilemapSize: {
       height,
       width,
     },
+    tileset,
   } = vision
 
+  const [currentIndex, setCurrentIndex] = useState(null)
+  const [currentWorld, setCurrentWorld] = useState(null)
   const [selectedPointInfos, setSelectedPointInfos] = useState(null)
   const [pixiApplication, setPixiApplication] = useState(null)
   const tilemapLayerRef = useRef(null)
 
   useWhenVisionChanges(() => {
     setSelectedPointInfos(null)
+
+    setCurrentIndex(vision.infos.index)
+    setCurrentWorld(vision.infos.world)
   })
 
   if (
@@ -72,47 +78,59 @@ const Map = ({
     <>
       <div className={style.webglWrapper}>
         <Stage
-          width={(width * 4) + resolution} //   workaround because, for some unknown reason, we need to update the size of the stage when we change its resolution
-          height={(height * 4) + resolution} // https://github.com/inlet/react-pixi/issues/127
+          width={(width * 8) + resolution} //   workaround because, for some unknown reason, we need to update the size of the stage when we change its resolution
+          height={(height * 8) + resolution} // https://github.com/inlet/react-pixi/issues/127
           options={{
-            antialias: true,
+            antialias: false,
             resolution,
             transparent: true,
           }}
           onMount={setPixiApplication}
         >
-          <TilemapLayer
-            vision={vision}
-            ref={tilemapLayerRef}
-          />
-          <DrawingLayer
-            getTilemapPoint={getTilemapPoint}
-            height={height * 4}
-            scheme={scheme}
-            setSelectedPointInfos={setSelectedPointInfos}
-            setToolState={setToolState}
-            toolState={toolState}
-            updateTilemapLayer={() => tilemapLayerRef.current.forceUpdate()}
-            updateTilemapPoint={updateTilemapPoint}
-            width={width * 4}
-          />
-          {optShowObjects && <ObjectsLayer
-            updateObjectsDiffMap={updateObjectsDiffMap}
-            setSelectedPointInfos={setSelectedPointInfos}
-            totalStages={totalStages}
-            setSelectedObject={setSelectedObject}
-            vision={vision}
-          />}
-          {optShowPortals && <PortalsLayer vision={vision} />}
-          <HighlightCoordinates
-            coordinates={highlightCoordinates}
-            height={height}
-            width={width}
-          />
-          {optShowGrid && <GridLayer
-            height={height * 4}
-            width={width * 4}
-          />}
+          {
+            pixiApplication && (
+              <>
+                <TilemapLayer
+                  index={currentIndex}
+                  world={currentWorld}
+                  pixiRenderer={pixiApplication.renderer}
+                  vision={vision}
+                  tileset={tileset}
+                  palette={palette}
+                  ref={tilemapLayerRef}
+                />
+                <DrawingLayer
+                  getTilemapPoint={getTilemapPoint}
+                  height={height * 8}
+                  setSelectedPointInfos={setSelectedPointInfos}
+                  setToolState={setToolState}
+                  toolState={toolState}
+                  updateTilemapLayer={
+                    () => tilemapLayerRef.current.forceUpdate()
+                  }
+                  updateTilemapPoint={updateTilemapPoint}
+                  width={width * 8}
+                />
+                {optShowObjects && <ObjectsLayer
+                  updateObjectsDiffMap={updateObjectsDiffMap}
+                  setSelectedPointInfos={setSelectedPointInfos}
+                  totalStages={totalStages}
+                  setSelectedObject={setSelectedObject}
+                  vision={vision}
+                />}
+                {optShowPortals && <PortalsLayer vision={vision} />}
+                <HighlightCoordinates
+                  coordinates={highlightCoordinates}
+                  height={height}
+                  width={width}
+                />
+                {optShowGrid && <GridLayer
+                  height={height * 8}
+                  width={width * 8}
+                />}
+              </>
+            )
+          }
         </Stage>
       </div>
       <MapFooter informations={selectedPointInfos} />
