@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Graphics } from '@inlet/react-pixi'
-import { fromSchemeGetTileNameById } from 'scissors'
 
 const DrawingLayer = ({
   getTilemapPoint,
   height,
-  scheme,
   setSelectedPointInfos,
   setToolState,
   toolState,
@@ -36,7 +34,7 @@ const DrawingLayer = ({
       const tileId = getTilemapPoint(x, y)
       const hexTileId = `0x${tileId.toString(16).toUpperCase()}`
       const tilemapPointInfos = {
-        message: `Tile ${fromSchemeGetTileNameById(scheme)(tileId)} (${hexTileId})`,
+        message: `Tile ${hexTileId}`,
         x,
         y,
       }
@@ -69,10 +67,6 @@ const DrawingLayer = ({
 DrawingLayer.propTypes = {
   getTilemapPoint: PropTypes.func.isRequired,
   height: PropTypes.number.isRequired,
-  scheme: PropTypes.arrayOf(PropTypes.shape({
-    ids: PropTypes.arrayOf(PropTypes.number).isRequired,
-    name: PropTypes.string.isRequired,
-  })).isRequired,
   setSelectedPointInfos: PropTypes.func.isRequired,
   setToolState: PropTypes.func.isRequired,
   toolState: PropTypes.shape({

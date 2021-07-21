@@ -148,7 +148,3 @@ If some object appears as unknown, you'll need to add this new kind on klo-gba.j
 1. Add a breakpoint on the address `0800CAF8`
 2. Enter on the vision. So the emulator will stop at the breakpoint, and the start address of portals will be stores at **r1**
 3. To discover the last address is just guessing: just add 8 on this address until plot a pretty tilemap.
-
-##### Scheme
-
-1. Using no$gba or using klo-gba.js, click on the tile, get its id and use one of the colors name at [`tileNameToColor.js`](brush/src/constants/tileNameToColor.js) file. If this tile is new, add a new color on this file.
