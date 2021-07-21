@@ -72,27 +72,29 @@ const LoadedRom = () => {
           </CardContent>
         </Card>
 
-        <Card className={style.cardEmulator}>
-          <CardContent>
-            <Flexbox alignItems="center" justifyContent="flex-end">
-              <EmulatorUpdateVision />
-            </Flexbox>
+        <Flexbox className={style.containerSecondColumn}>
+          <Card className={style.cardEmulator}>
+            <CardContent>
+              <Flexbox alignItems="center" justifyContent="flex-end">
+                <EmulatorUpdateVision />
+              </Flexbox>
 
-            <Emualtor />
-          </CardContent>
-        </Card>
+              <Emualtor />
+            </CardContent>
+          </Card>
+
+          <Card className={style.cardTileset}>
+            <CardTitle title="Tileset" />
+            <CardContent>
+              <TileSet setToolState={setToolState} />
+            </CardContent>
+          </Card>
+        </Flexbox>
       </Flexbox>
 
       <Spacing />
 
       <Flexbox className={style.containerSecondRow}>
-        <Card>
-          <CardTitle title="Tile Set" />
-          <CardContent>
-            <TileSet setToolState={setToolState} />
-          </CardContent>
-        </Card>
-
         <Card className={style.cardObjectsDetail}>
           <CardTitle title="Object Detail" />
           <CardContent>

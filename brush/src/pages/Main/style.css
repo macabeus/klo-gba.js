@@ -19,6 +19,10 @@ body { /* stylelint-disable-line */
   flex-wrap: nowrap;
 }
 
+.containerSecondColumn {
+  max-width: 530px;
+}
+
 .cardEmulator {
   max-width: 530px;
   margin-left: var(--spacing-small);
@@ -28,6 +32,12 @@ body { /* stylelint-disable-line */
   padding-bottom: var(--spacing-tiny);
 }
 
+.cardTileset {
+  max-width: 530px;
+  margin-top: var(--spacing-small);
+  margin-left: var(--spacing-small);
+}
+
 .containerSecondRow {
   display: flex;
   flex-wrap: nowrap;
@@ -35,5 +45,4 @@ body { /* stylelint-disable-line */
 
 .cardObjectsDetail {
   flex-shrink: 2;
-  margin-left: var(--spacing-small);
 }

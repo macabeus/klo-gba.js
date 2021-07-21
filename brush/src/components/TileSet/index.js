@@ -1,75 +1,66 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
-import {
-  groupBy,
-  map,
-  mapObjIndexed,
-  uniq,
-  values,
-  reject,
-} from 'ramda'
-import { fromSchemeGetTileNameById } from 'scissors'
-import tileNameToColor from '../../constants/tileNameToColor'
+import * as PIXI from 'pixi.js'
+import { Stage } from '@inlet/react-pixi'
 import VisionContext from '../../context/VisionContext'
-import style from './style.css'
-
-const hexToRGBAColor = ([hexColor, alpha]) => {
-  const red = (hexColor >> 16) & 0xFF
-  const green = (hexColor >> 8) & 0xFF
-  const blue = hexColor & 0xFF
-
-  return `rgba(${red}, ${green}, ${blue}, ${alpha})`
-}
-
-const mapTilesIdsToBlock = map(({ id, name, onClickHandle }) => (
-  <p
-    className={style.block}
-    key={`${name} ${id}`}
-    style={{ backgroundColor: hexToRGBAColor(tileNameToColor[name]) }}
-    onClick={onClickHandle}
-  >
-    {id}
-  </p>
-))
-
-const makeTilesGroup = (tiles, name) => (
-  <div className={style.group} key={name}>
-    <h4 className={style.title}>{name}</h4>
-    {mapTilesIdsToBlock(tiles)}
-  </div>
-)
+import TilesetGraphics from './TilesetGraphics'
+import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
 
 const TileSet = ({ setToolState }) => {
   const {
     vision: {
       infos: {
-        tilemap: {
-          scheme,
-        },
+        index,
+        world,
       },
-      tilemap,
+      palette,
+      tileset,
     },
   } = useContext(VisionContext)
+  const [pixiApplication, setPixiApplication] = useState(null)
+  const [currentIndex, setCurrentIndex] = useState(null)
+  const [currentWorld, setCurrentWorld] = useState(null)
 
-  const getTileNameById = fromSchemeGetTileNameById(scheme)
+  useWhenVisionChanges(() => {
+    setCurrentIndex(index)
+    setCurrentWorld(world)
+  })
 
-  const groups =
-    tilemap
-    |> uniq
-    |> reject(tileId => tileId === 0x00)
-    |> map(tileId => ({
-      id: tileId,
-      name: getTileNameById(tileId),
-      onClickHandle: () => { setToolState('brush', tileId) },
-    }))
-    |> groupBy(({ name }) => name)
-    |> mapObjIndexed(makeTilesGroup)
-    |> values
+  if (pixiApplication !== null) {
+    pixiApplication.renderer.plugins.interaction.destroy()
+    pixiApplication.renderer.plugins.interaction =
+      new PIXI.interaction.InteractionManager(pixiApplication.renderer)
+
+    pixiApplication.render()
+  }
+
+  if (tileset === undefined) {
+    return <span>empty</span>
+  }
 
   return (
-    <span className={style.tileSet}>
-      {groups}
-    </span>
+    <Stage
+      width={8 * 10}
+      height={(Math.ceil(tileset.length / 10) * 8)}
+      options={{
+        antialias: false,
+        transparent: true,
+      }}
+      onMount={setPixiApplication}
+    >
+      {
+        pixiApplication && (
+          <TilesetGraphics
+            pixiRenderer={pixiApplication.renderer}
+            index={currentIndex}
+            world={currentWorld}
+            tileset={tileset}
+            palette={palette}
+            setToolState={setToolState}
+          />
+        )
+      }
+    </Stage>
   )
 }
 
