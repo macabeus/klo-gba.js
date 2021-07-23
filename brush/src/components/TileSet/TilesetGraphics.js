@@ -9,8 +9,13 @@ const TilesetGraphics = ({
   pixiRenderer,
   setToolState,
   tileset,
+  setHovingTileTexture,
 }) => {
+  console.log({ tileset })
+  console.log({ objectsSprite: window.objectsSprite })
+
   const tileTextures = renderTilesetTextures(pixiRenderer, tileset, palette)
+  // const tileTextures = renderTilesetTextures(pixiRenderer, window.objectsSprite, window.objectsPalette)
 
   const tileIndexToCoordenates = (tileIndex) => {
     const x = tileIndex % 10
@@ -44,10 +49,36 @@ const TilesetGraphics = ({
           sprite.x = x
           sprite.y = y
 
+          // sprite.on('mousemove', () => {
+          //   console.log('mousemove')
+
+          //   setHovingTileTexture({
+          //     texture: tileTextures[tileIndex],
+          //     tileIndex,
+          //   })
+          // })
+
           g.addChild(sprite)
         }
       }}
       interactive
+      pointermove={e => {
+        // preciso fazer com que essa função só seja chamada quando estiver com o mouse em cima desse graphic
+
+        const tileId = coordenatesToTileIndex(
+          e.data.global.x,
+          e.data.global.y
+        )
+
+        if (tileTextures[tileId] === undefined) {
+          return
+        }
+
+        setHovingTileTexture({
+          tileTexture: tileTextures[tileId],
+          tileId,
+        })
+      }}
       pointerdown={e => {
         const tileId = coordenatesToTileIndex(
           e.data.global.x,

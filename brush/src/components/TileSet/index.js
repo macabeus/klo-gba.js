@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import * as PIXI from 'pixi.js'
 import { Stage } from '@inlet/react-pixi'
 import VisionContext from '../../context/VisionContext'
+import Hoving from './Hoving'
 import TilesetGraphics from './TilesetGraphics'
 import useWhenVisionChanges from '../../hooks/useWhenVisionChanges'
 
@@ -20,6 +21,7 @@ const TileSet = ({ setToolState }) => {
   const [pixiApplication, setPixiApplication] = useState(null)
   const [currentIndex, setCurrentIndex] = useState(null)
   const [currentWorld, setCurrentWorld] = useState(null)
+  const [hovingTileTexture, setHovingTileTexture] = useState({ tileId: null, tileTexture: null })
 
   useWhenVisionChanges(() => {
     setCurrentIndex(index)
@@ -40,7 +42,7 @@ const TileSet = ({ setToolState }) => {
 
   return (
     <Stage
-      width={8 * 10}
+      width={8 * 10 * 4}
       height={(Math.ceil(tileset.length / 10) * 8)}
       options={{
         antialias: false,
@@ -50,14 +52,22 @@ const TileSet = ({ setToolState }) => {
     >
       {
         pixiApplication && (
-          <TilesetGraphics
-            pixiRenderer={pixiApplication.renderer}
-            index={currentIndex}
-            world={currentWorld}
-            tileset={tileset}
-            palette={palette}
-            setToolState={setToolState}
-          />
+          <>
+            <TilesetGraphics
+              pixiRenderer={pixiApplication.renderer}
+              index={currentIndex}
+              world={currentWorld}
+              tileset={tileset}
+              palette={palette}
+              setToolState={setToolState}
+              setHovingTileTexture={setHovingTileTexture}
+            />
+
+            <Hoving
+              tileId={hovingTileTexture.tileId}
+              tileTexture={hovingTileTexture.tileTexture}
+            />
+          </>
         )
       }
     </Stage>
