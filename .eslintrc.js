@@ -38,6 +38,7 @@ module.exports = {
     ],
     'multiline-ternary': ['error', 'always-multiline'],
     'no-bitwise': 'off',
+    'no-unused-expressions': ['error', { allowTernary: true }]
     'no-multiple-empty-lines': [
       'error',
       {

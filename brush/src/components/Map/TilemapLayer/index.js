@@ -1,7 +1,7 @@
 import React, { forwardRef, memo } from 'react'
 import PropTypes from 'prop-types'
 import TilemapLayerGraphics from './TilemapLayerGraphics'
-import renderTilesetTextures from '../../../pixiHelpers/renderTilesetTextures'
+import { renderTilesTexture } from '../../../pixiHelpers/renderTextures'
 
 const TilemapLayer = forwardRef(({
   palette,
@@ -15,7 +15,7 @@ const TilemapLayer = forwardRef(({
     },
   },
 }, ref) => {
-  const tileTextures = renderTilesetTextures(pixiRenderer, tileset, palette)
+  const tileTextures = renderTilesTexture(pixiRenderer, tileset, palette)
 
   return (
     <TilemapLayerGraphics

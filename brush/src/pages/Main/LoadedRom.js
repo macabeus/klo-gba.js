@@ -99,7 +99,12 @@ const LoadedRom = () => {
           <CardTitle title="Object Detail" />
           <CardContent>
             <ObjectDetail
-              objectIndex={selectedObject}
+              objectIndex={
+                selectedObject && selectedObject.index
+              }
+              handleObjectChange={
+                selectedObject && selectedObject.handleObjectChange
+              }
               setHighlightCoordinates={setHighlightCoordinates}
             />
           </CardContent>

@@ -7,7 +7,11 @@ import Coordinates from './Coordinates'
 import Kind from './Kind'
 import style from './style.css'
 
-const ObjectDetail = ({ objectIndex, setHighlightCoordinates }) => {
+const ObjectDetail = ({
+  handleObjectChange,
+  objectIndex,
+  setHighlightCoordinates,
+}) => {
   const {
     infos: {
       tilemap: {
@@ -31,6 +35,7 @@ const ObjectDetail = ({ objectIndex, setHighlightCoordinates }) => {
     <Flexbox className={style.container}>
       <Kind
         objectIndex={objectIndex}
+        handleObjectChange={handleObjectChange}
         objectKind={objectData.kind}
       />
 
@@ -50,11 +55,13 @@ const ObjectDetail = ({ objectIndex, setHighlightCoordinates }) => {
 }
 
 ObjectDetail.propTypes = {
+  handleObjectChange: PropTypes.func,
   objectIndex: PropTypes.number,
   setHighlightCoordinates: PropTypes.func,
 }
 
 ObjectDetail.defaultProps = {
+  handleObjectChange: () => {},
   objectIndex: null,
   setHighlightCoordinates: () => {},
 }

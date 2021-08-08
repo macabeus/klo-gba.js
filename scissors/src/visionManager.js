@@ -20,6 +20,8 @@ import {
   setPatchCustomVisionLoader,
   visionHasCustomTilemap,
 } from './rom'
+import getGlobalObjectsSprites from './getGlobalObjectsSprites'
+import getVisionObjectsPalettes from './getVisionObjectPalettes'
 
 const isNumeric = pipe(t => Number(t), identical(NaN), not)
 
@@ -142,6 +144,128 @@ const getVisionSize = (romBuffer, world, vision) => {
   return { height, width }
 }
 
+const getObjectsPalettesIndexes = (romBuffer, totalObjects, world, vision) => {
+  const bytesPerVision = 4
+  const totalVisionsPerWorld = 9
+  const worldsOffset = (world - 1) * totalVisionsPerWorld * bytesPerVision
+  const visionsOffset = (vision - 1) * bytesPerVision
+  const pointersOffset = worldsOffset + visionsOffset
+
+  const { rawOamPointerArrayStart } = binary.parse(romBuffer)
+    .skip(0x18B8E4)
+    .skip(pointersOffset)
+    .word32lu('rawOamPointerArrayStart')
+    .vars
+
+  const oamPointerArrayStart = rawOamPointerArrayStart - 0x08000000
+
+  let loopIndex = 0
+  const rawOamPointers = []
+  binary.parse(romBuffer)
+    .skip(oamPointerArrayStart)
+    .loop(function loop (end) {
+      const { rawOamPointer } = this
+        .skip(4)
+        .word32lu('rawOamPointer')
+        .vars
+
+      rawOamPointers.push(rawOamPointer)
+
+      loopIndex += 1
+
+      if (loopIndex === (totalObjects + 1)) {
+        end()
+      }
+    })
+
+  const objectsPaletteIndexes = rawOamPointers.map(rawOamPointer => {
+    const oamPointer = rawOamPointer - 0x08000000
+
+    const {
+      tileIndexVRAM,
+      paletteIndex,
+      relativeX,
+      relativeY,
+    } = binary.parse(romBuffer)
+      .skip(oamPointer)
+      .word16lu('tileIndexVRAM')
+      .word8lu('paletteIndex')
+      .word8ls('relativeX')
+      .word8ls('relativeY')
+      .vars
+
+    return {
+      tileIndexVRAM,
+      paletteIndex,
+      relativeX,
+      relativeY,
+    }
+  })
+
+  return objectsPaletteIndexes
+}
+
+const getLocalObjectsSprite = (romBuffer, totalObjects, world, vision) => {
+  const bytesPerVision = 4
+  const totalVisionsPerWorld = 9
+  const worldsOffset = (world - 1) * totalVisionsPerWorld * bytesPerVision
+  const visionsOffset = (vision - 1) * bytesPerVision
+  const pointersOffset = worldsOffset + visionsOffset
+
+  const { rawObjectsSpriteAddress } = binary.parse(romBuffer)
+    .skip(0x189A28)
+    .skip(pointersOffset)
+    .word32lu('rawObjectsSpriteAddress')
+    .vars
+
+  const objectsSpriteAddress = rawObjectsSpriteAddress - 0x08000000
+
+  let loopIndex = 0
+  const localObjectsSprites = []
+  binary.parse(romBuffer)
+    .skip(objectsSpriteAddress)
+    .loop(function loop (end) {
+      const { rawAnimationsPointer, tilesetLength } = this
+        .word32lu('rawAnimationsPointer')
+        .skip(4)
+        .word16lu('tilesetLength')
+        .skip(2)
+        .vars
+
+      const animationsPointer = rawAnimationsPointer - 0x08000000
+
+      const { rawFirstAnimationFramePointer } = binary.parse(romBuffer)
+        .skip(animationsPointer)
+        .word32lu('rawFirstAnimationFramePointer')
+        .vars
+
+      const firstAnimationFramePointer =
+        rawFirstAnimationFramePointer - 0x08000000
+
+      const { rawTilesetPointer } = binary.parse(romBuffer)
+        .skip(firstAnimationFramePointer)
+        .word32lu('rawTilesetPointer')
+        .vars
+
+      const tilesetPointer = rawTilesetPointer - 0x08000000
+
+      const objectsSprite = romBuffer.slice(
+        tilesetPointer,
+        tilesetPointer + tilesetLength
+      )
+
+      localObjectsSprites.push(objectsSprite)
+
+      loopIndex += 1
+
+      if (loopIndex === (totalObjects + 1)) {
+        end()
+      }
+    })
+
+  return localObjectsSprites
+}
+
 const getVision = (romBuffer, world, vision) => {
   const infos = loadVisionInfo(world, vision)
   const addressStart = visionHasCustomTilemap(romBuffer, infos) ?
@@ -196,6 +320,28 @@ const getVision = (romBuffer, world, vision) => {
 
   const palette = getPalette(romBuffer, Number(world), Number(vision))
 
+  const visionObjectsPalettes = getVisionObjectsPalettes(
+    romBuffer,
+    Number(world),
+    Number(vision)
+  )
+
+  const objectsPaletteIndexes = getObjectsPalettesIndexes(
+    romBuffer,
+    objects.length,
+    Number(world),
+    Number(vision)
+  )
+
+  const localObjectsSprites = getLocalObjectsSprite(
+    romBuffer,
+    objects.length,
+    Number(world),
+    Number(vision)
+  )
+
+  const globalObjectsSprites = getGlobalObjectsSprites(romBuffer)
+
   const objectsKindToSprite =
     objects.map(({ data: { kind, sprite } }) => [kind, sprite])
     |> fromPairs
@@ -205,6 +351,10 @@ const getVision = (romBuffer, world, vision) => {
     objects,
     objectsKindToSprite,
     palette,
+    localObjectsSprites,
+    globalObjectsSprites,
+    visionObjectsPalettes,
+    objectsPaletteIndexes,
     portals,
     tilemap: tilemapProxy,
     tilemapSize,
