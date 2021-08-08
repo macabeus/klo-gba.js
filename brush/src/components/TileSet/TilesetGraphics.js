@@ -2,7 +2,7 @@ import React, { memo } from 'react'
 import PropTypes from 'prop-types'
 import * as PIXI from 'pixi.js'
 import { Graphics } from '@inlet/react-pixi'
-import renderTilesetTextures from '../../pixiHelpers/renderTilesetTextures'
+import { renderTilesTexture } from '../../pixiHelpers/renderTextures'
 
 const TilesetGraphics = ({
   palette,
@@ -10,7 +10,7 @@ const TilesetGraphics = ({
   setToolState,
   tileset,
 }) => {
-  const tileTextures = renderTilesetTextures(pixiRenderer, tileset, palette)
+  const tileTextures = renderTilesTexture(pixiRenderer, tileset, palette)
 
   const tileIndexToCoordenates = (tileIndex) => {
     const x = tileIndex % 10

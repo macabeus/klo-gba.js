@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react'
 import PropTypes from 'prop-types'
 import { enteringVisionGbaState, getVision } from 'scissors'
 import { GbaContext } from 'react-gbajs'
+import * as PIXI from 'pixi.js'
 import VisionContext from '../context/VisionContext'
 import useForceUpdate from '../hooks/useForceUpdate'
 
@@ -27,6 +28,8 @@ const VisionProvider = ({ children }) => {
   const setEmptyState = () => setVision(emptyState)
 
   const updateVision = (romBuffer, world, index) => {
+    PIXI.utils.destroyTextureCache()
+
     setVisionWorld(world)
     setVisionIndex(index)
 

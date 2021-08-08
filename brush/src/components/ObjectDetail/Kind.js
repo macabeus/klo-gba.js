@@ -10,6 +10,7 @@ import style from './style.css'
 const ToggleDropdownKind = ({
   currentKind,
   finishEditHandle,
+  handleObjectChange,
   isEditing,
   objectIndex,
 }) => {
@@ -31,6 +32,7 @@ const ToggleDropdownKind = ({
   const updateKind = (newKind) => {
     updateObjectsDiffMap(objectIndex, 'kind', Number(newKind))
     updateObjectsDiffMap(objectIndex, 'sprite', objectsKindToSprite[Number(newKind)])
+    handleObjectChange({ action: 'newKind', kind: newKind })
 
     finishEditHandle()
   }
@@ -51,6 +53,7 @@ const ToggleDropdownKind = ({
 ToggleDropdownKind.propTypes = {
   currentKind: PropTypes.number.isRequired,
   finishEditHandle: PropTypes.func,
+  handleObjectChange: PropTypes.func.isRequired,
   isEditing: PropTypes.bool.isRequired,
   objectIndex: PropTypes.number.isRequired,
 }
@@ -59,7 +62,7 @@ ToggleDropdownKind.defaultProps = {
   finishEditHandle: () => {},
 }
 
-const Kind = ({ objectIndex, objectKind }) => {
+const Kind = ({ handleObjectChange, objectIndex, objectKind }) => {
   const [isEditingKind, setIsEditingKind] = useState(false)
 
   const icon = (
@@ -75,6 +78,7 @@ const Kind = ({ objectIndex, objectKind }) => {
       <ToggleDropdownKind
         currentKind={objectKind}
         finishEditHandle={() => setIsEditingKind(false)}
+        handleObjectChange={handleObjectChange}
         isEditing={isEditingKind}
         objectIndex={objectIndex}
       />
@@ -90,6 +94,7 @@ const Kind = ({ objectIndex, objectKind }) => {
 }
 
 Kind.propTypes = {
+  handleObjectChange: PropTypes.func.isRequired,
   objectIndex: PropTypes.number.isRequired,
   objectKind: PropTypes.number.isRequired,
 }

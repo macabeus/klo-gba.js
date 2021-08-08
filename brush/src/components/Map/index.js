@@ -112,6 +112,9 @@ const Map = ({
                   width={width * 8}
                 />
                 {optShowObjects && <ObjectsLayer
+                  index={currentIndex}
+                  world={currentWorld}
+                  pixiRenderer={pixiApplication.renderer}
                   updateObjectsDiffMap={updateObjectsDiffMap}
                   setSelectedPointInfos={setSelectedPointInfos}
                   totalStages={totalStages}
