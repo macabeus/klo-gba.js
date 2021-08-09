@@ -27,6 +27,12 @@ const DrawingLayer = ({
 
     eyedropper: ({ x, y }) => {
       const tileId = getTilemapPoint(x, y)
+
+      if (tileId === 0x00) {
+        setToolState('eraser')
+        return
+      }
+
       setToolState('brush', tileId)
     },
 
