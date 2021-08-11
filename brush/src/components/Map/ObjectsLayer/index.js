@@ -11,6 +11,8 @@ const ObjectsLayer = ({
   setSelectedPointInfos,
   totalStages,
   updateObjectsDiffMap,
+  world,
+  index,
   vision,
 }) => {
   const {
@@ -98,7 +100,7 @@ const ObjectsLayer = ({
                 mapObjectKindToRelativePositions
               }
               onObjectSelected={setSelectedObject}
-              key={`${x} ${y} ${i}`}
+              key={`${world} ${index} ${x} ${y} ${i}`}
             />
           )
         }
@@ -108,7 +110,7 @@ const ObjectsLayer = ({
         return (
           <PointObject
             onFinishDragAndDrop={updateObjectsDiffMap}
-            key={`${x} ${y} ${i}`}
+            key={`${world} ${index} ${x} ${y} ${i}`}
             objectId={objectData.kind}
             objectIndex={objectIndex}
             stage={i}
