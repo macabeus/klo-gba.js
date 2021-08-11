@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Graphics } from '@inlet/react-pixi'
 
@@ -12,6 +12,7 @@ const DrawingLayer = ({
   updateTilemapPoint,
   width,
 }) => {
+  const [cursorCoordinates, setCursorCoordinates] = useState([-1, -1])
   const { name: toolName, value: toolValue } = toolState
 
   const mapToolToFunc = {
@@ -49,23 +50,56 @@ const DrawingLayer = ({
     },
   }
 
+  const mapCoordinatesToTilePosition = ([x, y]) => {
+    const tilePositionX = Math.floor(x / 8)
+    const tilePositionY = Math.floor(y / 8)
+
+    return [tilePositionX, tilePositionY]
+  }
+
+  const drawDrawingLayerBackground = (g) => {
+    g.beginFill(0x000000, 0.01)
+    g.drawRect(0, 0, width * 8, height * 8)
+    g.endFill()
+  }
+
+  const drawSquareCursor = (g) => {
+    g.beginFill(0xFFFFFF, 0.2)
+
+    g.lineStyle(1, 0x000000, 0.7)
+
+    const [x, y] = mapCoordinatesToTilePosition(cursorCoordinates)
+    g.drawRect(x * 8, y * 8, 8, 8)
+
+    g.endFill()
+  }
+
   const onClickHandler = (x, y) =>
     mapToolToFunc[toolName]({ x, y })
 
   return (
     <Graphics
+      interactive
       draw={(g) => {
         g.clear()
 
-        g.beginFill(0x000000, 0.01)
-        g.drawRect(0, 0, width * 8, height * 8)
+        drawDrawingLayerBackground(g)
+
+        drawSquareCursor(g)
       }}
-      interactive
-      pointerdown={e =>
-        onClickHandler(
-          Math.floor(e.data.global.x / 8),
-          Math.floor(e.data.global.y / 8)
-        )}
+      pointerdown={() => {
+        const [x, y] = mapCoordinatesToTilePosition(cursorCoordinates)
+        onClickHandler(x, y)
+      }}
+      mousemove={(e) => {
+        const { x, y } = e.data.global
+
+        const yAboveCursor = y > 8
+          ? y - 8
+          : y
+
+        setCursorCoordinates([x, yAboveCursor])
+      }}
     />
   )
 }
