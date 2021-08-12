@@ -3,7 +3,7 @@
 > 🧢 Reverse engineering tool for the Klonoa's GBA game
 
 <p align="center">
-  <img src="https://i.imgur.com/QxCoVPh.png">
+  <img src="https://i.imgur.com/VWc9K3k.png">
 </p>
 
 **klo-gba.js** is a web Level Editor for *Klonoa: Empire of Dreams* game. Using this tool, you can extend the limits of this awesome game! Please, buy Klonoa's games to support this franchise.
