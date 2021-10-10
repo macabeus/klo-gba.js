@@ -20,21 +20,19 @@ Since this is a study project, I'm writing a manual about how I'm developing it,
 - [🇧🇷 Manual in Portuguese](https://medium.com/@bruno.macabeus/pt-br-engenharia-reversa-num-jogo-de-gameboy-advance-introdu%C3%A7%C3%A3o-21ebffe2f794?source=friends_link&sk=ed05c9b97187694240ed3316ae325165)
 - [🇪🇸 Manual in Spanish](https://macabeus.medium.com/ingenier%C3%ADa-inversa-de-un-juego-de-game-boy-advance-gu%C3%ADa-completa-dd5167f70263)
 
-## Talks
+## Talk
 
-Are you the type that prefers to watch instead of read?  No problem!  My friend and I gave a lecture at two conferences about this project.  Of course, in a talk the content is much more condensed, because we have less time, so these posts are much more detailed - but these talks bring a far more interactive approach to unraveling the challenges of reverse engineering.
+Are you the type that prefers to watch instead of read?  No problem!  My friend and I gave a lecture at three conferences about this project. Of course, in a talk the content is much more condensed, because we have less time, so the posts liked above are much more detailed - but these talks bring a far more interactive approach to unraveling the challenges of reverse engineering.
 
-Talk at **The Conf**, in Brazil 🇧🇷<br>
-Since this conference has a general audience, half of this talk is about reverse engineering, and the other half is about the front-end. [Slides](https://speakerdeck.com/ythecombinator/the-day-i-reverse-engineered-a-gameboy-advance-game)
+Talk at **DEFCON Furs 2021** <br>
+Since this conference is geared towards security, this talk is focused on the reverse engineering process. [Slides](https://speakerdeck.com/macabeus/the-day-i-reverse-engineered-a-furry-gameboy-advance-game).<br>
+(there is a brief audio problem, fixed at ~2:00)
 
-<a href="http://bit.ly/theconf-gba"><img src="http://img.youtube.com/vi/X88pmwSltAY/0.jpg" /></a>
+<a href="https://www.youtube.com/watch?v=RMM_5bq3Ct8"><img src="http://img.youtube.com/vi/RMM_5bq3Ct8/0.jpg" /></a>
 
-Talk at **BalCCon**, in Serbia 🇷🇸<br>
-Since this conference is geared towards security, this talk is focused on the reverse engineering process. [Slides](https://speakerdeck.com/ythecombinator/the-day-i-reverse-engineered-a-gameboy-advance-game-revisited)
+> For the previous lectures with another focus, see the post on [Medium](https://medium.com/@bruno.macabeus/reverse-engineering-a-gameboy-advance-game-introduction-ec185bd8e02).
 
-<a href="http://bit.ly/balccon-gba"><img src="http://img.youtube.com/vi/xh0V1jRVnQI/0.jpg" /></a>
-
-> Are you liked this project and these talks? I have one about **compilers**! [Do you want to see?](https://github.com/macabeus/macro-compiler)
+> Are you liked this project and this talk? I have one about **compilers**! [Do you want to see?](https://github.com/macabeus/macro-compiler)
 
 ## Architecture of this project
 
