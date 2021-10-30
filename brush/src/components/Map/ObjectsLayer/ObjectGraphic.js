@@ -69,7 +69,11 @@ const ObjectGraphic = ({
           return
         }
 
-        for (let tileIndex = 0; tileIndex < tileTextures.length; tileIndex += 1) {
+        for (
+          let tileIndex = 0;
+          tileIndex < tileTextures.length;
+          tileIndex += 1
+        ) {
           const [tileX, tileY] = tileIndexToCoordenates(tileIndex)
 
           const texture = tileTextures[tileIndex]
@@ -78,9 +82,9 @@ const ObjectGraphic = ({
           if (status !== 'normal') {
             const filter = new PIXI.filters.ColorMatrixFilter()
 
-            status === 'dragging'
-              ? filter.brightness(0.8)
-              : filter.brightness(1.2)
+            status === 'dragging' ?
+              filter.brightness(0.8) :
+              filter.brightness(1.2)
 
             sprite.filters = [filter]
           }
