@@ -94,9 +94,9 @@ const DrawingLayer = ({
       mousemove={(e) => {
         const { x, y } = e.data.global
 
-        const yAboveCursor = y > 8
-          ? y - 8
-          : y
+        const yAboveCursor = y > 8 ?
+          y - 8 :
+          y
 
         setCursorCoordinates([x, yAboveCursor])
       }}

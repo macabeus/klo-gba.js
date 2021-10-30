@@ -136,6 +136,8 @@ ObjectsLayer.propTypes = {
   setSelectedPointInfos: PropTypes.func,
   totalStages: PropTypes.number.isRequired,
   updateObjectsDiffMap: PropTypes.func,
+  world: PropTypes.string.isRequired,
+  index: PropTypes.string.isRequired,
   vision: PropTypes.shape({
     globalObjectsSprites: PropTypes.object.isRequired,
     localObjectsSprites: PropTypes.array.isRequired,

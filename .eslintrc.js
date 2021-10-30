@@ -7,9 +7,8 @@ module.exports = {
   },
   plugins: [
     'import',
-    'sort-destructure-keys',
   ],
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   rules: {
     'arrow-parens': 'off',
     'comma-dangle': [
@@ -38,7 +37,7 @@ module.exports = {
     ],
     'multiline-ternary': ['error', 'always-multiline'],
     'no-bitwise': 'off',
-    'no-unused-expressions': ['error', { allowTernary: true }]
+    'no-unused-expressions': ['error', { allowTernary: true }],
     'no-multiple-empty-lines': [
       'error',
       {
@@ -46,12 +45,10 @@ module.exports = {
         maxEOF: 1,
       },
     ],
-    'implicit-arrow-linebreak':  'off',
+    'implicit-arrow-linebreak': 'off',
     'import/extensions': 'off',
-    'semi': ['error', 'never'],
-    'sort-destructure-keys/sort-destructure-keys': ['error'],
-    'sort-keys': ['error'],
-    'sort-vars': ['error'],
+    'import/no-unresolved': 'off',
+    semi: ['error', 'never'],
     'space-before-function-paren': ['error', 'always'],
     'operator-linebreak': [
       'error',

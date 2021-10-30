@@ -363,7 +363,6 @@ const getVision = (romBuffer, world, vision) => {
 }
 
 const applyObjectsDiff = (romBuffer, objectsStartAddress, objectsDiffs) => {
-  /* eslint-disable sort-keys */
   const mapKeyToOffsetAndSize = {
     xStage1: [0, 2],
     yStage1: [2, 2],
@@ -378,7 +377,6 @@ const applyObjectsDiff = (romBuffer, objectsStartAddress, objectsDiffs) => {
     sprite: [40, 1],
     kind: [41, 1],
   }
-  /* eslint-enable sort-keys */
 
   const updateROM = (diffs, objectIndex) => {
     const objectMemoryAddressStart = objectsStartAddress + (objectIndex * 44)
